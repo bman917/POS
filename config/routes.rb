@@ -1,19 +1,7 @@
 Rails.application.routes.draw do
 
-
-  get "users/index"
-  get "users/new"
-  get "users/create"
-  get "users/edit"
-  get "users/update"
-  get "users/show"
-  get "users/destroy"
-  devise_for :users
-  scope "/admin" do
-    resources :users do
-      get :activate, on: :member
-    end
-  end
+  mount UserManager::Engine, at: "/user_manager"
+  root "user_manager/users#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
