@@ -15,5 +15,12 @@
 //= require turbolinks
 //= require foundation
 //= require_tree .
-$(document).foundation();
-$(function(){ $(document).foundation(); });
+
+function init_foundation() {
+  $(document).foundation();
+  $(function(){ $(document).foundation(); });
+}
+
+init_foundation();
+$(document).on('page:load', init_foundation);
+Turbolinks.enableProgressBar();

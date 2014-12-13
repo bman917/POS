@@ -8,4 +8,18 @@
 <%=render 'user_manager/session_details'%>
 <%=render 'user_manager/controlls'%>
 
+<% if user_signed_in? %>
+<section id="manage_items" class="top-bar-section">
+  <ul class="right">
+    <li class="has-dropdown">
+      <%=link_to 'Manage Items', user_manager.users_path%>
+        <ul class="dropdown">
+          <li><%=link_to 'Add Category', main_app.new_category_path%></li>
+          
+        </ul>
+    </li>
+  </ul>
+</section>
+<% end %>
+
 </nav>

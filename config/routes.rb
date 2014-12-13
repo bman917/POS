@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :categories
+
+  get 'portal/index'
+
   mount UserManager::Engine, at: "/user_manager"
   root "user_manager/users#index"
 
