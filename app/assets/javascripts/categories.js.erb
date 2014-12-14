@@ -3,7 +3,8 @@
 function open_category_form()
 {
   $('#modal_form').foundation('reveal', 'open', {
-    url: '<%=url.new_category_path%>'
+    url: '<%=url.new_category_path%>',
+    error: foundation_reveal_utils_handle_error
   });
 }
 
@@ -19,10 +20,19 @@ function bind_open_category_form()
   $('#modal_form').unbind();
 }
 
-
 function unbind_open_category_form()
 {
   $(document).unbind('keyup', listen_to_open_category_form);
   $('#modal_form').unbind();
   $('#modal_form').on('closed.fndtn.reveal', bind_open_category_form);
+}
+
+function category_form_focus()
+{
+  $('#category_name').focus();
+}
+
+function bind_focus_on_category_form_open()
+{
+  $('#modal_form').on('opened.fndtn.reveal', category_form_focus);
 }

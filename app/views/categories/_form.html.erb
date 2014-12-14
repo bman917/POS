@@ -25,7 +25,8 @@
 <% end %>
 </div>
 <div>
+
 <%=javascript_tag do %>
-unbind_open_category_form();
-$('#modal_form').on('opened.fndtn.reveal', function(){$('#category_name').focus();});
+  unbind_open_category_form();
+  bind_focus_on_category_form_open();
 <% end %>

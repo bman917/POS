@@ -17,9 +17,8 @@
 //= require jquery-ui/mouse
 //= require jquery-ui/position
 //= require turbolinks
-//= require foundation/foundation
-//= require foundation/foundation.reveal
-//= require foundation/foundation.topbar
+//= require foundation
+//= require foundation/foundation.accordion
 //= require hide_toggler
 //= require common_tools
 //= require_tree .
@@ -27,15 +26,23 @@
 function init_foundation() {
   $(document).foundation();
   $(function(){ $(document).foundation(); });
-  $(document).foundation('reveal', {animation_speed: 75})
+  $(document).foundation('reveal', {animation_speed: 75});
+}
+
+function unbind_all_keyboard_listeners() {
+  $(document).unbind('keyup');
 }
 
 init_foundation();
-$(document).on('page:load', init_foundation);
-Turbolinks.enableProgressBar();
 
 $(document).ready(function(){
   //$('*[data-remote="true"]').on('click', overlay);
   $('a.close-reveal-modal').remove();
 });
+
+//Tourbolinks Configuration
+Turbolinks.enableProgressBar();
+$(document).on('page:load', init_foundation);
+$(document).on('page:load', unbind_all_keyboard_listeners);
+
 

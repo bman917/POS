@@ -1,0 +1,10 @@
+function foundation_reveal_utils_close_reveal() {
+  $('.reveal-modal-bg').remove();
+  $('#modal_form').foundation('reveal', 'close');
+
+}
+
+function foundation_reveal_utils_handle_error(jqXHR, status, error) {
+  alert("Unexpected error: " + error);
+  foundation_reveal_utils_close_reveal();
+}
