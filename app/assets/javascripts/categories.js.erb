@@ -1,0 +1,28 @@
+<% url = POS::Application.routes.url_helpers %>
+
+function open_category_form()
+{
+  $('#modal_form').foundation('reveal', 'open', {
+    url: '<%=url.new_category_path%>'
+  });
+}
+
+function listen_to_open_category_form(e) {
+    if (e.which == 65) {
+      open_category_form();
+    }
+}
+
+function bind_open_category_form()
+{
+  $(document).on('keyup', listen_to_open_category_form);
+  $('#modal_form').unbind();
+}
+
+
+function unbind_open_category_form()
+{
+  $(document).unbind('keyup', listen_to_open_category_form);
+  $('#modal_form').unbind();
+  $('#modal_form').on('closed.fndtn.reveal', bind_open_category_form);
+}

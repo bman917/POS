@@ -14,8 +14,10 @@
     <li class="has-dropdown">
       <%=link_to 'Manage Items', user_manager.users_path%>
         <ul class="dropdown">
-          <li><%=link_to 'Add Category', main_app.new_category_path%></li>
-          
+          <li><%=link_to 'List Categories', main_app.categories_url%></li>
+          <li><%=link_to 'Add Category', 
+            main_app.new_category_path, 
+            data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form"} %></li>
         </ul>
     </li>
   </ul>
@@ -23,3 +25,6 @@
 <% end %>
 
 </nav>
+
+<div id="modal_form" class="reveal-modal" data-reveal>
+</div>

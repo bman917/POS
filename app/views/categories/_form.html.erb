@@ -1,3 +1,5 @@
+<div class="row">
+<div class="small-12 columns">
 <%= form_for(@category) do |f| %>
   <% if @category.errors.any? %>
     <div id="error_explanation">
@@ -10,12 +12,20 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit value: 'Save', class: 'button expand' %>
-  </div>
+  <fieldset>
+    <legend>Category</legend>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="actions">
+      <%= f.submit value: 'Save', class: 'button expand' %>
+    </div>
+  </fieldset>
+<% end %>
+</div>
+<div>
+<%=javascript_tag do %>
+unbind_open_category_form();
+$('#modal_form').on('opened.fndtn.reveal', function(){$('#category_name').focus();});
 <% end %>

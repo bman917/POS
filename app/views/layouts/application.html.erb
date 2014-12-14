@@ -9,7 +9,12 @@
   <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body id="content">
+
+  <div id="wait_message" class="hidden">
+    <%=image_tag 'loading_bar.gif', size: "125x20"%>
+  </div>
+
 
 <%= render 'layouts/navigation'%>
 
@@ -28,7 +33,6 @@
   <div class="small-12 columns">
     <%= yield %>
   </div>
-
 </div>
 </body>
 </html>

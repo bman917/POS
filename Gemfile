@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -67,3 +69,6 @@ gem 'rack-mini-profiler'
 gem 'foundation-rails'
 gem 'user_manager', :path => '/home/jchan/engines/user_manager'
 #gem 'user_manager', github: 'bman917/user_manager'
+#gem 'common_assets', github: 'bman917/common_assets'
+gem 'common_assets', :path => '/home/jchan/work/common_assets'
+gem 'hide_toggler', :path => '/home/jchan/work/hide_toggler'

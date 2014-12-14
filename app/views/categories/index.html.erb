@@ -1,25 +1,40 @@
-<h1>Listing categories</h1>
+<%=javascript_tag do %>
+$(document).ready(function(){
+  bind_open_category_form();
+});
+<% end %>
 
-<table id="category">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<h1>Categories</h1>
+<div class="row">
+  <div class="columns small-7">
+    <table id="category">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr id="<%="category_#{category.id}"%>" class="<%='highlight' if category.id == @category.try(:id)%>">
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Category', new_category_path %>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr id="<%="category_#{category.id}"%>" class="<%='highlight' if category.id == @category.try(:id)%>">
+            <td><%= category.name %></td>
+            <td><%= link_to edit_img, 
+                    edit_category_path(category), 
+                    data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form", remote: false}%>
+            </td>
+            <td><%= link_to delete_img, category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-7">
+    <%=link_to 'Add Category', 
+            new_category_path, 
+            data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form"},
+            class: 'button' %>
+  </div>
+</div>

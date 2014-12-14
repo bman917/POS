@@ -1,11 +1,10 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :js
 
   def index
     @categories = Category.all
-    respond_with(@categories)
   end
 
   def show
@@ -14,10 +13,11 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
-    respond_with(@category)
+    render layout: false
   end
 
   def edit
+    render layout: false
   end
 
   def create
@@ -32,7 +32,8 @@ class CategoriesController < ApplicationController
 
   def update
     @category.update(category_params)
-    respond_with(@category)
+    @categories = Category.all
+    render 'index'
   end
 
   def destroy
