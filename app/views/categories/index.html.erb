@@ -1,16 +1,22 @@
 <%=javascript_tag do %>
 $(document).ready(function(){
   bind_open_category_form();
+
+  $('.toggler_link').hide_toggler();
+  $('.show_help_link').hide_toggler();
 });
 <% end %>
 
 <h1>Categories</h1>
 <div class="row">
-  <div class="columns small-7">
-  <h5>Keyboard shortcuts</h5>
-  <ul>
-    <li><kbd>a</kbd> -Add New Category</li>
-  </ul>
+  <div class="columns small-7 toggler_parent">
+      <%=link_to 'Keyboard shortcuts', '', class: 'help show_help_link label secondary'%>
+      <div id="help" class="togger_child hidden">
+        <ul>
+          <li><kbd>a</kbd> -Add New Category</li>
+          <li><kbd>esc</kbd> -Close New Category Form</li>
+        </ul>
+      </div>
   </div>
 </div>
 <div class="row">

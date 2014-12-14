@@ -23,5 +23,9 @@ test:
   timeout: 5000
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: pos_production
+  pool: 5
+  username: pos_admin
+  password: <%=ENV['MYSQL_PASSWORD']%>
+  host: localhost

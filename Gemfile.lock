@@ -1,4 +1,28 @@
 GIT
+  remote: git://github.com/bman917/common_assets.git
+  revision: 2ace0f4dc5b14164d105afd1948b1f28dd6f145e
+  specs:
+    common_assets (0.1.7)
+      rails (>= 3.1)
+
+GIT
+  remote: git://github.com/bman917/hide_toggler.git
+  revision: 7a6696931da0b478bfb049f68dcdc78cdfc79b72
+  specs:
+    hide_toggler (0.1.4)
+      rails (>= 3.1)
+
+GIT
+  remote: git://github.com/bman917/user_manager.git
+  revision: b6545a77c5e1d736986fb43537e85272a1e82894
+  specs:
+    user_manager (0.0.1)
+      devise (~> 3.4)
+      foundation-rails (~> 5.4)
+      rails (~> 4.1)
+      sass-rails
+
+GIT
   remote: git://github.com/jnicklas/capybara.git
   revision: 4161bbc560631e61e611d59bf797eeb59a6b1021
   specs:
@@ -8,27 +32,6 @@ GIT
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-
-PATH
-  remote: /home/jchan/engines/user_manager
-  specs:
-    user_manager (0.0.1)
-      devise (~> 3.4)
-      foundation-rails (~> 5.4)
-      rails (~> 4.1)
-      sass-rails
-
-PATH
-  remote: /home/jchan/work/common_assets
-  specs:
-    common_assets (0.1.7)
-      rails (>= 3.1)
-
-PATH
-  remote: /home/jchan/work/hide_toggler
-  specs:
-    hide_toggler (0.1.4)
-      rails (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -138,6 +141,7 @@ GEM
     mini_portile (0.6.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    mysql2 (0.3.16)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
@@ -263,6 +267,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   meta_request
+  mysql2
   paper_trail (~> 3.0.1)
   rack-mini-profiler
   rails (= 4.1.8)
