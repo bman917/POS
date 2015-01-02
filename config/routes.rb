@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :attributes
+
   resources :categories
 
   get 'portal/index'

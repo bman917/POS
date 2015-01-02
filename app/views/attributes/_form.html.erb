@@ -1,0 +1,27 @@
+<div class="row">
+<div class="small-12 columns">
+<%= form_for(@attribute) do |f| %>
+  <% if @attribute.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@attribute.errors.count, "error") %> prohibited this attribute from being saved:</h2>
+
+      <ul>
+      <% @attribute.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<fieldset>
+  <legend>Item Attribute</legend>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+     <%= f.submit value: 'Save', class: 'button expand' %>
+  </div>
+</fieldset>
+<% end %>
+</div>
+<div>
