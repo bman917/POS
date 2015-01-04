@@ -1,24 +1,47 @@
+<%=javascript_tag do %>
+$(document).ready(function(){
+  bind_open_supplier_form();
+
+  $('.toggler_link').hide_toggler();
+  $('.show_help_link').hide_toggler();
+});
+<% end %>
+
+
 <h1>Listing Suppliers</h1>
 
-<table id="supplier">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+<%=small_div do %>
+  <div class="toggler_parent">
+      <%=link_to 'Keyboard shortcuts', '', class: 'help show_help_link label secondary'%>
+      <div id="help" class="togger_child hidden">
+        <ul>
+          <li><kbd>a</kbd> -Add New Supplier</li>
+          <li><kbd>esc</kbd> -Close New Supplier Form</li>
+        </ul>
+      </div>
+  </div>
+<% end %>
 
-  <tbody>
-    <% @suppliers.each do |supplier| %>
-      <%=tr_highlight(supplier, @supplier) do %>
-        <td><%= supplier.name %></td>
-        <td><%= modal_link_to edit_img, edit_supplier_path(supplier) %></td>
-        <td><%= link_to delete_img, supplier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<%=small_div do %>
+  <table id="supplier">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @suppliers.each do |supplier| %>
+        <%=tr_highlight(supplier, @supplier) do %>
+          <td><%= supplier.name %></td>
+          <td><%= modal_link_to edit_img, edit_supplier_path(supplier) %></td>
+          <td><%= link_to delete_img, supplier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+<%end%>
 
-<br>
 
 <%= modal_button 'Add Supplier', new_supplier_path %>

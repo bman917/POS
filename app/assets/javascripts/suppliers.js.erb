@@ -1,0 +1,38 @@
+<% url = POS::Application.routes.url_helpers %>
+
+function open_supplier_form()
+{
+  $('#modal_form').foundation('reveal', 'open', {
+    url: '<%=url.new_supplier_path%>',
+    error: foundation_reveal_utils_handle_error
+  });
+}
+
+function listen_to_open_supplier_form(e) {
+    if (e.which == 65) {
+      open_supplier_form();
+    }
+}
+
+function bind_open_supplier_form()
+{
+  $(document).on('keyup', listen_to_open_supplier_form);
+  $('#modal_form').unbind();
+}
+
+function unbind_open_supplier_form()
+{
+  $(document).unbind('keyup', listen_to_open_supplier_form);
+  $('#modal_form').unbind();
+  $('#modal_form').on('closed.fndtn.reveal', bind_open_supplier_form);
+}
+
+function supplier_form_focus()
+{
+  $('#supplier_name').focus();
+}
+
+function bind_focus_on_supplier_form_open()
+{
+  $('#modal_form').on('opened.fndtn.reveal', supplier_form_focus);
+}

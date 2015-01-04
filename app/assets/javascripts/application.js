@@ -39,7 +39,18 @@ $(document).ready(function(){
   $('a.close-reveal-modal').remove();
 });
 
-//Tourbolinks Configuration
+
+//============================
+// START Tourbolinks Configuration
+//============================
 Turbolinks.enableProgressBar();
 $(document).on('page:load', init_foundation);
-$(document).on('page:load', unbind_all_keyboard_listeners);
+
+//Use page:receive so that unbinding keyboard events happens before
+//the page has been parsed. Using page:load remove any keyboard bindings
+//because it is triggered at the end of the loading process.
+$(document).on('page:receive', unbind_all_keyboard_listeners);
+
+//============================
+// END Tourbolinks Configuration
+//============================

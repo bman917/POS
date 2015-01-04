@@ -1,5 +1,5 @@
 <div class="row">
-<div class="small-12 columns">
+<div class="columns">
 
 <%= form_for(@supplier) do |f| %>
   <% if @supplier.errors.any? %>
@@ -25,3 +25,8 @@
 
 </div>
 </div>
+
+<%=javascript_tag do %>
+  unbind_open_supplier_form();
+  bind_focus_on_supplier_form_open();
+<% end %>
