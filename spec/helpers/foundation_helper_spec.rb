@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ApplicationHelper do
+describe FoundationHelper do
   describe "modal_button" do
 
     shared_examples_for "a modal button" do
