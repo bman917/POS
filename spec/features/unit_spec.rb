@@ -8,10 +8,16 @@ describe Unit do
     visit units_path
   end
 
+
   describe "Create", js: true do
     before(:each) do
       click_on 'Add Unit'
       expect(page).to have_css('form#new_unit')
+      expect(page).to have_css('a.close-reveal-modal')
+    end
+
+    describe "Form", :form do
+      it_should_behave_like "a modal form" 
     end
 
     it "saves" do
@@ -43,7 +49,6 @@ describe Unit do
         click_on 'Save'
         expect(page).to have_content("Abbrev has already been taken")
       end
-
     end
   end
 end

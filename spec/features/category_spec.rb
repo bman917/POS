@@ -14,6 +14,10 @@ describe Category do
       expect(page).to have_css('form#new_category')
     end
 
+    describe "Form", :form do
+      it_should_behave_like "a modal form" 
+    end
+    
     it "Creates a Category" do
       fill_in 'Name', with: 'EVA Sheet'
       click_on 'Save'

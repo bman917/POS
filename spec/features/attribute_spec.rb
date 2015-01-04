@@ -14,6 +14,10 @@ describe Category do
       expect(page).to have_css('form#new_attribute')
     end
 
+    describe "Form", :form do
+      it_should_behave_like "a modal form" 
+    end
+
     it "Creates an Attribute" do
       fill_in 'Name', with: 'Special Attribute'
       click_on 'Save'

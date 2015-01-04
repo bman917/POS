@@ -84,10 +84,16 @@ def sign_in
     @admin = UserManager::User.create(username: 'admin', password: 'password', email: 'noreply@email.com')
   end
   
-
   visit user_manager.new_user_session_path
   fill_in 'user_username', :with => 'admin'
   fill_in 'user_password', :with => 'password'
   click_button 'Sign in'
 end
 
+shared_examples "a modal form" do
+  it "can be closed" do
+    expect(page).to have_css('a.close-reveal-modal')
+    find("a.close-reveal-modal").click
+    expect(page).to have_no_css('a.close-reveal-modal')
+  end
+end

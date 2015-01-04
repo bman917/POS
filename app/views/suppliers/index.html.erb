@@ -1,0 +1,24 @@
+<h1>Listing Suppliers</h1>
+
+<table id="supplier">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @suppliers.each do |supplier| %>
+      <%=tr_highlight(supplier, @supplier) do %>
+        <td><%= supplier.name %></td>
+        <td><%= modal_link_to edit_img, edit_supplier_path(supplier) %></td>
+        <td><%= link_to delete_img, supplier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= modal_button 'Add Supplier', new_supplier_path %>
