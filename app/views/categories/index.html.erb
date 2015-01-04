@@ -33,9 +33,7 @@ $(document).ready(function(){
         <% @categories.each do |category| %>
           <tr id="<%="category_#{category.id}"%>" class="<%='highlight' if category.id == @category.try(:id)%>">
             <td><%= category.name %></td>
-            <td><%= link_to edit_img, 
-                    edit_category_path(category), 
-                    data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form", remote: false}%>
+            <td><%= modal_link_to edit_img, edit_category_path(category)%>
             </td>
             <td><%= link_to delete_img, category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
@@ -46,9 +44,6 @@ $(document).ready(function(){
 </div>
 <div class="row">
   <div class="columns small-7">
-    <%=link_to 'Add Category', 
-            new_category_path, 
-            data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form"},
-            class: 'button' %>
+    <%=modal_button 'Add Category', new_category_path%>
   </div>
 </div>

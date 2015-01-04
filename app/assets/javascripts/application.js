@@ -36,7 +36,6 @@ function unbind_all_keyboard_listeners() {
 init_foundation();
 
 $(document).ready(function(){
-  //$('*[data-remote="true"]').on('click', overlay);
   $('a.close-reveal-modal').remove();
 });
 
@@ -44,5 +43,3 @@ $(document).ready(function(){
 Turbolinks.enableProgressBar();
 $(document).on('page:load', init_foundation);
 $(document).on('page:load', unbind_all_keyboard_listeners);
-
-
