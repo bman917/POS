@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Unit do 
   before(:each) do
     Unit.destroy_all
-    @existing = Unit.create(name: "Existing One", abbrev: "ext")
+    @existing = Unit.create(name: "Existing One", abbrev: "ExistingAbbrev")
     sign_in
     visit units_path
   end
@@ -19,7 +19,7 @@ describe Unit do
       fill_in 'Abbrev', with: 'TestAbbrev'
       click_on 'Save'
       within "table#unit" do
-        
+
         expect(page).to have_content('TestUnit')
         expect(page).to have_content('TestAbbrev')
 
@@ -30,10 +30,20 @@ describe Unit do
       end
     end
 
-    it "errors on duplicate name" do
-      fill_in 'Name', with: "Existing One"
-      click_on 'Save'
-      expect(page).to have_content("Name has already been taken")
+    describe "duplicate" do
+      it "error with name" do
+        fill_in 'Name', with: "Existing One"
+        fill_in 'Abbrev', with: "DifferentAbbrev"
+        click_on 'Save'
+        expect(page).to have_content("Name has already been taken")
+      end
+      it "error with abbrev" do
+        fill_in 'Name', with: "DifferentName"
+        fill_in 'Abbrev', with: "ExistingAbbrev"
+        click_on 'Save'
+        expect(page).to have_content("Abbrev has already been taken")
+      end
+
     end
   end
 end
