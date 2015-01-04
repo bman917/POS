@@ -1,6 +1,8 @@
 <h1>Item Attributes</h1>
-<div class="row">
-  <div class="columns small-7">
+
+<%=small_div do %>
+
+
 <table id="attribute">
   <thead>
     <tr>
@@ -20,10 +22,10 @@
     <% end %>
   </tbody>
 </table>
-  </div>
-</div>
+<% end %>
+
 <div class="row">
   <div class="columns small-7">
-  <%= modal_button 'New Attribute', new_attribute_path%>
+  <%= modal_button 'Add Attribute', new_attribute_path%>
   </div>
 </div>

@@ -10,7 +10,7 @@ describe Category do
   
   describe "Create", js: true do
     before(:each) do
-      click_on 'New Attribute'
+      click_on 'Add Attribute'
       expect(page).to have_css('form#new_attribute')
     end
 

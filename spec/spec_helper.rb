@@ -78,6 +78,13 @@ RSpec.configure do |config|
 end
 
 def sign_in 
+  @admin = UserManager::User.find_by_username('admin')
+  if @admin == nil
+    puts "Creating Admin user..."
+    @admin = UserManager::User.create(username: 'admin', password: 'password', email: 'noreply@email.com')
+  end
+  
+
   visit user_manager.new_user_session_path
   fill_in 'user_username', :with => 'admin'
   fill_in 'user_password', :with => 'password'

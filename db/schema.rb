@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102171413) do
+ActiveRecord::Schema.define(version: 20150104063718) do
 
   create_table "attributes", force: true do |t|
     t.string   "name"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 20150102171413) do
   end
 
   add_index "item_bases", ["name"], name: "index_item_bases_on_name"
+
+  create_table "units", force: true do |t|
+    t.string   "name"
+    t.string   "abbrev"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "units", ["name"], name: "index_units_on_name", unique: true
 
   create_table "user_manager_users", force: true do |t|
     t.string   "email",                  default: "",       null: false

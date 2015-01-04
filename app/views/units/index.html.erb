@@ -1,0 +1,28 @@
+<h1>Item Units</h1>
+<%=small_div do %>
+
+<table id="unit">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Abbrev</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @units.each do |unit| %>
+      <%=tr_highlight(unit, @unit) do %>
+        <td><%= unit.name %></td>
+        <td><%= unit.abbrev %></td>
+        <td><%= modal_link_to edit_img, edit_unit_path(unit) %></td>
+        <td><%= link_to delete_img, unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%=small_div do %>
+  <%= modal_button 'Add Unit', new_unit_path %>
+<% end %>

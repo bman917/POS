@@ -1,0 +1,36 @@
+<div class="row">
+<div class="small-12 columns">
+
+
+  <%= form_for(@unit) do |f| %>
+    <% if @unit.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@unit.errors.count, "error") %> prohibited this unit from being saved:</h2>
+
+        <ul>
+        <% @unit.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <legend>Unit</legend>
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :abbrev %><br>
+        <%= f.text_field :abbrev %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit value: 'Save', class: 'button expand' %>
+      </div>
+    </fieldset>
+  <% end %>
+
+</div>
+</div>
