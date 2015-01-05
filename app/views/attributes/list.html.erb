@@ -1,0 +1,11 @@
+<%= form_tag add_attribute_items_path, method: :post, remote: true do %>
+  <ul>  
+  <% Attribute.all.each do | attribute | %>
+    <li>
+      <%=check_box_tag 'attribute[]', attribute.id%>
+      <%=label_tag attribute.name %>
+    </li>
+  <% end %>
+  </ul>
+  <%=button_tag 'Select'%>
+<% end %>

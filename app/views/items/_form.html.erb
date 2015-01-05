@@ -1,0 +1,40 @@
+<%= simple_form_for @item do |f| %>
+
+    <% if @item.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+        <ul>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+<table id="item_display">
+  <tr>
+    <th colspan="2">
+      <%= f.input :item_base_name, label: 'Name' %>
+    </th>
+  </tr>
+  <tr>
+    <th style="width: 11em"><%=f.label :description %></th>
+    <td><%= f.input :description, label: false %></td>
+  </tr>
+  <tr>
+    <th><%=f.label :supplier%></th>
+    <td><%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier"  %></td>
+  </tr>
+  <tr>
+    <th><%=f.label :unit %></th>
+    <td><%= f.input :unit, label: false, collection: Unit.order(:name), prompt: "Choose a Unit" %></td>
+  </tr>
+  <% @base_attrbs.each do | attrib | %>
+    <%=render partial: 'attribute_input_row', 
+              locals: {attribute: attrib.Attribute, value: attrib.value} %>
+  <% end if @base_attrbs%>
+</table>
+<%=modal_link_to "Add Attribute", list_attributes_path, class: 'button secondary' %>
+<%= f.button :submit, value: "Save", class: 'expand' %>
+<% end %>

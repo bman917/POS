@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
 
+  resources :items do
+    collection do
+      post 'add_attribute'
+    end
+  end
+
   resources :suppliers
 
   resources :units
 
-  resources :attributes
+  resources :attributes do
+    collection do
+      get 'list'
+    end
+  end
 
   resources :categories
 

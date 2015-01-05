@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104174648) do
+ActiveRecord::Schema.define(version: 20150105110816) do
 
   create_table "attribute_item_bases", force: true do |t|
     t.integer  "attribute_id"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 20150104174648) do
     t.datetime "updated_at"
   end
 
+  create_table "item_attribute_values", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "attribute_id"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_attribute_values", ["attribute_id"], name: "index_item_attribute_values_on_attribute_id"
+  add_index "item_attribute_values", ["item_id"], name: "index_item_attribute_values_on_item_id"
+
   create_table "item_bases", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -41,6 +52,18 @@ ActiveRecord::Schema.define(version: 20150104174648) do
   end
 
   add_index "item_bases", ["name"], name: "index_item_bases_on_name"
+
+  create_table "items", force: true do |t|
+    t.integer  "item_base_id"
+    t.integer  "supplier_id"
+    t.text     "description"
+    t.string   "unit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "items", ["item_base_id"], name: "index_items_on_item_base_id"
+  add_index "items", ["supplier_id"], name: "index_items_on_supplier_id"
 
   create_table "suppliers", force: true do |t|
     t.string   "name"

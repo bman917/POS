@@ -3,6 +3,11 @@ class AttributesController < ApplicationController
 
   respond_to :html
 
+  def list
+    @attributes = Attribute.all
+    render layout: false
+  end
+
   def index
     @attributes = Attribute.all
     respond_with(@attributes)
