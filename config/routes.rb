@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :items do
     collection do
-      post 'add_attribute'
+      post 'add_attrib'
     end
   end
 
@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :units
 
-  resources :attributes do
+  resources :attribs do
     collection do
       get 'list'
     end

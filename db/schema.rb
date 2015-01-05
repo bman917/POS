@@ -13,37 +13,40 @@
 
 ActiveRecord::Schema.define(version: 20150105110816) do
 
-  create_table "attribute_item_bases", force: true do |t|
-    t.integer  "attribute_id"
+  create_table "attrib_item_bases", id: false, force: true do |t|
+    t.integer  "attrib_id"
     t.integer  "item_base_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "attributes", force: true do |t|
+  add_index "attrib_item_bases", ["attrib_id"], name: "index_attrib_item_bases_on_attrib_id"
+  add_index "attrib_item_bases", ["item_base_id"], name: "index_attrib_item_bases_on_item_base_id"
+
+  create_table "attrib_item_values", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "attrib_id"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attrib_item_values", ["attrib_id"], name: "index_attrib_item_values_on_attrib_id"
+  add_index "attrib_item_values", ["item_id"], name: "index_attrib_item_values_on_item_id"
+
+  create_table "attribs", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "attributes", ["name"], name: "index_attributes_on_name"
+  add_index "attribs", ["name"], name: "index_attribs_on_name", unique: true
 
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "item_attribute_values", force: true do |t|
-    t.integer  "item_id"
-    t.integer  "attribute_id"
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "item_attribute_values", ["attribute_id"], name: "index_item_attribute_values_on_attribute_id"
-  add_index "item_attribute_values", ["item_id"], name: "index_item_attribute_values_on_item_id"
 
   create_table "item_bases", force: true do |t|
     t.string   "name"

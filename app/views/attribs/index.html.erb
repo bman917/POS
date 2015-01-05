@@ -1,0 +1,31 @@
+<h1>Item Attributes</h1>
+
+<%=small_div do %>
+
+
+<table id="attrib">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attribs.each do |attrib| %>
+      <%=tr_highlight attrib, @attrib do %>
+        <td><%= attrib.name %></td>
+        <td><%= link_to edit_img, edit_attrib_path(attrib),
+                    data: {:"reveal-ajax" => true, :"reveal-id" => "modal_form", remote: false}%></td>
+        <td><%= link_to delete_img, attrib, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<div class="row">
+  <div class="columns small-7">
+  <%= modal_button 'Add Attribute', new_attrib_path%>
+  </div>
+</div>

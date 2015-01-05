@@ -9,7 +9,7 @@ describe Category do
   
   describe "Create", js: true do
     before(:each) do
-      click_on 'Manage Items'
+      visit categories_path
       click_on 'Add Category'
       expect(page).to have_css('form#new_category')
     end

@@ -1,24 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Item base:</strong>
-  <%= @item.item_base %>
-</p>
+<table id="item_display">
+  <tr>
+    <th colspan="2">
+      <%= @item.item_base.name %>
+    </th>
+  </tr>
+  <tr>
+    <th style="width: 11em"><%=label_tag :supplier %></th>
+    <td> <%= @item.supplier.name %></td>
+  </tr>
+  <tr>
+    <th><%=label_tag :unit %></th>
+    <td><%= @item.unit %></td>
+  </tr>
+  
+  <% @item.attrib_values.each do | av | %>
+  <tr>
+    <th><%=av.attrib.name%></th>
+    <td><%=av.value%></td>
+  </tr>
+  <% end %>
 
-<p>
-  <strong>Supplier:</strong>
-  <%= @item.supplier %>
-</p>
+</table>
 
-<p>
-  <strong>Description:</strong>
-  <%= @item.description %>
-</p>
 
-<p>
-  <strong>Unit:</strong>
-  <%= @item.unit %>
-</p>
+
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>

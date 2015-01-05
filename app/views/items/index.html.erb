@@ -14,8 +14,8 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.item_base %></td>
-        <td><%= item.supplier %></td>
+        <td><%= item.item_base.name %></td>
+        <td><%= item.supplier.name %></td>
         <td><%= item.description %></td>
         <td><%= item.unit %></td>
         <td><%= link_to 'Show', item %></td>

@@ -19,22 +19,25 @@
     </th>
   </tr>
   <tr>
-    <th style="width: 11em"><%=f.label :description %></th>
-    <td><%= f.input :description, label: false %></td>
-  </tr>
-  <tr>
-    <th><%=f.label :supplier%></th>
+    <th style="width: 11em"><%=f.label :supplier%></th>
     <td><%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier"  %></td>
   </tr>
   <tr>
     <th><%=f.label :unit %></th>
-    <td><%= f.input :unit, label: false, collection: Unit.order(:name), prompt: "Choose a Unit" %></td>
+    <td><%= f.input :unit, label: false, 
+              collection: Unit.order(:name), 
+              label_method: :name,
+              value_method: :name, 
+              prompt: "Choose a Unit" %></td>
   </tr>
-  <% @base_attrbs.each do | attrib | %>
-    <%=render partial: 'attribute_input_row', 
-              locals: {attribute: attrib.Attribute, value: attrib.value} %>
-  <% end if @base_attrbs%>
+  
+  <% @base_attribs.each do | attrib_item_value | %>
+    <%=render partial: 'attrib_input_row', 
+              locals: { attrib: attrib_item_value.attrib, 
+                        value: attrib_item_value.value} %>
+  <% end if @base_attribs%>
+
 </table>
-<%=modal_link_to "Add Attribute", list_attributes_path, class: 'button secondary' %>
+<%=modal_link_to "Add Attribute", list_attribs_path, class: 'button secondary' %>
 <%= f.button :submit, value: "Save", class: 'expand' %>
 <% end %>

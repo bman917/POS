@@ -116,6 +116,11 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.2)
+    factory_girl (4.4.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.4.1)
+      factory_girl (~> 4.4.0)
+      railties (>= 3.0.0)
     ffi (1.9.6)
     foundation-rails (5.4.5.0)
       railties (>= 3.1.0)
@@ -266,6 +271,7 @@ DEPENDENCIES
   common_assets!
   database_cleaner
   devise
+  factory_girl_rails (~> 4.0)
   foundation-rails
   hide_toggler!
   jbuilder (~> 2.0)

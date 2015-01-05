@@ -1,6 +1,0 @@
-foundation_reveal_utils_close_reveal();
-<% @attributes.each do | attribute | %>
-
-  $('#item_display').append("<%=j render partial: 'attribute_input_row', locals: {attribute: attribute, value: ""}%>");
-
-<% end %>

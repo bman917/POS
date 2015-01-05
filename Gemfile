@@ -52,6 +52,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "factory_girl_rails", "~> 4.0"
   gem 'better_errors'
   gem 'meta_request'
   gem 'binding_of_caller'
