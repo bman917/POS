@@ -10,7 +10,7 @@ RSpec.describe AttribItemBase, :type => :model do
 
     it "can establish correct relationships" do
       item = ItemBase.create(name: 'ItemBase')
-      attrib = Attrib.create(name: 'Size')
+      attrib = Attrib.create(name: 'Size', display_number: 1)
       item.attribs << attrib
       item.save!
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Category do 
   before(:each) do
     Attrib.destroy_all
-    @existing = Attrib.create(name: "Existing One")
+    @existing = Attrib.create(name: "Existing One", display_number: 1)
     sign_in
     visit attribs_path
   end
@@ -20,6 +20,7 @@ describe Category do
 
     it "Creates an Attrib" do
       fill_in 'Name', with: 'Special Attrib'
+      fill_in 'Display number', with: '2'
       click_on 'Save'
       within "table#attrib" do
         expect(page).to have_content('Special Attrib')
@@ -32,8 +33,15 @@ describe Category do
 
     it "Shows an error when the Attrib already exists" do
       fill_in 'Name', with: "Existing One"
+      fill_in 'Display number', with: "3"
       click_on 'Save'
       expect(page).to have_content("Name has already been taken")
+    end
+    it "Shows an error on duplication of Display number" do
+      fill_in 'Name', with: "Test Attrib For Display Number Test"
+      fill_in 'Display number', with: "1"
+      click_on 'Save'
+      expect(page).to have_content("Display number has already been taken")
     end
 
   end

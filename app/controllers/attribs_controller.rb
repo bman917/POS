@@ -53,6 +53,6 @@ class AttribsController < ApplicationController
     end
 
     def attrib_params
-      params.require(:attrib).permit(:name)
+      params.require(:attrib).permit(:name, :display_number)
     end
 end

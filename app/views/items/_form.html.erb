@@ -15,11 +15,16 @@
 <table id="item_display">
   <tr>
     <th colspan="2">
+      <!--%= f.association :item_base, label_method: :name, label: 'Name' %-->
       <%= f.input :item_base_name, label: 'Name' %>
     </th>
   </tr>
   <tr>
-    <th style="width: 11em"><%=f.label :supplier%></th>
+    <th style="width: 11em"><%=f.label :description%></th>
+    <td><%= f.input :description, label: false%></td>
+  </tr>
+  <tr>
+    <th><%=f.label :supplier%></th>
     <td><%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier"  %></td>
   </tr>
   <tr>

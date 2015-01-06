@@ -1,10 +1,11 @@
 class AddDefaultAttribs < ActiveRecord::Migration
   def up
     puts 'Adding default attribs....'
-    Attrib.create(name: 'Color')
-    Attrib.create(name: 'Size')
-    Attrib.create(name: 'Thickness')
-    Attrib.create(name: 'Grade')
-    Attrib.create(name: 'Texture')
+    Attrib.create(name: 'Thickness', display_number: 1)
+    Attrib.create(name: 'Size'     , display_number: 2)
+    Attrib.create(name: 'Design'   , display_number: 3)
+    Attrib.create(name: 'Texture'  , display_number: 4)
+    Attrib.create(name: 'Color'    , display_number: 5)
+    Attrib.create(name: 'Grade'    , display_number: 6)
   end
 end

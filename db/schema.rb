@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105110816) do
+ActiveRecord::Schema.define(version: 20150106054747) do
 
-  create_table "attrib_item_bases", id: false, force: true do |t|
+  create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
     t.integer  "item_base_id"
     t.datetime "created_at"
@@ -36,10 +36,12 @@ ActiveRecord::Schema.define(version: 20150105110816) do
 
   create_table "attribs", force: true do |t|
     t.string   "name"
+    t.integer  "display_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "attribs", ["display_number"], name: "index_attribs_on_display_number", unique: true
   add_index "attribs", ["name"], name: "index_attribs_on_name", unique: true
 
   create_table "categories", force: true do |t|
@@ -63,9 +65,11 @@ ActiveRecord::Schema.define(version: 20150105110816) do
     t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "items", ["item_base_id"], name: "index_items_on_item_base_id"
+  add_index "items", ["name", "supplier_id", "unit"], name: "index_items_on_name_and_supplier_id_and_unit", unique: true
   add_index "items", ["supplier_id"], name: "index_items_on_supplier_id"
 
   create_table "suppliers", force: true do |t|

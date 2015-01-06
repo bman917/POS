@@ -1,9 +1,9 @@
-<h1>Listing items</h1>
+<h1>Listing Items</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Item base</th>
+      <th style="min-width: 25em">Name</th>
       <th>Supplier</th>
       <th>Description</th>
       <th>Unit</th>
@@ -14,7 +14,7 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.item_base.name %></td>
+        <td><%= item.name %></td>
         <td><%= item.supplier.name %></td>
         <td><%= item.description %></td>
         <td><%= item.unit %></td>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Item', new_item_path %>
+<%= link_to 'New Item', new_item_path, class: 'button' %>
