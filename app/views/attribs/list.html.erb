@@ -1,8 +1,8 @@
-<%= form_tag add_attrib_items_path, method: :post, remote: true do %>
+<%= form_tag add_attrib_items_path, method: :post, remote: true, id: 'list_attrib' do %>
   <ul>  
   <% Attrib.all.each do | attrib | %>
     <li>
-      <%=check_box_tag 'attrib[]', attrib.id%>
+      <%=check_box_tag 'attrib[]', attrib.id, false, id: "attrib_#{attrib.id}"%>
       <%=label_tag attrib.name %>
     </li>
   <% end %>

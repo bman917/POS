@@ -1,7 +1,8 @@
 class Item < ActiveRecord::Base
   attr_accessor :item_base_name
 
-  #validates :item_base_name, presence: true, if: :item_base
+  validates :item_base_name, presence: true, unless: :item_base
+  validates :name, presence: true
   validates :item_base, presence: true
   validates :supplier, presence: true
   validates :unit, presence: true
@@ -18,12 +19,14 @@ class Item < ActiveRecord::Base
   before_save :populate_item_base_attribs
 
   def populate_name
-     if self.attrib_values.try(:size) > 0
-        sorted = attrib_values.sort { |x,y| x.attrib.display_number <=> y.attrib.display_number }
-        values = sorted.map { |x| x.value }
-        self.name = "#{item_base.name} #{values.join(" ")}".squeeze(" ").capitalize.titleize
-     end
-     self
+    if self.attrib_values.try(:size) > 0
+      sorted = attrib_values.sort { |x,y| x.attrib.display_number <=> y.attrib.display_number }
+      values = sorted.map { |x| x.value }
+      self.name = "#{item_base.name} #{values.join(" ")}".squeeze(" ").capitalize.titleize
+    else
+      self.name = "#{item_base.name}"
+    end
+    self #return self so we can chain this method
   end
 
   def populate_item_base

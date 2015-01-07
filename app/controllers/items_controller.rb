@@ -28,16 +28,31 @@ class ItemsController < ApplicationController
 
   def create
 
+    #Collect the Attribs-Values that have been dynamically been added to 
+    #the form. At this point these Attribs-Values may not yet be 
+    #associated to the ItemBase. The following logic handles this
     @base_attribs = []
     @attribs = params[:attrib]
     @attribs.keys.each do | key |
       @base_attribs << AttribItemValue.new(attrib_id: key, value: @attribs[key])
-      puts "AttribItemValue: #{@base_attribs.last.attrib.id}, #{@base_attribs.last.value}"
+      #puts "AttribItemValue: #{@base_attribs.last.attrib.id}, #{@base_attribs.last.value}"
     end if @attribs
-    puts "Attribs: #{@attribs}, @base_attribs: #{@base_attribs.size}"
-    p = item_params
-    p[:attrib_values] = @base_attribs
-    @item = Item.new(p)
+    #puts "Attribs: #{@attribs}, @base_attribs: #{@base_attribs.size}"
+    modified_item_parms = item_params
+    modified_item_parms[:attrib_values] = @base_attribs
+
+    #When a user selects to add a new ItemBase into the 
+    #select#item_item_base_id, the option will look like:
+    #   <option selected="selected" value="NewValue">NewValue</option>
+    #Thus, we should convert item_base_id into item_base_name.
+    #The Item model will handle converting the item_base_name
+    #into a new ItemBase record.
+    unless modified_item_parms[:item_base_id] =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
+      modified_item_parms[:item_base_name] = modified_item_parms[:item_base_id]
+      modified_item_parms[:item_base_id] = nil
+    end
+
+    @item = Item.new(modified_item_parms)
     @item.save
     respond_with(@item)
   end

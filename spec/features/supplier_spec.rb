@@ -42,3 +42,7 @@ describe Supplier do
     end
   end
 end
+
+def fill_up_and_submit_new_supplier_form
+  
+end

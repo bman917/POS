@@ -14,18 +14,23 @@
 
 <table id="item_display">
   <tr>
-    <th colspan="2">
-      <!--%= f.association :item_base, label_method: :name, label: 'Name' %-->
-      <%= f.input :item_base_name, label: 'Name' %>
+    <th style="width: 11em"><%=f.label :item_base%></th>
     </th>
+    <td id="base_item_column">
+      <%= f.association :item_base, label_method: :name, label: false %>
+      <%=modal_link_to "Add", add_item_base_to_new_item_form_path, style: "padding: 0;margin:0" %>
+    </td>
   </tr>
   <tr>
-    <th style="width: 11em"><%=f.label :description%></th>
+    <th><%=f.label :description%></th>
     <td><%= f.input :description, label: false%></td>
   </tr>
   <tr>
     <th><%=f.label :supplier%></th>
-    <td><%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier"  %></td>
+    <td id="supplier_column">
+    <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier" %>
+    <%=modal_link_to "Add", add_supplier_to_new_item_form_path, style: "padding: 0;margin:0"%>
+    </td>
   </tr>
   <tr>
     <th><%=f.label :unit %></th>

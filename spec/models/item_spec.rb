@@ -86,6 +86,12 @@ RSpec.describe Item, :type => :model do
         @item2.add_attrib(@attrib[:thickness], "1/2")
       end
 
+      it "created even if item has no attribs" do
+        item = Item.new(item_base_name: "Test Product", supplier: @supplier, unit: "piece")
+        item.save!
+        expect(item.name).to eq ("Test Product")
+      end
+
       it "auto-updates when Attrib display_number is changed", :attrib_change do
         #Create 2 Items...
         @basic_item.save!

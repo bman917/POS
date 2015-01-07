@@ -1,25 +1,15 @@
 <div class="row">
 <div class="columns">
 
-<%= form_for(@supplier) do |f| %>
-  <% if @supplier.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
+<%= simple_form_for(@supplier, url: @modified_url, remote: @remote) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @supplier.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="form-inputs">
+    <%= f.input :name %>
   </div>
-  <div class="actions">
-    <%= f.submit value: 'Save', class: 'button expand' %>
+
+  <div class="form-actions">
+    <%= f.button :submit, value: 'Save', class: 'expand' %>
   </div>
 <% end %>
 

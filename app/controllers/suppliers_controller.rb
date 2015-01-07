@@ -3,6 +3,18 @@ class SuppliersController < ApplicationController
 
   respond_to :html
 
+  def add_to_new_item_form
+    @supplier = Supplier.new
+    @modified_url = supplier_script_to_add_to_select_path
+    @remote = true
+    render 'new', layout: false
+  end
+
+  def script_to_add_to_select
+    @supplier = Supplier.new(supplier_params)
+    respond_to { | format | format.js }
+  end
+
   def index
     @suppliers = Supplier.all
     respond_with(@suppliers)
