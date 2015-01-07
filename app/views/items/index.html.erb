@@ -15,7 +15,7 @@
     <% @items.each do |item| %>
       <tr>
         <td><%= item.name %></td>
-        <td><%= item.supplier.name %></td>
+        <td><%= item.supplier.try(:name) %></td>
         <td><%= item.description %></td>
         <td><%= item.unit %></td>
         <td><%= link_to 'Show', item %></td>

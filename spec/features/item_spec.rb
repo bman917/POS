@@ -73,7 +73,8 @@ describe Item do
         click_on 'Save'
       end
 
-      expect(page).to have_content("EVA 7mm Linso Black")
+      expect(page).to have_content("Eva 7mm Black Linso")
+      expect(page).to have_content("TestSupplier")
     end
   end
 end

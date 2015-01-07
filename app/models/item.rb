@@ -18,6 +18,13 @@ class Item < ActiveRecord::Base
   before_validation :populate_item_base, :populate_name
   before_save :populate_item_base_attribs
 
+  # def convert_supplier_name
+  #   puts "SSSSSSSSSSSSSSSSSupplier: #{self.supplier_id}"
+  #   unless self.supplier_id =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
+  #     self.supplier = Supplier.find_or_create_by(name: self.supplier_id)
+  #   end
+  # end
+
   def populate_name
     if self.attrib_values.try(:size) > 0
       sorted = attrib_values.sort { |x,y| x.attrib.display_number <=> y.attrib.display_number }
