@@ -22,8 +22,8 @@ class Item < ActiveRecord::Base
         sorted = attrib_values.sort { |x,y| x.attrib.display_number <=> y.attrib.display_number }
         values = sorted.map { |x| x.value }
         self.name = "#{item_base.name} #{values.join(" ")}".squeeze(" ").capitalize.titleize
-
      end
+     self
   end
 
   def populate_item_base

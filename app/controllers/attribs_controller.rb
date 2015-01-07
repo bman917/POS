@@ -4,12 +4,12 @@ class AttribsController < ApplicationController
   respond_to :html
 
   def list
-    @attribs = Attrib.all
+    @attribs = Attrib.active
     render layout: false
   end
 
   def index
-    @attribs = Attrib.all
+    @attribs = Attrib.active
     respond_with(@attrib)
   end
 
@@ -29,7 +29,7 @@ class AttribsController < ApplicationController
   def create
     @attrib = Attrib.new(attrib_params)
     if @attrib.save
-      @attribs = Attrib.all
+      @attribs = Attrib.active
       render 'index'
     else
       respond_with(@attrib)
@@ -38,7 +38,7 @@ class AttribsController < ApplicationController
 
   def update
     @attrib.update(attrib_params)
-    @attribs = Attrib.all
+    @attribs = Attrib.active
     render 'index'
   end
 

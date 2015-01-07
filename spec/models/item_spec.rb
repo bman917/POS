@@ -1,5 +1,26 @@
 require 'rails_helper'
 
+def clear_db
+  Item.destroy_all
+  ItemBase.destroy_all
+  Supplier.destroy_all
+  Attrib.destroy_all
+end
+
+def create_seed_data
+  @supplier = Supplier.create(name: "Supplier_1")
+
+
+  @attrib = { 
+    color:     Attrib.create!(name: 'Color',     display_number: 3),
+    thickness: Attrib.create!(name: 'Thickness', display_number: 1),
+    size:      Attrib.create!(name: 'Size',      display_number: 2),
+    model:     Attrib.create!(name: 'Model',     display_number: 4)
+  }
+
+  @basic_item = Item.new(item_base_name: "Test Product", supplier: @supplier, unit: "piece")
+end
+
 RSpec.describe Item, :type => :model do
   before(:each) do
     clear_db
@@ -11,7 +32,18 @@ RSpec.describe Item, :type => :model do
     create_seed_data
   end
 
-  describe "Create" do
+  describe "association", :assoc do
+    describe "Attrib actively used by an Item" do
+      it "errors on destroy" do
+        @basic_item.add_attrib(@attrib[:color], "Red")
+        @basic_item.save!
+        expect { @attrib[:color].destroy!}.to raise_error
+        expect(@attrib[:color].errors.messages[:base].first).to eq "Cannot delete record because dependent items exist"
+      end
+    end 
+  end
+
+  describe "create" do
     describe "Errors on Required fields" do
       it "raises an error when no Supplier and ItemBase" do
         expect { Item.create! }.to raise_error
@@ -42,7 +74,7 @@ RSpec.describe Item, :type => :model do
 
     end
 
-    describe "Uniqness of Name" do
+    describe "name" do
       before(:each) do
         @basic_item.add_attrib(@attrib[:color], "Red")
         @basic_item.add_attrib(@attrib[:size], "Small")
@@ -54,7 +86,23 @@ RSpec.describe Item, :type => :model do
         @item2.add_attrib(@attrib[:thickness], "1/2")
       end
 
-      it "changes with attrib values" do
+      it "auto-updates when Attrib display_number is changed", :attrib_change do
+        #Create 2 Items...
+        @basic_item.save!
+        @item2.attrib_values.last.value = "1/4"
+        @item2.save!
+
+        #Update the display number of the color Attrib...
+        @attrib[:color].display_number = 0
+        @attrib[:color].save!
+
+        #Verify that the item names has changed
+        expect(@basic_item.reload.name).to eq "Test Product Red 1/2 Small"
+        expect(@item2.reload.name).to eq "Test Product Red 1/4 Small"
+
+      end
+
+      it "changes for different attrib values" do
         @basic_item.save!
 
         @item2.attrib_values.last.value = "1/4"
@@ -107,23 +155,3 @@ RSpec.describe Item, :type => :model do
   end
 end
 
-def clear_db
-  Item.destroy_all
-  ItemBase.destroy_all
-  Supplier.destroy_all
-  Attrib.destroy_all
-end
-
-def create_seed_data
-  @supplier = Supplier.create(name: "Supplier_1")
-
-
-  @attrib = { 
-    color:     Attrib.create!(name: 'Color',     display_number: 3),
-    thickness: Attrib.create!(name: 'Thickness', display_number: 1),
-    size:      Attrib.create!(name: 'Size',      display_number: 2),
-    model:     Attrib.create!(name: 'Model',     display_number: 4)
-  }
-
-  @basic_item = Item.new(item_base_name: "Test Product", supplier: @supplier, unit: "piece")
-end
