@@ -7,5 +7,6 @@ class AddDefaultAttribs < ActiveRecord::Migration
     Attrib.create(name: 'Texture'  , display_number: 4)
     Attrib.create(name: 'Color'    , display_number: 5)
     Attrib.create(name: 'Grade'    , display_number: 6)
+    Attrib.create(name: 'Model'    , display_number: 7)
   end
 end

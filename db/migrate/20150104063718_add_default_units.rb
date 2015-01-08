@@ -12,5 +12,6 @@ class AddDefaultUnits < ActiveRecord::Migration
     Unit.create(name: 'pound', abbrev: 'lbs')
     Unit.create(name: 'case', abbrev: 'cse')
     Unit.create(name: 'sheet', abbrev: 'sht')
+    Unit.create(name: 'bundle', abbrev: 'bdl')
   end
 end
