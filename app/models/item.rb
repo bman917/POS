@@ -18,6 +18,8 @@ class Item < ActiveRecord::Base
   before_validation :populate_item_base, :populate_name
   before_save :populate_item_base_attribs
 
+  default_scope -> { order(:name, :supplier_id) }
+
   # def convert_supplier_name
   #   puts "SSSSSSSSSSSSSSSSSupplier: #{self.supplier_id}"
   #   unless self.supplier_id =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/

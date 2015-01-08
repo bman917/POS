@@ -21,6 +21,7 @@
 //= require foundation/foundation.accordion
 //= require hide_toggler
 //= require common_tools
+//= require mousetrap.min
 //= require_tree .
 
 function init_foundation() {
@@ -33,11 +34,28 @@ function unbind_all_keyboard_listeners() {
   $(document).unbind('keyup');
 }
 
+function bind_short_cut_for_toggler() {
+  if ($('div.toggler_parent').length) {
+    Mousetrap.bind('alt+k', function(e) {
+      $('.toggler_parent a').click();
+    });
+  }
+}
+
+//============================
+// START Logic when page is loaded
+//============================
+
 init_foundation();
 
 $(document).ready(function(){
   $('a.close-reveal-modal').remove();
+  bind_short_cut_for_toggler();
 });
+//============================
+// END Logic when page is loaded
+//============================
+
 
 
 //============================
@@ -45,12 +63,15 @@ $(document).ready(function(){
 //============================
 Turbolinks.enableProgressBar();
 $(document).on('page:load', init_foundation);
+$(document).on('page:load', bind_short_cut_for_toggler);
 
 //Use page:receive so that unbinding keyboard events happens before
 //the page has been parsed. Using page:load remove any keyboard bindings
 //because it is triggered at the end of the loading process.
 $(document).on('page:receive', unbind_all_keyboard_listeners);
-
+$(document).on('page:receive', function(){ Mousetrap.reset() });
 //============================
 // END Tourbolinks Configuration
 //============================
+
+

@@ -16,8 +16,10 @@ function listen_to_open_supplier_form(e) {
 
 function bind_open_supplier_form()
 {
-  $(document).on('keyup', listen_to_open_supplier_form);
-  $('#modal_form').unbind();
+  if ($('table#supplier').length) {
+    $(document).on('keyup', listen_to_open_supplier_form);
+    $('#modal_form').unbind();
+  }
 }
 
 function unbind_open_supplier_form()

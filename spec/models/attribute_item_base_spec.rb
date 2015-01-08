@@ -4,13 +4,14 @@ RSpec.describe AttribItemBase, :type => :model do
   describe "Create" do
     before(:each) do
       ItemBase.destroy_all
-      Attrib.destroy_all
+      AttribItemValue.destroy_all
       AttribItemBase.destroy_all
+      Attrib.destroy_all
     end
 
     it "can establish correct relationships" do
-      item = ItemBase.create(name: 'ItemBase')
-      attrib = Attrib.create(name: 'Size', display_number: 1)
+      item = ItemBase.create!(name: 'ItemBase')
+      attrib = Attrib.create!(name: 'Size', display_number: 1)
       item.attribs << attrib
       item.save!
 

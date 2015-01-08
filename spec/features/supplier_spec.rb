@@ -14,13 +14,21 @@ describe Supplier do
       click_on 'Add Supplier'
       expect(page).to have_css('form#new_supplier')
       expect(page).to have_css('a.close-reveal-modal')
+
     end
 
     describe "Form", :form do
       it_should_behave_like "a modal form" 
+
+      it "focus by default on supplier name", :focus do
+        expect(page).to have_css('#supplier_name')
+        sleep 0.5
+        activeElement_id = page.evaluate_script("document.activeElement.id").to_s
+        expect(activeElement_id == "supplier_name").to be_truthy
+      end
     end
 
-    it "saves" do
+    it "saves", :saves do
       fill_in 'Name', with: 'TestSupplier'
       click_on 'Save'
       within "table#supplier" do

@@ -24,6 +24,8 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = set_item
+    @base_attribs = @item.attrib_values
   end
 
   def handle_new_item_base_abd_supplier(params)

@@ -1,3 +1,13 @@
+<div class"row">
+<div class="column small-12">
+
+<%=javascript_tag do %>
+$(document).ready(function(){
+  $('.toggler_link').hide_toggler();
+  $('.show_help_link').hide_toggler();
+});
+<% end %>
+
 <%= simple_form_for @item do |f| %>
 
     <% if @item.errors.any? %>
@@ -12,12 +22,24 @@
       </div>
     <% end %>
 
+<%=small_div do %>
+  <div class="toggler_parent">
+      <%=link_to 'Keyboard shortcuts', '', class: 'help show_help_link label secondary'%>
+      <div id="help" class="togger_child hidden">
+        <ul>
+          <li><kbd>alt</kbd>+<kbd>b</kbd> -Add New Item Base</li>
+          <li><kbd>alt</kbd>+<kbd>s</kbd> -Add New Supplier</li>
+        </ul>
+      </div>
+  </div>
+<% end %>
+
 <table id="item_display">
   <tr>
-    <th style="width: 11em"><%=f.label :item_base%></th>
+    <th style="width: 11em"><%=f.label :name, "Item Base"%></th>
     </th>
     <td id="base_item_column">
-      <%= f.association :item_base, label_method: :name, label: false %>
+      <%= f.association :item_base, label_method: :name, label: false, prompt: "Choose Item Base", input_html: {class: 'mousetrap'} %>
       <%=modal_link_to "Add", add_item_base_to_new_item_form_path, style: "padding: 0;margin:0" %>
     </td>
   </tr>
@@ -28,7 +50,7 @@
   <tr>
     <th><%=f.label :supplier%></th>
     <td id="supplier_column">
-    <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier" %>
+    <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: {class: 'mousetrap'} %>
     <%=modal_link_to "Add", add_supplier_to_new_item_form_path, style: "padding: 0;margin:0"%>
     </td>
   </tr>
@@ -48,6 +70,26 @@
   <% end if @base_attribs%>
 
 </table>
-<%=modal_link_to "Add Attribute", list_attribs_path, class: 'button secondary' %>
-<%= f.button :submit, value: "Save", class: 'expand' %>
+<div class="row">
+  <div class="small-12 columns">
+    <%=modal_link_to "Add Attribute", list_attribs_path, class: 'button secondary expand' %>
+   </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.button :submit, value: "Save", class: 'expand' %>
+  </div>
+</div>
+<% end %>
+
+</div>
+</div>
+
+<%=javascript_tag do %>
+
+item_form_bind_key_listeners();
+item_form_focus();
+
+Mousetrap.stopCallback = function() { return false };
+
 <% end %>

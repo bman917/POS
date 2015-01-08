@@ -9,3 +9,11 @@
     <%= f.button :submit, value: 'Save', class: 'expand' %>
   </div>
 <% end %>
+
+<%=javascript_tag do %>
+
+setTimeout(function() {
+   $('#item_base_name').focus();   
+  }, 250);
+  
+<% end %>

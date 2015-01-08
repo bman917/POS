@@ -26,7 +26,13 @@
           </li>
 
           <li><%=link_to 'Suppliers', main_app.suppliers_path%></li>
-          <li><%=link_to 'Items', main_app.items_path%></li>
+          <li class="has-dropdown">
+            <%=link_to 'Items', main_app.items_path%>
+            <ul class="dropdown">
+              <li><%=link_to 'Show Item List', main_app.items_path%></li>
+              <li><%=link_to 'Add New', main_app.new_item_path%></li>
+            </ul>
+          </li>
 
         </ul>
     </li>

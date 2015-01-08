@@ -1,0 +1,18 @@
+<% url = POS::Application.routes.url_helpers %>
+
+function item_form_focus() {
+  $('#item_item_base_id').focus();
+} 
+
+function item_form_bind_key_listeners() {
+
+  Mousetrap.bind('alt+b', function(e) {
+    $('#base_item_column a').click();
+    
+  });
+
+  Mousetrap.bind('alt+s', function(e) {
+    $('#supplier_column a').click();
+    
+  });
+}

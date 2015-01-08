@@ -13,14 +13,14 @@
 
   <tbody>
     <% @items.each do |item| %>
-      <tr>
+      <tr id="<%=css_id(item)%>">
         <td><%= item.name %></td>
         <td><%= item.supplier.try(:name) %></td>
         <td><%= item.description %></td>
         <td><%= item.unit %></td>
         <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to edit_img, edit_item_path(item) %></td>
+        <td><%= link_to delete_img, item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

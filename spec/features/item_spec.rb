@@ -15,15 +15,43 @@ describe Item do
       model:     Attrib.create!(name: 'Model',     display_number: 4)
     }
 
+    @add_attribute_button =  'Add Attribute'
+
     sign_in
     visit items_path
   end
 
-  describe "Create", js: true do
-
-    it "works!" do
+  describe "Create", :js, :create do
+    before(:each) do
       click_on 'New Item'
       expect(page).to have_css('form#new_item')
+    end
+
+    describe "Item Form", :item_form do
+      it "focus by default on Item Base" do
+        sleep 0.5
+        has_focus = page.evaluate_script("document.activeElement.id") == "item_item_base_id"
+        expect(has_focus ).to be_truthy
+      end
+    end
+
+    describe "ItemBase Form", :item_base_form do
+      it "focus on default on Item Base name" do
+        within("table#item_display td#base_item_column") do
+          click_on 'Add'
+        end
+        expect(page).to have_css('form#new_item_base')
+
+        within("form#new_item_base") do
+          sleep 0.5
+          activeElement_id = page.evaluate_script("document.activeElement.id").to_s
+          expect(activeElement_id == "item_base_name").to be_truthy
+        end
+      end
+    end
+
+    it "works!" do
+
       within("table#item_display td#base_item_column") do
         click_on 'Add'
       end
@@ -44,22 +72,23 @@ describe Item do
         end
       end
      
-      fill_up_and_submit_new_supplier_form
+      expect(page).to have_css('form#new_supplier')
+      within "form#new_supplier" do
+        fill_in 'supplier_name', with: 'TestSupplier'
+        click_on 'Save'
+      end
+
+      expect(page).to have_no_css('form#new_supplier')
 
       within 'form#new_item' do
         select 'TestSupplier', :from => 'item_supplier_id'
         select @unit.name, :from => 'item_unit'
       end
 
-      click_on 'Add Attribute'
-
-      expect(page).to have_css('form#list_attrib')
-
-      within 'form#list_attrib' do
+      select_attribs do
         check "attrib_#{@attrib[:color].id}"
         check "attrib_#{@attrib[:thickness].id}"
         check "attrib_#{@attrib[:model].id}"
-        click_on 'Select'
       end
 
       within 'form#new_item' do
@@ -77,4 +106,76 @@ describe Item do
       expect(page).to have_content("TestSupplier")
     end
   end
+
+  describe "Edit", :js, :edit do
+    before(:each) do
+      @supplier1 = Supplier.create(name: "Supplier_1")
+      @supplier2 = Supplier.create(name: "Supplier_2")
+
+      @basic_item = Item.new(item_base_name: "Test Product", supplier: @supplier1, unit: "piece")
+      @basic_item.add_attrib(@attrib[:color], "Red")
+      @basic_item.add_attrib(@attrib[:size], "Small")
+      @basic_item.add_attrib(@attrib[:thickness], "1/2")
+      @basic_item.save!
+
+      @edit_from_id = "form#edit_item_#{@basic_item.id}"
+      @basic_item_row_id = "tr#item#{@basic_item.id}"
+      @item_display_id = "table#item_display"
+
+      visit items_path
+      within @basic_item_row_id do
+        click_on 'Edit'
+      end
+
+      expect(page).to have_css(@edit_from_id)
+    end
+
+    it "supplier works!" do
+      within @edit_from_id do
+        select @supplier2.name, :from => 'item_supplier_id'
+        click_on 'Save'
+      end
+      within @item_display_id do
+        expect(page).to have_content(@supplier2.name)
+      end
+    end
+
+    it "existing attrib works!" do
+      within @edit_from_id do
+        fill_in "attrib_#{@attrib[:thickness].id}"    , with: '1/4'
+        click_on 'Save'
+      end
+      within @item_display_id do
+        expect(page).to have_no_content("1/2")
+        expect(page).to have_content("1/4")
+      end
+    end
+
+    it "add attrib works!" do
+      select_attribs do
+        check "attrib_#{@attrib[:model].id}"
+      end
+
+      within @edit_from_id do
+        expect(page).to have_content('Model')
+        fill_in "attrib_#{@attrib[:model].id}"    , with: 'Linso'
+        click_on 'Save'
+      end
+
+      within @item_display_id do
+        expect(page).to have_content('Linso')
+      end
+    end
+
+  end
+end
+
+def select_attribs
+  click_on @add_attribute_button
+  expect(page).to have_css('form#list_attrib')
+  within 'form#list_attrib' do
+    yield
+    click_on 'Select'
+  end
+  expect(page).to have_no_css('form#list_attrib')
 end
