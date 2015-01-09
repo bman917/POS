@@ -15,6 +15,8 @@ class Item < ActiveRecord::Base
     class_name: 'AttribItemValue', 
     :dependent => :destroy
 
+  has_many :attribs, through: :attrib_values
+
   before_validation :populate_item_base, :populate_name
   before_save :populate_item_base_attribs
 
@@ -53,6 +55,12 @@ class Item < ActiveRecord::Base
 
   def add_attrib(attrib, value)
     self.attrib_values << AttribItemValue.new(attrib: attrib, value: value)
+  end
+
+  def copy_attribs(other_item)
+    other_item.attrib_values.each do | av |
+      self.add_attrib av.attrib, av.value
+    end
   end
 
 end

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :items do
     collection do
       post 'add_attrib'
+      post 'create_similar'
     end
   end
 

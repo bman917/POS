@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @cloned_item = Item.new(@item.attributes)
     respond_with(@item)
   end
 
@@ -61,6 +62,21 @@ class ItemsController < ApplicationController
     modified_item_parms = item_params
     modified_item_parms[:attrib_values] = @base_attribs
     modified_item_parms
+  end
+
+  def create_similar
+    orig_item = Item.find(params[:original_item_id])
+
+    #doing this long-cut, because clone and dup are 
+    #not doing what they are supposed to!!!
+    new_attributes = orig_item.attributes.merge(item_params)
+    new_attributes.delete("id")
+
+    @cloned_item = Item.new(new_attributes)
+    @cloned_item.copy_attribs(orig_item)
+
+    @cloned_item.save
+    respond_with(@cloned_item)
   end
 
   def create

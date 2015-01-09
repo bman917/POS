@@ -5,5 +5,20 @@
   <%= @item_base.name %>
 </p>
 
+<table>
+<% @item_base.map.each do | attrib, values | %>
+<tr>
+  <td><%=attrib%></td>
+  <td>
+
+  <% values.each do | v | %>
+    <li><%=v%></li>
+  <% end %>
+    
+  </td>
+</tr>
+<% end %>
+</table>
+
 <%= link_to 'Edit', edit_item_base_path(@item_base) %> |
 <%= link_to 'Back', item_bases_path %>

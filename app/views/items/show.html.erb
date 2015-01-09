@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%=simple_form_for @cloned_item, url: create_similar_items_path do | f | %>
+<%=hidden_field_tag :original_item_id, @item.id%>
+
 <table id="item_display">
   <tr>
     <th colspan="2">
@@ -8,11 +11,16 @@
   </tr>
   <tr>
     <th style="width: 11em"><%=label_tag :supplier %></th>
-    <td> <%= @item.supplier.name %></td>
+    <td> 
+      <%= @item.supplier.name %>
+      <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: { class: 'mousetrap'} %>
+    </td>
   </tr>
   <tr>
     <th><%=label_tag :unit %></th>
-    <td><%= @item.unit %></td>
+    <td>
+      <%= @item.unit %>
+    </td>
   </tr>
   
   <% @item.attrib_values.each do | av | %>
@@ -23,7 +31,8 @@
   <% end %>
 
 </table>
-
+<%= f.button :submit, value: "Save", class: 'expand' %>
+<% end %>
 
 
 

@@ -41,6 +41,79 @@ RSpec.describe Item, :type => :model do
         expect(@attrib[:color].errors.messages[:base].first).to eq "Cannot delete record because dependent items exist"
       end
     end 
+
+    describe "ItemBase" do 
+      before(:each) do
+        @supplier_a = Supplier.create(name: "Supplier_a")
+        @supplier_b = Supplier.create(name: "Supplier_b")
+
+        @item1 = Item.new(item_base_name: "EVA", supplier: @supplier_a, unit: "sheet")
+        @item1.add_attrib(@attrib[:thickness], "7mm")
+        @item1.add_attrib(@attrib[:color], "Black")
+        @item1.add_attrib(@attrib[:model], "Linso")
+        @item1.save!
+
+        @item2 = Item.new(item_base_name: "EVA", supplier: @supplier_b, unit: "sheet")
+        @item2.copy_attribs(@item1)
+        @item2.save!
+
+        @item3 = Item.new(item_base_name: "EVA", supplier: @supplier_b, unit: "truck")
+        @item3.copy_attribs(@item1)
+        @item3.add_attrib(@attrib[:color], "White")        
+        @item3.save!
+
+        @item_base = ItemBase.find_by_name("EVA")
+      end
+
+      describe "map by supplier" do
+        before(:each) do
+          @map = @item_base.map_by_supplier
+        end
+
+        it "has correct count" do
+          expect(@map.size).to eq 2 
+        end
+
+        it "items has correct count" do
+          expect(@map[@supplier_b.name].size).to eq 2
+          expect(@map[@supplier_a.name].size).to eq 1
+        end
+
+
+      end
+
+      describe "standard map" do
+        before(:each) do
+          @map = @item_base.map
+          # puts "Testing Map: #{@map}"
+        end
+        it "maps attribs" do
+          count = @item1.attrib_values.size + 2 #item attribs + supplier + unit
+          expect(@map.size).to eq count
+        end
+
+        it "joins similar attrib values" do
+          # puts "Thickness: #{@map["Thickness"].to_a}"
+          expect(@map["Thickness"].size).to eq 1
+        end
+
+        it "stores different attribs" do
+          # puts "Color: #{@map["Color"].to_a}"
+          expect(@map["Color"].size).to eq 2
+        end
+
+        it "stores supplier info" do
+          # puts "Supplier: #{@map[:supplier].to_a}"
+          expect(@map[:supplier].size).to eq 2
+        end
+
+        it "stores unit info" do
+          expect(@map[:unit].size).to eq 2
+          expect(@map[:unit].include?("truck")).to be_truthy
+        end
+      end
+
+    end
   end
 
   describe "create" do
