@@ -1,6 +1,7 @@
+<h2>Add Attribute</h2>
 <%= form_tag add_attrib_items_path, method: :post, remote: true, id: 'list_attrib' do %>
   <ul>  
-  <% Attrib.all.each do | attrib | %>
+  <% Attrib.active.each do | attrib | %>
     <li>
       <%=check_box_tag 'attrib[]', attrib.id, false, id: "attrib_#{attrib.id}"%>
       <%=label_tag attrib.name %>
@@ -8,4 +9,11 @@
   <% end %>
   </ul>
   <%=button_tag 'Select'%>
+<% end %>
+
+<%=javascript_tag do %>
+  setTimeout(function() {
+    $('#list_attrib input[type="checkbox"]:first').focus();
+    }, 250);
+  $('#modal_form').addClass('small');
 <% end %>

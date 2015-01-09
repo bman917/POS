@@ -29,6 +29,7 @@ $(document).ready(function(){
         <ul>
           <li><kbd>alt</kbd>+<kbd>b</kbd> -Add New Item Base</li>
           <li><kbd>alt</kbd>+<kbd>s</kbd> -Add New Supplier</li>
+          <li><kbd>alt</kbd>+<kbd>a</kbd> -Add New Attribute</li>
         </ul>
       </div>
   </div>
@@ -72,7 +73,7 @@ $(document).ready(function(){
 </table>
 <div class="row">
   <div class="small-12 columns">
-    <%=modal_link_to "Add Attribute", list_attribs_path, class: 'button secondary expand' %>
+    <%=modal_link_to "Add Attribute", list_attribs_path, { id: 'add_attrb_button', class: 'button secondary expand'} %>
    </div>
 </div>
 <div class="row">

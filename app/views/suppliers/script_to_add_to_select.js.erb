@@ -1,3 +1,4 @@
 foundation_reveal_utils_close_reveal();
 $('select#item_supplier_id').append("<%=j options_for_select([[@supplier.name,@supplier.name]], @supplier.name)%>");
+$('select#item_supplier_id').focus();
 

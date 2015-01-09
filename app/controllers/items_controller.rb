@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   respond_to :html
 
   def add_attrib
-    @attribs = Attrib.where(id: params[:attrib])
+    @attribs = Attrib.where(id: params[:attrib]).order(:display_number)
   end
 
   def index

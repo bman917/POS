@@ -90,6 +90,12 @@ def sign_in
   click_button 'Sign in'
 end
 
+def expect_html_focus_on(element_id)
+  sleep 0.5
+  activeElement_id = page.evaluate_script("document.activeElement.id").to_s
+  expect(activeElement_id == element_id).to be_truthy
+end
+
 shared_examples "a modal form" do
   it "can be closed" do
     expect(page).to have_css('a.close-reveal-modal')

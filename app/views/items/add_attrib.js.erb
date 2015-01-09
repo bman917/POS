@@ -1,6 +1,5 @@
 foundation_reveal_utils_close_reveal();
 <% @attribs.each do | attrib | %>
-
   $('#item_display').append("<%=j render partial: 'attrib_input_row', locals: {attrib: attrib, value: ""}%>");
-
 <% end %>
+$('.attrib_row:first input').focus();

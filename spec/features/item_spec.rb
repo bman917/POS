@@ -29,28 +29,57 @@ describe Item do
 
     describe "Item Form", :item_form do
       it "focus by default on Item Base" do
-        sleep 0.5
-        has_focus = page.evaluate_script("document.activeElement.id") == "item_item_base_id"
-        expect(has_focus ).to be_truthy
+        expect_html_focus_on "item_item_base_id"
       end
     end
 
     describe "ItemBase Form", :item_base_form do
-      it "focus on default on Item Base name" do
+      before(:each) do
         within("table#item_display td#base_item_column") do
           click_on 'Add'
         end
         expect(page).to have_css('form#new_item_base')
+      end
 
+      it "focus by default on Item Base name" do
         within("form#new_item_base") do
-          sleep 0.5
-          activeElement_id = page.evaluate_script("document.activeElement.id").to_s
-          expect(activeElement_id == "item_base_name").to be_truthy
+          expect_html_focus_on "item_base_name"
         end
+      end
+
+      it "after save focuses on Item Base input" do
+        within("form#new_item_base") do
+          fill_in 'Name', with: 'EVA'
+          click_on 'Save'
+        end
+        expect_html_focus_on "item_item_base_id"
       end
     end
 
-    it "works!" do
+    describe "Supplier Form", :supplier_form do
+      before(:each) do
+        within 'td#supplier_column' do
+          click_on 'Add'
+        end
+        expect(page).to have_css('form#new_supplier')
+      end
+
+      it "focus by default on Supplier name" do
+        within("form#new_supplier") do
+          expect_html_focus_on "supplier_name"
+        end
+      end
+
+      it "after save focuses on Suppler input" do
+        within "form#new_supplier" do
+          fill_in 'supplier_name', with: 'TestSupplier'
+          click_on 'Save'
+        end
+        expect_html_focus_on "item_supplier_id"
+      end
+    end
+
+    it "works!", :works do
 
       within("table#item_display td#base_item_column") do
         click_on 'Add'
@@ -86,19 +115,20 @@ describe Item do
       end
 
       select_attribs do
+        check "attrib_#{@attrib[:model].id}"
         check "attrib_#{@attrib[:color].id}"
         check "attrib_#{@attrib[:thickness].id}"
-        check "attrib_#{@attrib[:model].id}"
       end
 
       within 'form#new_item' do
         expect(page).to have_content('Color')
         expect(page).to have_content('Thickness')
         expect(page).to have_content('Model')
-
-        fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
+        expect_html_focus_on "attrib_#{@attrib[:thickness].id}"
+        
         fill_in "attrib_#{@attrib[:thickness].id}", with: '7mm'
         fill_in "attrib_#{@attrib[:model].id}"    , with: 'Linso'
+        fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
         click_on 'Save'
       end
 
@@ -173,7 +203,9 @@ end
 def select_attribs
   click_on @add_attribute_button
   expect(page).to have_css('form#list_attrib')
+  puts "Expecting focus on attrib: #{@attrib[:thickness].id}, #{@attrib[:thickness].name}"
   within 'form#list_attrib' do
+    expect_html_focus_on "attrib_#{@attrib[:thickness].id}"
     yield
     click_on 'Select'
   end
