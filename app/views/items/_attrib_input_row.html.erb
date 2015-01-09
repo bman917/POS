@@ -1,4 +1,9 @@
-<tr class="attrib_row">
+<tr id="attrib_<%=attrib.id%>"class="attrib_row">
   <th><%=attrib.name%></th>
-  <td><%=text_field_tag "attrib[#{attrib.id}]", value%></td>
+  <td>
+    <%=text_field_tag "attrib[#{attrib.id}]", value%>
+    <%=link_to delete_img, 
+      "javascript:$('tr#attrib_#{attrib.id}').hide('fast',function(){ $(this).remove(); })"%>
+  </td>
 </tr>
+
