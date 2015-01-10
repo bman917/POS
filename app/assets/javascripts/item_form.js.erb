@@ -1,5 +1,25 @@
 <% url = POS::Application.routes.url_helpers %>
 
+function item_form_ajax_for_item_base_select() {
+  $('#item_item_base_id').change( function() {
+    
+    if(xhr && xhr.readystate != 4) {
+      xhr.abort();
+    } 
+    
+    id = $('#item_item_base_id').val();
+
+    if (isNaN(id) || id == '') {
+      item_form_remove_all_attrib_rows();
+    }
+    else {
+      xhr = $.ajax({
+        url: '/item_base/' + id + '/attribs'
+      });
+    }
+  });
+}
+
 function item_form_focus() {
   $('#item_item_base_id').focus();
 } 
@@ -19,4 +39,8 @@ function item_form_bind_key_listeners() {
     $('#add_attrb_button').click();
   });
 
+}
+
+function item_form_remove_all_attrib_rows() {
+  $("tr.attrib_row").hide('slow',function(){ $(this).remove(); });
 }

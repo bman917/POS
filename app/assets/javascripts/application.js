@@ -52,6 +52,11 @@ init_foundation();
 $(document).ready(function(){
   $('a.close-reveal-modal').remove();
   bind_short_cut_for_toggler();
+
+  //Logic for tabindexes --START
+  $(".toggler_parent a").attr("tabindex", -1);
+  //Logic for tabindexes --START
+
 });
 //============================
 // END Logic when page is loaded

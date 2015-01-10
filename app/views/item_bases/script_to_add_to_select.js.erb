@@ -1,4 +1,5 @@
 foundation_reveal_utils_close_reveal();
+$("tr.attrib_row").hide('slow',function(){ $(this).remove(); });
 $('select#item_item_base_id').append("<%=j options_for_select([[@item_base.name,@item_base.name]], @item_base.name)%>");
 $('#item_item_base_id').focus();
 

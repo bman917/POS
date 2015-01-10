@@ -35,24 +35,39 @@ $(document).ready(function(){
   </div>
 <% end %>
 
+<%
+  select_input_html_options = {}
+  add_button_html_options = {class: "tiny round success button", tabindex: -1}
+%>
+
 <table id="item_display">
   <tr>
     <th style="width: 11em"><%=f.label :name, "Item Base"%></th>
     </th>
     <td id="base_item_column">
-      <%= f.association :item_base, label_method: :name, label: false, prompt: "Choose Item Base", input_html: {class: 'mousetrap'} %>
-      <%=modal_link_to "Add", add_item_base_to_new_item_form_path, style: "padding: 0;margin:0" %>
+      <div class="row">
+        <div class="column small-10">
+          <%= f.association :item_base, label_method: :name, label: false,  prompt: "Choose Item Base", input_html: select_input_html_options %>
+        </div>
+        <div class="column small-2">
+          <%=modal_link_to "Add", add_item_base_to_new_item_form_path, add_button_html_options %>
+        </div>
+      </div>
+
     </td>
   </tr>
-  <tr>
-    <th><%=f.label :description%></th>
-    <td><%= f.input :description, label: false%></td>
-  </tr>
+
   <tr>
     <th><%=f.label :supplier%></th>
     <td id="supplier_column">
-    <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: {class: 'mousetrap'} %>
-    <%=modal_link_to "Add", add_supplier_to_new_item_form_path, style: "padding: 0;margin:0"%>
+      <div class="row">
+        <div class="column small-10">
+          <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
+        </div>
+        <div class="column small-2">
+            <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
+        </div>
+      </div>
     </td>
   </tr>
   <tr>
@@ -69,6 +84,11 @@ $(document).ready(function(){
               locals: { attrib: attrib_item_value.attrib, 
                         value: attrib_item_value.value} %>
   <% end if @base_attribs%>
+
+  <tr>
+    <th><%=f.label :description%></th>
+    <td><%= f.input :description, label: false%></td>
+  </tr>
 
 </table>
 <div class="row">
@@ -90,7 +110,10 @@ $(document).ready(function(){
 
 item_form_bind_key_listeners();
 item_form_focus();
+item_form_ajax_for_item_base_select();
 
 Mousetrap.stopCallback = function() { return false };
+
+var xhr;
 
 <% end %>

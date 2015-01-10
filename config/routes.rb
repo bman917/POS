@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :item_bases do
-    collection do
-      get 'load_attrib_table'
-    end
-  end
+  resources :item_bases 
+
+  get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
 
 
   get  'item/new/add/item_base' => 'item_bases#add_to_new_item_form', as: 'add_item_base_to_new_item_form'

@@ -3,9 +3,13 @@ class ItemBasesController < ApplicationController
 
   respond_to :html
 
-  #Populates the ItemBase attrib table
-  #Used in ItemBase show view
-  def load_attrib_table
+  #Returns attribs of an item base
+  #Used by: item_form
+  def scripts_to_add_attribs_to_item_form
+    if params[:id] && params[:id] != "-1"
+      @item_base = set_item_base
+      @attribs = @item_base.attribs
+    end
   end
 
   # This is triggered from the add item form.

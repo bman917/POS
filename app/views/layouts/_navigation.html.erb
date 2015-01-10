@@ -39,8 +39,14 @@
   </ul>
 </section>
 <% end %>
-
 </nav>
+
+<%=javascript_tag do %>
+//Remove all links from tab cycle
+$(document).ready(function(){
+  $('nav a').attr("tabindex", -1);
+});
+<% end %>
 
 <div id="modal_form" class="reveal-modal" data-reveal>
 </div>
