@@ -19,7 +19,6 @@
 //= require jquery-ui/position
 //= require turbolinks
 //= require foundation
-//= require foundation/foundation.accordion
 //= require hide_toggler
 //= require common_tools
 //= require mousetrap.min

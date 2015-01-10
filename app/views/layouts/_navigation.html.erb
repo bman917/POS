@@ -15,24 +15,15 @@
         <ul class="dropdown">
           
           <li><%=link_to 'Manage Users', user_manager.users_path%></li>
-
-          <li class="has-dropdown">
-            <a href="#">Item Configuration</a>
-            <ul class="dropdown">
-              <li><%=link_to 'Attributes', main_app.attribs_path%></li>
-              <li><%=link_to 'Categories', main_app.categories_path%></li>
-              <li><%=link_to 'Units', main_app.units_path%></li>
-            </ul>
-          </li>
-
+          <li class="divider"></li>
+          <li><%=link_to 'Attributes', main_app.attribs_path%></li>
+          <li><%=link_to 'Categories', main_app.categories_path%></li>
+          <li><%=link_to 'Units', main_app.units_path%></li>
+          <li class="divider"></li>
           <li><%=link_to 'Suppliers', main_app.suppliers_path%></li>
-          <li class="has-dropdown">
-            <%=link_to 'Items', main_app.items_path%>
-            <ul class="dropdown">
-              <li><%=link_to 'Show Item List', main_app.items_path%></li>
-              <li><%=link_to 'Add New', main_app.new_item_path%></li>
-            </ul>
-          </li>
+          <li class="divider"></li>
+          <li><%=link_to 'Item List', main_app.items_path%></li>
+          <li><%=link_to 'Item - Add New', main_app.new_item_path%></li>
 
         </ul>
     </li>

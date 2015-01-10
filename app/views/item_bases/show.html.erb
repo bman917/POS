@@ -5,7 +5,7 @@
   <%= @item_base.name %>
 </p>
 
-<div class="panel">
+<!--div class="panel">
 Required Attributes:
   <ul class="inline-list">
   <% @item_base.attribs.each do | attrib | %>
@@ -15,7 +15,7 @@ Required Attributes:
 
   <% end %>
   </ul>
-</div>
+</div -->
 
 <table id="item_base_show_attrib">
   <thead>
@@ -33,9 +33,11 @@ Required Attributes:
             <td><%=value%></td>
           <% else %>
             <td>
+              <ul>
               <% value.each do | v | %>
                 <li><%=v%></li>
               <% end if value %>
+              </ul>
             </td>
           <% end %>
         <% end %>
@@ -46,18 +48,3 @@ Required Attributes:
 
 <%= link_to 'Edit', edit_item_base_path(@item_base) %> |
 <%= link_to 'Back', item_bases_path %>
-
-<!-- %=javascript_tag do %>
-
-<!-- $(document).ready( function () {
-  $.ajax({
-    url: '<%=load_attrib_table_item_bases_path%>',
-    dataType: "script",
-    "columns": [
-          {"data": "attrib"},
-          {"data": "supplier"}
-    ]    
-  });
-});
-<% end % -->
-
