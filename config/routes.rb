@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :item_bases
+  resources :item_bases do
+    collection do
+      get 'load_attrib_table'
+    end
+  end
+
 
   get  'item/new/add/item_base' => 'item_bases#add_to_new_item_form', as: 'add_item_base_to_new_item_form'
   post 'item/new/add/item_base' => 'item_bases#script_to_add_to_select', as: 'item_base_script_to_add_to_select'
   get  'item/new/add/supplier' => 'suppliers#add_to_new_item_form', as: 'add_supplier_to_new_item_form'
   post 'item/new/add/supplier' => 'suppliers#script_to_add_to_select', as: 'supplier_script_to_add_to_select'
+
 
   resources :items do
     collection do

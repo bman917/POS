@@ -103,3 +103,4 @@ shared_examples "a modal form" do
     expect(page).to have_no_css('a.close-reveal-modal')
   end
 end
+

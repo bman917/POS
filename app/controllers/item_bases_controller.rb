@@ -3,6 +3,13 @@ class ItemBasesController < ApplicationController
 
   respond_to :html
 
+  #Populates the ItemBase attrib table
+  #Used in ItemBase show view
+  def load_attrib_table
+  end
+
+  # This is triggered from the add item form.
+  # It loads the new ItemBase from
   def add_to_new_item_form
     @item_base = ItemBase.new
     @modified_url = item_base_script_to_add_to_select_path
@@ -10,6 +17,8 @@ class ItemBasesController < ApplicationController
     render 'new', layout: false
   end
 
+  # Triggers the javascript that will add the new item base
+  # into a select box. Used after the add_to_new_item_form action
   def script_to_add_to_select
     @item_base = ItemBase.new(item_base_params)
     respond_to { | format | format.js }

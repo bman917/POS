@@ -47,6 +47,7 @@ RSpec.describe Item, :type => :model do
         @supplier_a = Supplier.create(name: "Supplier_a")
         @supplier_b = Supplier.create(name: "Supplier_b")
 
+
         @item1 = Item.new(item_base_name: "EVA", supplier: @supplier_a, unit: "sheet")
         @item1.add_attrib(@attrib[:thickness], "7mm")
         @item1.add_attrib(@attrib[:color], "Black")
@@ -65,52 +66,85 @@ RSpec.describe Item, :type => :model do
         @item_base = ItemBase.find_by_name("EVA")
       end
 
-      describe "map by supplier" do
+      describe "mapping" do
         before(:each) do
-          @map = @item_base.map_by_supplier
+            @supplier_c = Supplier.create(name: "Supplier_c")
+            @item4 = Item.new(item_base_name: "EVA", supplier: @supplier_c, unit: "sheet")
+            @item4.copy_attribs(@item1)
+            @item4.add_attrib(@attrib[:size], "Long")        
+            @item4.save!
         end
 
-        it "has correct count" do
-          expect(@map.size).to eq 2 
+        describe "by attrib then supplier", :attrib_then_supplier do
+        # "Thickness": { "Supplier_a": ["7mm"], "Supplier_b": ["7mm"]}, ...
+        # "Color": { "Supplier_a": ["Black"], "Supplier_b": ["White"] }, ...
+        # ...
+          before(:each) do
+            @map = @item_base.map_by_attrib_then_supplier
+
+            #This block is not used --START
+            @supplier_b_attribs = {}
+            @map.each do |attrib_name, supplier_map|
+              @supplier_b_attribs[attrib_name] = supplier_map[@supplier_b.name]
+            end
+            #puts "Testing: #{@supplier_b_attribs}"
+            #This block is not used --END
+
+          end
+
+          it "maps attribs" do
+            #The number of attribs == the item with most attrib
+            max = @item4.attrib_values.size + 1 #item attribs + unit
+            expect(@map.size).to eq max
+          end
+
+          it "joins similar attrib values" do
+            #puts "Thickness : #{@map["Thickness"]}"
+            expect(@map["Thickness"][@supplier_b.name].size).to eq 1
+          end
+
+          it "stores unit info" do
+            supplier_b_units = @map[:unit][@supplier_b.name]
+            expect(supplier_b_units.size).to eq 2
+            expect(supplier_b_units.include?("truck")).to be_truthy
+          end
+
+          it "stores size info" do
+            supplier_b_size = @map["Size"][@supplier_b.name]
+            expect(supplier_b_size).to eq nil
+
+            supplier_c_size = @map["Size"][@supplier_c.name]
+            expect(supplier_c_size.include?("Long")).to be_truthy
+          end
         end
 
-        it "items has correct count" do
-          expect(@map[@supplier_b.name].size).to eq 2
-          expect(@map[@supplier_a.name].size).to eq 1
+        describe "by supplier" do
+          before(:each) do
+            @map = @item_base.map_by_supplier
+          end
+
+          it "has correct count" do
+            expect(@map.size).to eq 3 
+          end
+
+          it "each has correct attrib count" do
+            item1_attribs = @item1.attrib_values.size + 2 #item1 attribs + supplier + unit
+            item4_attribs = @item4.attrib_values.size + 2 #item4 attribs + supplier + unit
+
+            puts "supplier_a: #{@map[@supplier_a.name]}"
+            expect(@map[@supplier_a.name].size).to eq item1_attribs
+            expect(@map[@supplier_c.name].size).to eq item4_attribs
+            expect(@map[@supplier_c.name]["Size"].first).to eq "Long"
+          end
         end
-
-
       end
 
-      describe "standard map" do
-        before(:each) do
-          @map = @item_base.map
-          # puts "Testing Map: #{@map}"
-        end
-        it "maps attribs" do
-          count = @item1.attrib_values.size + 2 #item attribs + supplier + unit
-          expect(@map.size).to eq count
-        end
-
-        it "joins similar attrib values" do
-          # puts "Thickness: #{@map["Thickness"].to_a}"
-          expect(@map["Thickness"].size).to eq 1
-        end
-
-        it "stores different attribs" do
-          # puts "Color: #{@map["Color"].to_a}"
-          expect(@map["Color"].size).to eq 2
-        end
-
-        it "stores supplier info" do
-          # puts "Supplier: #{@map[:supplier].to_a}"
-          expect(@map[:supplier].size).to eq 2
-        end
-
-        it "stores unit info" do
-          expect(@map[:unit].size).to eq 2
-          expect(@map[:unit].include?("truck")).to be_truthy
-        end
+      #Probably not usefule to use a shared example group for this.
+      #Just experimenting :P
+      describe "standard map", :std do
+        it_should_behave_like "a standard map" do
+          let(:method) { :map }
+        end 
       end
 
     end

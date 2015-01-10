@@ -5,20 +5,59 @@
   <%= @item_base.name %>
 </p>
 
-<table>
-<% @item_base.map.each do | attrib, values | %>
-<tr>
-  <td><%=attrib%></td>
-  <td>
+<div class="panel">
+Required Attributes:
+  <ul class="inline-list">
+  <% @item_base.attribs.each do | attrib | %>
+    <li>
+      <%=attrib.name%>
+    </li>
 
-  <% values.each do | v | %>
-    <li><%=v%></li>
   <% end %>
-    
-  </td>
-</tr>
-<% end %>
+  </ul>
+</div>
+
+<table id="item_base_show_attrib">
+  <thead>
+    <tr>
+      <%gen_table(@item_base)[:header].sort_by {|attrib, index| index}.each do | name, index | %>
+            <th><%=name%></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <%gen_table(@item_base)[:rows].each do | columns  | %>
+    <tr>
+        <% columns.each do | col_index, value | %>
+          <% if col_index == 1 %>
+            <td><%=value%></td>
+          <% else %>
+            <td>
+              <% value.each do | v | %>
+                <li><%=v%></li>
+              <% end if value %>
+            </td>
+          <% end %>
+        <% end %>
+    </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <%= link_to 'Edit', edit_item_base_path(@item_base) %> |
 <%= link_to 'Back', item_bases_path %>
+
+<!-- %=javascript_tag do %>
+
+<!-- $(document).ready( function () {
+  $.ajax({
+    url: '<%=load_attrib_table_item_bases_path%>',
+    dataType: "script",
+    "columns": [
+          {"data": "attrib"},
+          {"data": "supplier"}
+    ]    
+  });
+});
+<% end % -->
+

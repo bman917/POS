@@ -6,14 +6,14 @@
 <table id="item_display">
   <tr>
     <th colspan="2">
-      <%= @item.name %>
+      <%=@item.name %> <%=link_to "Show all types", @item.item_base, class: 'info label' %>
     </th>
   </tr>
   <tr>
     <th style="width: 11em"><%=label_tag :supplier %></th>
     <td> 
       <%= @item.supplier.name %>
-      <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: { class: 'mousetrap'} %>
+      <!-- %= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: { class: 'mousetrap'} %-->
     </td>
   </tr>
   <tr>
@@ -31,7 +31,7 @@
   <% end %>
 
 </table>
-<%= f.button :submit, value: "Save", class: 'expand' %>
+<!-- %= f.button :submit, value: "Save", class: 'expand' %-->
 <% end %>
 
 

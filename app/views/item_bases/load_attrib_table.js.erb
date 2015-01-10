@@ -1,0 +1,14 @@
+$('#item_base_show_attrib').DataTable({
+  paging: false,
+  info: false,
+  searching: false,
+  ordering: false
+});
+
+
+var table = $('#item_base_show_attrib').DataTable()
+
+table.row.add( 
+        "attrib":       "xxxxx",
+        "supplier": "yyyyy"
+    } ).draw();
