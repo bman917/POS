@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.all
+    @items = Item.active
     respond_with(@items)
   end
 
@@ -21,7 +21,23 @@ class ItemsController < ApplicationController
     @item = Item.new(item_base: ItemBase.new)
     @attribs = [Attrib.first]
 
+    @item_base = ItemBase.all.first
+
     respond_with(@item)
+  end
+
+  def copy
+    orig_item = set_item
+
+    #doing this long-cut, because clone and dup are 
+    #not doing what they are supposed to!!!
+    new_attributes = orig_item.attributes
+    new_attributes.delete("id")
+
+    @item = Item.new(new_attributes)
+    @base_attribs = orig_item.attrib_values
+    render 'new'
+
   end
 
   def edit
@@ -29,7 +45,7 @@ class ItemsController < ApplicationController
     @base_attribs = @item.attrib_values
   end
 
-  def handle_new_item_base_abd_supplier(params)
+  def handle_new_item_base_add_supplier(params)
     #When a user selects to add a new ItemBase into the 
     #select#item_item_base_id, the option will look like:
     #   <option selected="selected" value="NewValue">NewValue</option>
@@ -64,40 +80,36 @@ class ItemsController < ApplicationController
     modified_item_parms
   end
 
-  def create_similar
-    orig_item = Item.find(params[:original_item_id])
 
-    #doing this long-cut, because clone and dup are 
-    #not doing what they are supposed to!!!
-    new_attributes = orig_item.attributes.merge(item_params)
-    new_attributes.delete("id")
-
-    @cloned_item = Item.new(new_attributes)
-    @cloned_item.copy_attribs(orig_item)
-
-    @cloned_item.save
-    respond_with(@cloned_item)
-  end
 
   def create
     modified_item_parms = create_attrib_item_values
-    modified_item_parms = handle_new_item_base_abd_supplier(modified_item_parms)
+    modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
 
     @item = Item.new(modified_item_parms)
-    @item.save
-    respond_with(@item)
+    if @item.save
+      @items = Item.active
+      flash[:success] = "Saved '#{@item.name}'"
+      render 'index'
+    else
+      render 'new'
+    end
   end
 
   def update
     modified_item_parms = create_attrib_item_values
-    modified_item_parms = handle_new_item_base_abd_supplier(modified_item_parms)
+    modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
     @item.update(modified_item_parms)
     respond_with(@item)
   end
 
   def destroy
-    @item.destroy
-    respond_with(@item)
+    if @item.destroy
+      flash[:notice] = "Deleted '#{@item.name}'"
+    else
+      flash[:error] = "Error while deleting '#{@item.name}'"
+    end
+      respond_with(@item)
   end
 
   private

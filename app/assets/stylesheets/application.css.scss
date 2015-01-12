@@ -21,6 +21,19 @@
  *= require_self
  *= require foundation_and_overrides
  */
+ html, body, .full-height {
+  height: 100% !important;
+  padding: 0;
+  margin: 0;
+ }
+
+.side_nav {
+  background: #333333;
+  height: 100%;
+  float: left;
+  padding: 0;
+  margin: 0;
+ }
   
 table {
   width: 100%;

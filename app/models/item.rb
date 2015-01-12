@@ -21,6 +21,7 @@ class Item < ActiveRecord::Base
   before_save :populate_item_base_attribs
 
   default_scope -> { order(:name, :supplier_id) }
+  scope :active, -> { order(:name, :supplier_id) }
 
   def populate_name
     if self.attrib_values.try(:size) > 0

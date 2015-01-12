@@ -1,8 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<%=simple_form_for @cloned_item, url: create_similar_items_path do | f | %>
-<%=hidden_field_tag :original_item_id, @item.id%>
-
+<%=page_title "Item Details" %>
 <table id="item_display">
   <tr>
     <th colspan="2">
@@ -31,10 +27,6 @@
   <% end %>
 
 </table>
-<!-- %= f.button :submit, value: "Save", class: 'expand' %-->
-<% end %>
-
-
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>

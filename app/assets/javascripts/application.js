@@ -28,6 +28,8 @@ function init_foundation() {
   $(document).foundation();
   $(function(){ $(document).foundation(); });
   $(document).foundation('reveal', {animation_speed: 75});
+  $(".full-height").height($(".main").parent().height()); 
+  $('.inner-wrap').height($(".main").parent().height()); 
 }
 
 function unbind_all_keyboard_listeners() {

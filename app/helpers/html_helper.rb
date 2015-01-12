@@ -1,4 +1,12 @@
 module HtmlHelper
+
+  #Standard wrapper for main heading
+  def page_title(title)
+    content_tag :h4, class: 'title' do
+      title
+    end.html_safe
+  end
+
     #Creates a small div. 1 Row + 1 Column
   def small_div
     content_tag :div, class: 'row' do

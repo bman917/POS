@@ -9,7 +9,7 @@
   <%= javascript_include_tag "application"%>
   <%= csrf_meta_tags %>
 </head>
-<body id="content">
+<body id="content main">
 
   <div id="wait_message" class="hidden">
     <%=image_tag 'loading_bar.gif', size: "125x20"%>
@@ -19,20 +19,47 @@
 <%= render 'layouts/navigation'%>
 
 
-<div class="row">
-<br>
-<% flash.each do |name, msg| %>
-   <div id="pos_alert" class="column small-6 small-centered">
-      <div data-alert class=" alert-box warning">
-      <%= content_tag :div, msg, id: "flash_#{name}" %>
-      <a href="#" class="close">&times;</a>
-      </div>
-    </div>
-  <% end %>
-  
-  <div class="small-12 columns">
-    <%= yield %>
+<div class="row full-height">
+
+
+
+
+
+  <div class="side_nav columns small-2">
+      <ul class="off-canvas-list">
+        <li><label>Suppliers</label></li>
+        <li><%=link_to 'Suppliers', suppliers_path%></li>
+        <li><label>Item Config</label></li>
+        <li><%=link_to 'Attributes', attribs_path%></li>
+        <li><%=link_to 'Categories', categories_path%></li>
+        <li><%=link_to 'Units', units_path%></li>
+        <li><label>Items</label></li>
+        <li><%=link_to 'Item List', main_app.items_path%></li>
+        <li><%=link_to 'New Item', main_app.new_item_path%></li>
+      </ul>
   </div>
-</div>
+
+  <div class="main columns small-10">
+      <div class="row">
+      <% flash.each do |name, msg| %>
+       <div id="pos_alert" class="column small-6 small-centered" style="margin-top: 1em;">
+          <div data-alert class=" alert-box warning">
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
+          <a href="#" class="close">&times;</a>
+          </div>
+        </div>
+      <% end %>
+      </div>
+
+      <div class="row">
+        <div class="large-12 columns" style="margin-left: 20px">
+          <br>
+             <%= yield %>
+
+        </div>
+      </div>
+
+  </div>
+
 </body>
 </html>

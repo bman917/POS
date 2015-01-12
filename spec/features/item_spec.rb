@@ -32,8 +32,9 @@ describe Item do
       @basic_item.add_attrib(@attrib[:size], "Small")
       @basic_item.add_attrib(@attrib[:thickness], "1/2")
       @basic_item.save!
-
-      click_on 'New Item'
+      within ".main" do
+        click_on 'New Item'
+      end
       expect(page).to have_css('form#new_item')
     end
 

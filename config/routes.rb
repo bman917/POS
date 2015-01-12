@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       post 'add_attrib'
       post 'create_similar'
     end
+    member do
+      get 'copy'
+    end
   end
 
   resources :suppliers
