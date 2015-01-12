@@ -3,6 +3,17 @@ class ItemsController < ApplicationController
 
   respond_to :html
 
+  def destroy_multiple
+    begin
+      ret_val = Item.destroy_all(id: params[:item_ids])
+      flash[:status] = "Successfully Deleted #{ret_val.size} Items"
+    rescue Exception => e
+      flash[:error] = "Unexpected error while deleting Items: #{e.message}"
+    end
+    @items = Item.active
+    redirect_to action: 'index', flash: flash
+  end
+
   def add_attrib
     @attribs = Attrib.where(id: params[:attrib]).order(:display_number)
   end
@@ -65,8 +76,9 @@ class ItemsController < ApplicationController
   end
 
   #Collect the Attribs-Values that have been dynamically been added to 
-  #the form. At this point these Attribs-Values may not yet be 
-  #associated to the ItemBase. The following logic handles this
+  #the form. 
+  #In the case that the Attribs has not yet been associated to the ItemBase. 
+  #It will be handled internally within item.rb
   def create_attrib_item_values 
     @base_attribs = []
     @attribs = params[:attrib]
@@ -80,9 +92,115 @@ class ItemsController < ApplicationController
     modified_item_parms
   end
 
+  def do_it(key, comma_delimited_val, orig_attribs)
+    ret_val = []
+    ary = comma_delimited_val.strip.squeeze(",").squeeze(" ").split(',')
+    ary.each do | ary_val |
+      cloned_attribs = orig_attribs.clone
+      cloned_attribs[key] =  ary_val
+      ret_val << cloned_attribs
+    end
+    ret_val
+  end
+
 
 
   def create
+
+    params_attrib = []
+    orig_attribs = params[:attrib]
+    attribs_clone = orig_attribs.clone
+    stage_2 = {}
+
+    #check if there are comma-separated values
+    comma = orig_attribs.find_all do |key, value| 
+      value.include?(",")
+    end
+
+    no_comma = orig_attribs.reject do |key, value| 
+      value.include?(",")
+    end
+
+    puts "commas: #{comma}"
+    puts "no_comma: #{no_comma}"
+
+#commas: [["7041", "1mm, 2mm, 3mm"], ["7040", "Black, White, Grey"]]
+#no_comma: {"7043"=>"Linso"}
+
+# Transform ["7041", "1mm, 2mm, 3mm"] to:
+# {"7043"=>
+#  [
+#   [{"7043"=>"Linso"},{"7041"=>"1mm"}],
+#   [{"7043"=>"Linso"},{"7041"=>"2mm"}],
+#   [{"7043"=>"Linso"},{"7041"=>"3mm"}]
+#  ],
+#  "7040"=>
+#  [
+#   [{"7040"=>"Linso"},{"7040"=>"Black"}],
+#   [{"7040"=>"Linso"},{"7040"=>"White"}],
+#   [{"7040"=>"Linso"},{"7040"=>"Grey"}]
+#  ]
+# }
+
+
+    comma.each do | attrib, val | 
+      ary = val.strip.squeeze(",").squeeze(" ").split(',')
+      ary.each do | ary_val |
+        tmp = no_comma.clone
+        tmp[attrib] = ary_val
+        stage_2[attrib] ||= []
+        stage_2[attrib] << tmp
+      end
+    end if comma
+
+
+    puts "STAGE 2: #{stage_2}"
+
+    stage_3 = []
+
+    
+
+
+    comma.each do | attrib, val | 
+      
+        ary = val.strip.squeeze(",").squeeze(" ").split(',')
+        puts "Processing Attrib: #{attrib}, ary: #{ary}"
+
+        others = stage_2.reject {|a,v| a == attrib}
+        puts "Others: #{others}"
+
+        ary.each do | ary_val |
+          others.each do | o_key, array_of_hash | 
+            array_of_hash.each do |hash| 
+              hash[attrib] = ary_val.strip
+              puts "Updated: #{o_key}, with: #{hash[attrib]} "
+              stage_3 << hash.clone
+            end
+          end
+        end
+      
+    end    
+
+    puts "STAGE 3: #{stage_3}"
+
+
+
+    # stage_2.each do | attrib, val_array |
+    #   puts "Processing Attrib: #{attrib}, val_array: #{val_array}"
+    #   others = stage_2.reject {|a,v| a == attrib}
+    #   puts "Others: #{others}"
+    #   val_array.each do | val |
+    #     others.each do | o_key, array_of_hash | 
+    #       array_of_hash.each { |hash| hash[attrib] = val}
+    #     end
+    #   end
+    #   puts "Others After: #{others}"
+    # end
+
+    
+    
+
+
     modified_item_parms = create_attrib_item_values
     modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
 

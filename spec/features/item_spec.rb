@@ -32,6 +32,12 @@ describe Item do
       @basic_item.add_attrib(@attrib[:size], "Small")
       @basic_item.add_attrib(@attrib[:thickness], "1/2")
       @basic_item.save!
+
+      @basic_item2 = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier1, unit: "piece")
+      @basic_item2.add_attrib(@attrib[:color], "Green")
+      @basic_item2.add_attrib(@attrib[:size], "Small")
+      @basic_item2.add_attrib(@attrib[:thickness], "1/2")
+      @basic_item2.save!
       visit items_path
     end
 
@@ -43,11 +49,24 @@ describe Item do
         expect(page).to have_css('form#new_item')
         fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
         click_on 'Save'
-        expect(page).to have_content('Seeded Item Base 1/2 Small Black')
+        expect(page).to have_content(@basic_item.name)
         expect(page).to have_content('Seeded Item Base 1/2 Small Red')
       end
     end
 
+    describe "Delete multiple", :delete_multiple do
+      it "works" do
+        find(:css, "#item_ids_[value='#{@basic_item.id}']").set(true)
+        find(:css, "#item_ids_[value='#{@basic_item2.id}']").set(true)
+        within "#items_actions" do
+          click_on "Delete Checked"
+        end
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content("Successfully Deleted 2 Items")
+        expect(page).to have_no_content(@basic_item.name)
+        expect(page).to have_no_content(@basic_item2.name)
+      end
+    end
   end
 
   describe "Create", :js, :create do
@@ -131,61 +150,86 @@ describe Item do
       end
     end
 
-    it "works!", :works do
-
-      within("table#item_display td#base_item_column") do
-        click_on 'Add'
-      end
-      expect(page).to have_css('form#new_item_base')
-
-      within("form#new_item_base") do
-        fill_in 'Name', with: 'EVA'
-        click_on 'Save'
-      end
-
-      expect(page).to have_no_css('form#new_item_base')
-
-      within 'form#new_item' do
-        select('EVA', :from => 'item_item_base_id')
-        fill_in 'Description', with: "Lorem ispum"
-        within 'td#supplier_column' do
+    describe "Logic" do
+      before(:each) do
+        within("table#item_display td#base_item_column") do
           click_on 'Add'
         end
-      end
-     
-      expect(page).to have_css('form#new_supplier')
-      within "form#new_supplier" do
-        fill_in 'supplier_name', with: 'TestSupplier'
-        click_on 'Save'
+        expect(page).to have_css('form#new_item_base')
+
+        within("form#new_item_base") do
+          fill_in 'Name', with: 'EVA'
+          click_on 'Save'
+        end
+
+        expect(page).to have_no_css('form#new_item_base')
+
+        within 'form#new_item' do
+          select('EVA', :from => 'item_item_base_id')
+          fill_in 'Description', with: "Lorem ispum"
+          within 'td#supplier_column' do
+            click_on 'Add'
+          end
+        end
+       
+        expect(page).to have_css('form#new_supplier')
+        within "form#new_supplier" do
+          fill_in 'supplier_name', with: 'TestSupplier'
+          click_on 'Save'
+        end
+
+        expect(page).to have_no_css('form#new_supplier')
+
+        within 'form#new_item' do
+          select 'TestSupplier', :from => 'item_supplier_id'
+          select @unit.name, :from => 'item_unit'
+        end
+
+        select_attribs do
+          check "attrib_#{@attrib[:model].id}"
+          check "attrib_#{@attrib[:color].id}"
+          check "attrib_#{@attrib[:thickness].id}"
+        end
+
+        within 'form#new_item' do
+          expect(page).to have_content('Color')
+          expect(page).to have_content('Thickness')
+          expect(page).to have_content('Model')
+          expect_html_focus_on "attrib_#{@attrib[:thickness].id}"
+        end
       end
 
-      expect(page).to have_no_css('form#new_supplier')
 
-      within 'form#new_item' do
-        select 'TestSupplier', :from => 'item_supplier_id'
-        select @unit.name, :from => 'item_unit'
-      end
-
-      select_attribs do
-        check "attrib_#{@attrib[:model].id}"
-        check "attrib_#{@attrib[:color].id}"
-        check "attrib_#{@attrib[:thickness].id}"
-      end
-
-      within 'form#new_item' do
-        expect(page).to have_content('Color')
-        expect(page).to have_content('Thickness')
-        expect(page).to have_content('Model')
-        expect_html_focus_on "attrib_#{@attrib[:thickness].id}"
+      it "creates multiple when comma-separated", :create_multiple do
+        pending "Not yet done"
         
-        fill_in "attrib_#{@attrib[:thickness].id}", with: '7mm'
-        fill_in "attrib_#{@attrib[:model].id}"    , with: 'Linso'
-        fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
-        click_on 'Save'
+        within 'form#new_item' do
+          fill_in "attrib_#{@attrib[:thickness].id}", with: '1mm, 2mm, 3mm'
+          fill_in "attrib_#{@attrib[:model].id}"    , with: 'Linso, Tribu'
+          fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black, White, Grey'
+          click_on 'Save'
+        end
+
+        expect(page).to have_content("Eva 1mm Blk Linso")
+        expect(page).to have_content("Eva 2mm Blk Linso")
+        expect(page).to have_content("Eva 3mm Blk Linso")
+        expect(page).to have_content("Eva 1mm Wht Linso")
+        expect(page).to have_content("Eva 2mm Wht Linso")
+        expect(page).to have_content("Eva 3mm Wht Linso")
+        expect(page).to have_content("Eva 1mm Gry Linso")
+        expect(page).to have_content("Eva 2mm Gry Linso")
+        expect(page).to have_content("Eva 3mm Gry Linso")
+        expect(page).to have_content("TestSupplier")
       end
 
-      expect(page).to have_content("Eva 7mm Black Linso")
-      expect(page).to have_content("TestSupplier")
+      it "works!", :works do
+        within 'form#new_item' do
+          fill_in "attrib_#{@attrib[:thickness].id}", with: '7mm'
+          fill_in "attrib_#{@attrib[:model].id}"    , with: 'Linso'
+          fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
+          click_on 'Save'
+        end
+      end
     end
   end
 

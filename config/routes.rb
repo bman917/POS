@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     collection do
       post 'add_attrib'
       post 'create_similar'
+      delete 'destroy_multiple'
     end
     member do
       get 'copy'

@@ -1,31 +1,38 @@
 <%=page_title "Item List" %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="2">Name</th>
-      <th style="width: 5em">Unit</th>
-      <th style="width: 15em">Supplier</th>
-      <th style="width: 5em" colspan="4"></th>
-    </tr>
-  </thead>
+<%=form_tag destroy_multiple_items_path, method: :delete do %>
+  <%=div_row(10) do %>
+    <div id="items_actions">
+      <%=submit_tag 'Delete Checked', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
+    </div>
+  <% end %>
 
-  <tbody>
-    <% @items.each do |item| %>
-      <%=tr_highlight item, @item do%>
-        <td><%= check_box_tag "item_ids[]", item.id %></td>
-        <td><%= item.name %></td>
-        <td><%= item.unit %></td>
-        <td><%= item.supplier.try(:name) %></td>
-        <td><%= link_to view_img, item %></td>
-        <td><%= link_to "Copy", copy_item_path(item) %></td>
-        <td><%= link_to edit_img, edit_item_path(item) %></td>
-        <td><%= link_to delete_img, item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">Name</th>
+        <th style="width: 5em">Unit</th>
+        <th style="width: 15em">Supplier</th>
+        <th style="width: 5em" colspan="4"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @items.each do |item| %>
+        <%=tr_highlight item, @item do%>
+          <td><%= check_box_tag "item_ids[]", item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.unit %></td>
+          <td><%= item.supplier.try(:name) %></td>
+          <td><%= link_to view_img, item %></td>
+          <td><%= link_to "Copy", copy_item_path(item) %></td>
+          <td><%= link_to edit_img, edit_item_path(item) %></td>
+          <td><%= link_to delete_img, item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
-
+    </tbody>
+  </table>
+<% end %>
 <br>
 
 <%= link_to 'New Item', new_item_path, class: 'button' %>
