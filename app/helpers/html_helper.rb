@@ -22,4 +22,22 @@ module HtmlHelper
       yield
     end
   end
+
+  def div_row(size, options={})
+    size = 12 if size == "max"
+
+    options[:class] ||= "row"
+
+    unless options[:class].include?("row")
+      options[:class] = options[:class] + " row"
+    end
+
+
+
+    content_tag :div, options do
+      content = content_tag :div, class: "columns small-#{size}" do
+        yield
+      end
+    end.html_safe
+  end
 end

@@ -1,13 +1,55 @@
 // Place all the styles related to the Items controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#item_display {
-  // tr, th, td, input, select, textarea {
-  //   padding: 0;
-  //   margin: 0;
-  // }
+div#add_attrib {
+  margin: -20px 0 -20px -15px;
+  float: left;
+}
 
-  // a {
-  //   margin: 0;
-  // }
+div#save_button_row {
+  margin: 0 0 0 50px;
+  clear: both;
+}
+
+form#new_item table#item_display {
+
+  select:focus, input:focus, textarea:focus, a:focus {
+    font-weight: bolder;
+    box-shadow: -3px 0px 0px #888888;
+  } 
+
+
+  div {
+    padding: 0;
+  }
+
+  a.tiny {
+    margin: 0;
+    margin-left: 2px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+
+  input, select {
+    padding: 0;
+    margin: 0;
+    border-bottom: 0;
+  }
+
+  tr, th, td { 
+    line-height: 0; 
+    margin: 0;
+    padding: 0;
+  }
+
+  div.row {
+    margin: -5px;
+
+  }
+
+  a {
+    margin: 0;
+  }
+
 }

@@ -37,8 +37,10 @@ $(document).ready(function(){
 
 <%
   select_input_html_options = {}
-  add_button_html_options = {class: "tiny round success button", tabindex: -1}
+  add_button_html_options = {class: "tiny success button", tabindex: -1}
 %>
+
+<%=div_row 'max' do %>
 
 <table id="item_display">
   <tr>
@@ -72,11 +74,15 @@ $(document).ready(function(){
   </tr>
   <tr>
     <th><%=f.label :unit %></th>
-    <td><%= f.input :unit, label: false, 
+    <td>
+      <%=div_row 10 do %>
+        <%= f.input :unit, label: false, 
               collection: Unit.order(:name), 
               label_method: :name,
               value_method: :name, 
-              prompt: "Choose a Unit" %></td>
+              prompt: "Choose a Unit" %>
+        <% end %>
+      </td>
   </tr>
   
   <% @base_attribs.each do | attrib_item_value | %>
@@ -87,20 +93,32 @@ $(document).ready(function(){
 
   <tr>
     <th><%=f.label :description%></th>
-    <td><%= f.input :description, label: false%></td>
+    <td>
+      <%=div_row 10 do %>
+        <%= f.input :description, label: false%>
+      <%end%>
+    </td>
   </tr>
 
 </table>
-<div class="row">
-  <div class="small-12 columns">
-    <%=modal_link_to "Add Attribute", list_attribs_path, { id: 'add_attrb_button', class: 'button secondary expand'} %>
-   </div>
-</div>
-<div class="row">
-  <div class="small-12 columns">
-    <%= f.button :submit, value: "Save", class: 'expand' %>
+
+<% end  %>
+
+<%=div_row 'max', id: "add_attrib" do %>
+    <%=modal_link_to "Add Attribute", list_attribs_path, { id: 'add_attrb_button', class: 'button tiny success'} %>
+<% end %>
+
+<div class="row" id="save_button_row">
+  <div class="small-10 column">
+      <div class="row">
+        <div class="small-10 small-offset-2 column">
+          <%= f.button :submit, value: "Save", class: 'expand' %>
+        </div>
+      </div>
   </div>
 </div>
+
+
 <% end %>
 
 </div>

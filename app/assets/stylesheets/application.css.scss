@@ -30,5 +30,8 @@ table tr.highlight {
 }
 
 select:focus, input:focus, textarea:focus, a:focus {
-  box-shadow: 0px 0px 10px #888888;
+  //box-shadow: -10px 0px 0px #888888;
+  font-weight: bolder;
+
+  box-shadow: -3px 0px 0px #888888;
 } 
