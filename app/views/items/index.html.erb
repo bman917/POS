@@ -3,7 +3,7 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th colspan="2">Name</th>
       <th style="width: 5em">Unit</th>
       <th style="width: 15em">Supplier</th>
       <th style="width: 5em" colspan="4"></th>
@@ -13,6 +13,7 @@
   <tbody>
     <% @items.each do |item| %>
       <%=tr_highlight item, @item do%>
+        <td><%= check_box_tag "item_ids[]", item.id %></td>
         <td><%= item.name %></td>
         <td><%= item.unit %></td>
         <td><%= item.supplier.try(:name) %></td>

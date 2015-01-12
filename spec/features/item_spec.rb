@@ -22,6 +22,34 @@ describe Item do
     visit items_path
   end
 
+  describe "Index", :js, :index do
+    before(:each) do
+      item_spec_seed
+
+      @supplier1 = Supplier.create(name: "Supplier_1")
+      @basic_item = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier1, unit: "piece")
+      @basic_item.add_attrib(@attrib[:color], "Red")
+      @basic_item.add_attrib(@attrib[:size], "Small")
+      @basic_item.add_attrib(@attrib[:thickness], "1/2")
+      @basic_item.save!
+      visit items_path
+    end
+
+    describe "Copy" do
+      it "works!" do
+        within "tr#item#{@basic_item.id}" do
+          click_on 'Copy'
+        end
+        expect(page).to have_css('form#new_item')
+        fill_in "attrib_#{@attrib[:color].id}"    , with: 'Black'
+        click_on 'Save'
+        expect(page).to have_content('Seeded Item Base 1/2 Small Black')
+        expect(page).to have_content('Seeded Item Base 1/2 Small Red')
+      end
+    end
+
+  end
+
   describe "Create", :js, :create do
     before(:each) do
       item_spec_seed
