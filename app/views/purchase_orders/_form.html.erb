@@ -1,0 +1,14 @@
+<%= simple_form_for(@purchase_order) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :supplier %>
+    <%= f.input :status, as: :hidden %>
+    <%= f.input :notes, as: :text %>
+    <%= f.input :date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

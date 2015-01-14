@@ -1,0 +1,26 @@
+<div id="purchase_order_show_details">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Supplier:</strong>
+  <%= purchase_order.supplier %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= purchase_order.status %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= purchase_order.notes %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= purchase_order.date %>
+</p>
+
+<%= link_to 'Edit', edit_purchase_order_path(purchase_order) %> |
+<%= link_to 'Back', purchase_orders_path %>
+</div>

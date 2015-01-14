@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108191713) do
+ActiveRecord::Schema.define(version: 20150114084025) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(version: 20150108191713) do
   add_index "items", ["item_base_id"], name: "index_items_on_item_base_id"
   add_index "items", ["name", "supplier_id", "unit"], name: "index_items_on_name_and_supplier_id_and_unit", unique: true
   add_index "items", ["supplier_id"], name: "index_items_on_supplier_id"
+
+  create_table "purchase_orders", force: true do |t|
+    t.integer  "supplier_id"
+    t.string   "status"
+    t.text     "notes"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "purchase_orders", ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
 
   create_table "suppliers", force: true do |t|
     t.string   "name"

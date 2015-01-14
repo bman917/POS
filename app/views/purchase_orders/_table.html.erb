@@ -1,0 +1,19 @@
+  <table id="purchase_orders">
+    <thead>
+      <tr>
+        <th>Supplier</th>
+        <th style="width: 7em">Status</th>
+        <th style="width: 7em">Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% purchase_orders.each do |purchase_order| %>
+        <tr id="<%=purchase_order.id%>">
+          <td><%= purchase_order.supplier.name %></td>
+          <td><%= purchase_order.status %></td>
+          <td><%= purchase_order.date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

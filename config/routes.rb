@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :purchase_orders
+
   resources :item_bases 
 
   get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
