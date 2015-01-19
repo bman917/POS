@@ -8,9 +8,7 @@ class PurchaseOrdersController < ApplicationController
     @status = params[:status] || 'PENDING'
     @supplier_id = params[:supplier_id] || Supplier.all.first.id
 
-
     @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier)
-    @purchase_order = PurchaseOrder.first
 
     respond_to do | format |
       format.html

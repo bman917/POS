@@ -4,42 +4,40 @@
 
   <!-- START COLUMN 1 -->
   <div class="small-5 columns">
+    <div class="po_control_panel">
+        <ul class="po_date_filter po_filter_spacings">
+          <li>From</li>
+          <li>To</li>
+          <li><%=date_field(:from, :date_filter)%></li>
+          <li><%=date_field(:to, :date_filter)%></li>
+        </ul>
 
-      <table id="control_table">
-        <tr>
-          <th colspan="3">Filter</th>
-        </tr>
-        <tr>
-          <td>Date</td>
-          <td>From</td>
-          <td>To</td>
-        </tr>
-        <tr>
-          <td>Supplier</td>
-          <td colspan="2"><%=select_tag :po_supplier, 
-              options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), 
-              include_blank: true%>
-          </td>
-        </tr>
-        <tr>
-          <td>Status</td>
-          <td colspan="2"><%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
-          </td>
-        </tr>
-      </table>
+        <ul class="po_filter po_filter_spacings">
+          <li>Supplier</li>
+          <li><%=select_tag :po_supplier, 
+            options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), 
+            include_blank: true%>
+          </li>
+          <li>Status</li>
+          <li>
+            <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
+          </li>
+        </ul>
+  </div>
 
       <div id="po_list">
       <%=render partial: 'table', locals: {purchase_orders: @purchase_orders} %>
       </div>
 
       <%= link_to 'New Purchase order', new_purchase_order_path %>
-
-  </div>
+    </div>
   <!-- END COLUMN 1 -->
 
 
-  <div id="pos_details" class="small-7 columns">
-  <%=render partial: 'show', locals: {purchase_order: @purchase_order}%>
+  <div class="small-7 columns">
+    <div id="pos_details" class="panel">
+      <%=render partial: 'show', locals: {purchase_order: @purchase_order}%>
+    </div>
   </div>
 
 </div>

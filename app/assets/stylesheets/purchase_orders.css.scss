@@ -1,13 +1,41 @@
 // Place all the styles related to the PurchaseOrders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "foundation/components/block-grid";
+@import "foundation/components/panels";
 
-#control_table {
-  
-  th {
-    background: #0000FF;
-    color: WHITE;
-    
+$po-block-grid-spacing: 1px;
+
+table#purchase_orders tbody tr {
+  cursor: pointer;
+}
+
+.po_date_filter {
+  @include block-grid(
+    $per-row: 2,
+    $spacing: $po-block-grid-spacing,
+    $base-style: true
+  );
+}
+
+.po_filter {
+  @include block-grid(
+    $per-row: 1,
+    $spacing: $po-block-grid-spacing,
+    $base-style: true
+  );
+}
+
+.po_filter_spacings {
+  input, select {
+    font-size: 95%;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
   }
+}
 
+.po_control_panel {
+  @include panel(
+    $padding:7px
+  );
 }

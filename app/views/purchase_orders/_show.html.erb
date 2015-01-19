@@ -1,14 +1,25 @@
 <div id="purchase_order_show_details">
+<%if purchase_order %>
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>PO#</strong>
+  <%= purchase_order.po_id %>
+</p>
+
+
+<p>
   <strong>Supplier:</strong>
-  <%= purchase_order.supplier %>
+  <%= purchase_order.supplier.name %>
 </p>
 
 <p>
   <strong>Status:</strong>
   <%= purchase_order.status %>
+</p>
+<p>
+  <strong>Date:</strong>
+  <%= purchase_order.date %>
 </p>
 
 <p>
@@ -16,11 +27,11 @@
   <%= purchase_order.notes %>
 </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= purchase_order.date %>
-</p>
 
-<%= link_to 'Edit', edit_purchase_order_path(purchase_order) %> |
-<%= link_to 'Back', purchase_orders_path %>
+<%= link_to 'Edit', edit_purchase_order_path(purchase_order) %>
+
+<% else %>
+  No Purchase Order Selected.
+<%end%>
+
 </div>
