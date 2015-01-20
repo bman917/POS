@@ -31,6 +31,20 @@ module HtmlHelper
     end
   end
 
+  #Helper method for creating a table row.
+  #Adds a tr id for the model.
+  #Adds a tr.highlight css if the row is equal to the new model 
+  def tr_highlight_simple(model, new_model)
+    h = "highlight" if model.id == new_model.try(:id)
+    n = " new" if model.created_at.to_date == Date.today
+
+    css_class = "#{h} #{n}".squeeze(' ').strip
+
+    content_tag :tr, id: model.id, class: css_class do
+      yield
+    end
+  end
+
   def div_row(size, options={})
     size = 12 if size == "max"
 

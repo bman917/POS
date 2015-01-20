@@ -2,7 +2,11 @@ class PurchaseOrder < ActiveRecord::Base
   belongs_to :supplier
 
   def po_id
-    sprintf('%07d', id)
+    if id
+      sprintf('%07d', id)
+    else
+      "New un-saved Purchase Order"
+    end
   end
 
   def details

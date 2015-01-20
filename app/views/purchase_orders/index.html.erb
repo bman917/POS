@@ -4,7 +4,7 @@
 
   <!-- START COLUMN 1 -->
   <div class="small-5 columns">
-    <div class="po_control_panel">
+    <div class="po_panel">
         <ul class="po_date_filter po_filter_spacings">
           <li>From</li>
           <li>To</li>
@@ -23,14 +23,19 @@
             <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
           </li>
         </ul>
-  </div>
+    </div>
+
+    <%= link_to 'New Purchase order', new_purchase_order_path, class: 'expand tiny button', remote: true, id: 'new_purchase_order' %>
+
+    <div class="po_panel">
 
       <div id="po_list">
       <%=render partial: 'table', locals: {purchase_orders: @purchase_orders} %>
       </div>
-
-      <%= link_to 'New Purchase order', new_purchase_order_path %>
     </div>
+
+    
+  </div>
   <!-- END COLUMN 1 -->
 
 

@@ -1,4 +1,11 @@
 <div id="purchase_order_show_details">
+
+<% if purchase_order && purchase_order.created_at.to_date == Date.today %>
+<div data-alert class="alert-box success">
+  * NEW PURCHASE ORDER CREATED TODAY
+</div>
+<% end %>
+
 <%if purchase_order %>
 <p id="notice"><%= notice %></p>
 

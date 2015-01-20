@@ -1,3 +1,4 @@
+  <%= will_paginate purchase_orders %>
   <table id="purchase_orders">
     <thead>
       <tr>
@@ -8,13 +9,15 @@
 
     <tbody>
       <% purchase_orders.each do |purchase_order| %>
-        <tr id="<%=purchase_order.id%>">
-          <td><%= purchase_order.po_id %></td>
+        <%=tr_highlight_simple(purchase_order, @purchase_order) do%>
+          <td class="id"><%= purchase_order.po_id %></td>
           <td><%= purchase_order.po_date_short_format %></td>
-        </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
+  <%= will_paginate purchase_orders %>
+
 
   <%=javascript_tag do %>
 

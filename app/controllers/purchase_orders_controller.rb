@@ -1,14 +1,14 @@
 class PurchaseOrdersController < ApplicationController
   before_action :set_purchase_order, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :js
 
   def index
 
     @status = params[:status] || 'PENDING'
     @supplier_id = params[:supplier_id] || Supplier.all.first.id
 
-    @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier)
+    @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
 
     respond_to do | format |
       format.html
@@ -24,8 +24,16 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def new
-    @purchase_order = PurchaseOrder.new(status: 'PENDING')
-    respond_with(@purchase_order)
+    @purchase_order = PurchaseOrder.new(
+      status: 'PENDING',
+      date: Date.today,
+      supplier_id: params[:supplier_id])
+    @purchase_order.save
+
+    respond_to do | format |
+      format.html
+      format.js
+    end
   end
 
   def edit

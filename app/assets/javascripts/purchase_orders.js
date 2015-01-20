@@ -3,6 +3,7 @@ function purchase_order_index_init_listeners() {
   $('#po_status').change(purchase_order_index_ajax);
   $('#po_supplier').change(purchase_order_index_ajax);
   purchase_order_table_click_listener();
+  purchase_order_create_listener();
 }
 
 function purchase_order_index_ajax() {
@@ -27,5 +28,18 @@ function purchase_order_show_ajax(id) {
       dataType: 'script',
       url: "/purchase_orders/" + id
     });
+}
+
+function purchase_order_create_listener() {
+  supplier_id = $('#po_supplier').val();
+
+  $('a#new_purchase_order').on('click', function() {
+    $.ajax({
+      dataType: 'script',
+      url: "/purchase_orders/new?supplier_id=" + supplier_id      
+    });
+    return false;
+  });
+
 }
 

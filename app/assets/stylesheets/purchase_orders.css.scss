@@ -6,8 +6,17 @@
 
 $po-block-grid-spacing: 1px;
 
-table#purchase_orders tbody tr {
+table#purchase_orders {
+
+  margin-bottom: 0;
+  
+  tbody tr {
   cursor: pointer;
+  }
+
+  tr.new td.id:before {
+    content: '* ';
+  }
 }
 
 .po_date_filter {
@@ -34,7 +43,7 @@ table#purchase_orders tbody tr {
   }
 }
 
-.po_control_panel {
+.po_panel {
   @include panel(
     $padding:7px
   );

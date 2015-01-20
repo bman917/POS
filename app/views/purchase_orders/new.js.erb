@@ -1,0 +1,11 @@
+<%=render template: 'purchase_orders/show'%>
+
+purchase_order_index_ajax();
+
+
+setTimeout(function() {
+  $('tr#<%=@purchase_order.id%>').addClass('highlight');
+}, 500);
+
+
+$('#purchase_order_show_details .alert-box').show();

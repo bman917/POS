@@ -70,7 +70,7 @@ gem 'cancancan'
 gem 'devise'
 
 gem 'paper_trail', '~> 3.0.1'
-gem 'will_paginate', '~> 3.0'
+gem 'will_paginate', '~> 3.0.6'
 gem 'rack-mini-profiler'
 gem 'foundation-rails'
 #gem 'user_manager', :path => '/home/jchan/engines/user_manager'
