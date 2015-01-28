@@ -55,7 +55,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th style="width: 4em">Quantity</th>
+        <th style="width: 8em" colspan="2">Quantity</th>
       </tr>
     </thead>
 
@@ -63,7 +63,8 @@
       <% purchase_order.item_purchase_orders.each do | item | %>
         <%=tr_highlight(item, @item_purchase_order) do %>
           <td><%=item.item.name%></td>
-          <td><%=item.quantity%></td>
+          <td style="text-align: right"><%=item.quantity%></td>
+          <td style="font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
         <% end %>
       <% end %>
     </tbody>

@@ -16,8 +16,8 @@ class ItemsAutocomplete
     items.map do | item |
       {
         id: item.id,
-        label: item.name,
-        value: item.name,
+        label: "#{item.name} (#{item.unit})",
+        value: "#{item.name} (#{item.unit})",
         desc: item.unit        
       }
     end
