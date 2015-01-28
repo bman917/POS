@@ -1,7 +1,23 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :js
+
+  def autocomplete
+  end
+
+  def json
+    if params[:term]
+      #When there is a :term paramter then it means this is an autocomplete json
+      render json: ItemsAutocomplete.new(view_context)
+    else
+      render json: ItemsDatatable.new(view_context)
+    end
+  end
+
+  def select
+    @items = Item.active
+  end
 
   def destroy_multiple
     begin

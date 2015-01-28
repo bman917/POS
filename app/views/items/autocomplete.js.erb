@@ -1,0 +1,31 @@
+$('tr#add_item').remove();
+$('#item_qty').unbind('keyup');
+
+$('#po_detail tbody').append("<%=j render 'add_item_row'%>");
+
+$('#item_name').autocomplete({
+  minLength: 2,
+  source: "<%=json_items_path%>",
+  select: function( event, ui ) {
+    $('#item_id').val(ui.item.id);
+    $('#item_name').val(ui.item.value);
+    $('#item_qty').val("");
+    $('#item_qty').focus();
+    return false;
+  }
+});
+
+//Only add listener to #item_qty after it receives focus
+$('#item_qty').on('keyup', function(e){
+  var enter_key = 13;
+
+  var item_qty_has_value = $('#item_qty').val().trim().length > 0;
+  var item_id_has_value = $('#item_id').val().trim().length > 0;
+  var qty_has_focus = document.activeElement.id == "item_qty"
+
+  if (e.which == enter_key && qty_has_focus && item_qty_has_value && item_id_has_value) {
+    //do a post to save the new item
+    alert("Item saved! ID: " +  $('#item_id').val() + ", Qty: " + $('#item_qty').val());
+  }
+});
+

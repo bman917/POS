@@ -32,12 +32,16 @@ function purchase_order_show_ajax(id) {
 
 function purchase_order_create_listener() {
   supplier_id = $('#po_supplier').val();
+  supplier = $('#po_supplier option:selected').text();
 
   $('a#new_purchase_order').on('click', function() {
-    $.ajax({
-      dataType: 'script',
-      url: "/purchase_orders/new?supplier_id=" + supplier_id      
-    });
+
+    if (confirm("New Purchase Order for '" + supplier + "'?")) {
+      $.ajax({
+        dataType: 'script',
+        url: "/purchase_orders/new?supplier_id=" + supplier_id      
+      });
+    }
     return false;
   });
 

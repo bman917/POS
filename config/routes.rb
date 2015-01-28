@@ -14,10 +14,15 @@ Rails.application.routes.draw do
 
 
   resources :items do
+    get  :json, on: :collection
+    post :json, on: :collection
+
     collection do
       post 'add_attrib'
       post 'create_similar'
       delete 'destroy_multiple'
+      get 'select'
+      get 'autocomplete'
     end
     member do
       get 'copy'

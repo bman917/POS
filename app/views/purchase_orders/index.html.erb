@@ -25,7 +25,10 @@
         </ul>
     </div>
 
-    <%= link_to 'New Purchase order', new_purchase_order_path, class: 'expand tiny button', remote: true, id: 'new_purchase_order' %>
+    <%= link_to 'New Purchase order', 
+          new_purchase_order_path, class: 'expand tiny button', 
+          remote: true, id: 'new_purchase_order',
+          data: { confirm: 'Create New Purchase Order?'} %>
 
     <div class="po_panel">
 

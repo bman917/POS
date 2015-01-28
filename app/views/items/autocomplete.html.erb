@@ -1,0 +1,13 @@
+<%= text_field_tag :item_name, [], 
+        placeholder: "Start typing and profile names will appear...",  
+        autofocus: true, class: 'text'%>
+
+<%=javascript_tag do %>
+  $(document).ready( function () {
+    $('#item_name').autocomplete({
+      minLength: 2,
+      source: "<%=json_items_path%>"
+    });
+
+  } );
+<% end %>

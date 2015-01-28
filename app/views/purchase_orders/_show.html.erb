@@ -1,41 +1,73 @@
 <div id="purchase_order_show_details">
 
 <% if purchase_order && purchase_order.created_at.to_date == Date.today %>
-<div data-alert class="alert-box success">
-  * NEW PURCHASE ORDER CREATED TODAY
-</div>
+
+  <div class="row">
+    <div class="column small-12">
+      <div data-alert class="alert-box success">
+        * NEW PURCHASE ORDER CREATED TODAY
+      </div>
+    </div>
+  </div>
+
 <% end %>
 
 <%if purchase_order %>
-<p id="notice"><%= notice %></p>
+  
+  <div class="row">
 
-<p>
-  <strong>PO#</strong>
-  <%= purchase_order.po_id %>
-</p>
+    <div class="column small-8">
+      <span style="font-size: 150%">PO#</span>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
+    </div>
+
+    <div class="column small-4">
+      <div class="row">
+        <span class="label"><%= purchase_order.status %></span>
+      </div>
+      <div class="row">
+        <strong>Date:</strong>
+        <%= purchase_order.po_date_short_format %>
+      </div>
+    </div>
+
+  </div>
+  
+
+  <%=div_row(12) do %>
+    <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
+  <% end %>
 
 
-<p>
-  <strong>Supplier:</strong>
-  <%= purchase_order.supplier.name %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= purchase_order.status %>
-</p>
-<p>
-  <strong>Date:</strong>
-  <%= purchase_order.date %>
-</p>
-
-<p>
+  <%=div_row(12) do %>
   <strong>Notes:</strong>
   <%= purchase_order.notes %>
-</p>
+  <% end if purchase_order.notes%>
+  <!--%= link_to 'Edit', edit_purchase_order_path(purchase_order) %-->
 
+  <br/>
 
-<%= link_to 'Edit', edit_purchase_order_path(purchase_order) %>
+  <table id="po_detail">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th style="width: 4em">Quantity</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% Item.all.each do | item | %>
+        <tr>
+          <td><%=item.name%></td>
+          <td>100</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%=link_to 'Add Item', autocomplete_items_path, class: 'tiny button', remote: true%>
 
 <% else %>
   No Purchase Order Selected.
