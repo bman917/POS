@@ -22,6 +22,7 @@
       &nbsp;
       &nbsp;
       <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
+      <%=hidden_field_tag :purchase_order_id, purchase_order.id %>
     </div>
 
     <div class="column small-4">
@@ -59,15 +60,16 @@
     </thead>
 
     <tbody>
-      <% Item.all.each do | item | %>
-        <tr>
-          <td><%=item.name%></td>
-          <td>100</td>
-        </tr>
+      <% purchase_order.item_purchase_orders.each do | item | %>
+        <%=tr_highlight(item, @item_purchase_order) do %>
+          <td><%=item.item.name%></td>
+          <td><%=item.quantity%></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>
-  <%=link_to 'Add Item', autocomplete_items_path, class: 'tiny button', remote: true%>
+
+  <%=link_to 'Add Item', autocomplete_item_purchase_orders_path, class: 'tiny button', remote: true%>
 
 <% else %>
   No Purchase Order Selected.

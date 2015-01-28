@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :item_purchase_orders do
+    collection do
+      get 'autocomplete'
+    end
+  end
+
   resources :purchase_orders
 
   resources :item_bases 

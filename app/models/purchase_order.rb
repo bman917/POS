@@ -1,5 +1,6 @@
 class PurchaseOrder < ActiveRecord::Base
   belongs_to :supplier
+  has_many :item_purchase_orders
 
   def po_id
     if id

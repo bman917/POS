@@ -1,3 +1,3 @@
 $('#purchase_order_show_details').remove();
-$('#pos_details').append('<%=j render partial: 'show', 
+$('#pos_details').append('<%=j render partial: 'purchase_orders/show', 
     locals: {purchase_order: @purchase_order}%>');

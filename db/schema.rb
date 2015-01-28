@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114084025) do
+ActiveRecord::Schema.define(version: 20150128165009) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -57,6 +57,20 @@ ActiveRecord::Schema.define(version: 20150114084025) do
   end
 
   add_index "item_bases", ["name"], name: "index_item_bases_on_name"
+
+  create_table "item_purchase_orders", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "purchase_order_id"
+    t.integer  "quantity"
+    t.float    "estimated_unit_price"
+    t.float    "estimated_total_price"
+    t.string   "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_purchase_orders", ["item_id"], name: "index_item_purchase_orders_on_item_id"
+  add_index "item_purchase_orders", ["purchase_order_id"], name: "index_item_purchase_orders_on_purchase_order_id"
 
   create_table "items", force: true do |t|
     t.integer  "item_base_id"
