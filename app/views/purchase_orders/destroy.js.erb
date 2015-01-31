@@ -1,0 +1,11 @@
+$('#purchase_orders').remove();
+$('#po_list .pagination').remove();
+$('#po_list').append('<%=j render partial: 'table', 
+    locals: {purchase_orders: @purchase_orders}%>');
+
+$('#purchase_order_show_details').remove();
+$('#pos_details').append('<%=j render partial: 'purchase_orders/show', 
+    locals: {purchase_order: @purchase_order}%>');
+
+alert("Deleted PO# <%=@purchase_order.po_id%>");
+

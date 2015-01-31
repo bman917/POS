@@ -4,4 +4,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!
+
+
+  def selected_supplier
+    @supplier_id = params[:supplier_id] || session[:supplier_id] || Supplier.all.first.id
+    session[:supplier_id] = @supplier_id
+  end
+
+  def selected_status
+    @status = params[:status] || session[:status] || 'PENDING'
+    session[:status] = @status
+  end
+
 end

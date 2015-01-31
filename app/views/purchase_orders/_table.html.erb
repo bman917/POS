@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>PO#</th>
-        <th>Date</th>
+        <th colspan="2">Date</th>
       </tr>
     </thead>
 
@@ -12,6 +12,13 @@
         <%=tr_highlight_simple(purchase_order, @purchase_order) do%>
           <td class="id"><%= purchase_order.po_id %></td>
           <td><%= purchase_order.po_date_short_format %></td>
+          <td><%= link_to delete_img, 
+                    purchase_order, 
+                    remote: true,
+                    method: :delete,
+                    data: { confirm: "Delete PO# #{purchase_order.po_id}?"}
+              %>
+          </td>
         <% end %>
       <% end %>
     </tbody>

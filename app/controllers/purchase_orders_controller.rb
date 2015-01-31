@@ -5,10 +5,7 @@ class PurchaseOrdersController < ApplicationController
 
   def index
 
-    @status = params[:status] || 'PENDING'
-    @supplier_id = params[:supplier_id] || Supplier.all.first.id
-
-    @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
+    purchase_order_list
 
     respond_to do | format |
       format.html
@@ -17,10 +14,16 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def show
+    
     respond_to do | format |
-      format.html
+      format.html do
+        purchase_order_list
+        render 'index'
+      end
+
       format.js
     end
+    
   end
 
   def new
@@ -53,15 +56,30 @@ class PurchaseOrdersController < ApplicationController
 
   def destroy
     @purchase_order.destroy
-    respond_with(@purchase_order)
+    purchase_order_list
+
+    respond_to do | format |
+      format.html do
+        purchase_order_list
+        render 'index'
+      end
+      
+      format.js
+    end
   end
 
   private
     def set_purchase_order
-      @purchase_order = PurchaseOrder.find(params[:id])
+      @purchase_order = PurchaseOrder.find_by(id: params[:id])
     end
 
     def purchase_order_params
       params.require(:purchase_order).permit(:supplier_id, :status, :notes, :date)
+    end
+
+    def purchase_order_list
+      @status = selected_status
+      @supplier_id = selected_supplier
+      @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
     end
 end

@@ -1,6 +1,8 @@
 <div id="purchase_order_show_details">
 
-<% if purchase_order && purchase_order.created_at.to_date == Date.today %>
+<%if purchase_order && purchase_order.destroyed? == false %>
+
+<% if purchase_order.created_at.to_date == Date.today %>
 
   <div class="row">
     <div class="column small-12">
@@ -12,7 +14,7 @@
 
 <% end %>
 
-<%if purchase_order %>
+
   
   <div class="row">
 
