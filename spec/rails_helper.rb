@@ -11,6 +11,7 @@ Capybara.server do |app, port|
 end
 
 require 'form_fillers/supplier_filler'
+require 'seeder'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -51,4 +52,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   
   #config.include FactoryGirl::Syntax::Methods
+  config.include Seeder
 end

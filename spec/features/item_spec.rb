@@ -1,20 +1,5 @@
 require 'rails_helper'
 
-def item_spec_seed
-  ItemBase.destroy_all
-  Item.destroy_all
-  Supplier.destroy_all
-  Attrib.destroy_all
-
-  @unit = Unit.find_or_create_by(name: 'Piece', abbrev: 'pcs')
-  @attrib = { 
-    color:     Attrib.create!(name: 'Color',     display_number: 3),
-    thickness: Attrib.create!(name: 'Thickness', display_number: 1),
-    size:      Attrib.create!(name: 'Size',      display_number: 2),
-    model:     Attrib.create!(name: 'Model',     display_number: 4)
-  }
-end
-
 describe Item do 
   before(:each) do
     @add_attribute_button =  'Add Attribute'
@@ -27,11 +12,8 @@ describe Item do
       item_spec_seed
 
       @supplier1 = Supplier.create(name: "Supplier_1")
-      @basic_item = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier1, unit: "piece")
-      @basic_item.add_attrib(@attrib[:color], "Red")
-      @basic_item.add_attrib(@attrib[:size], "Small")
-      @basic_item.add_attrib(@attrib[:thickness], "1/2")
-      @basic_item.save!
+
+      item_spec_create_basic_item
 
       @basic_item2 = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier1, unit: "piece")
       @basic_item2.add_attrib(@attrib[:color], "Green")
