@@ -19,7 +19,7 @@ function purchase_order_table_click_listener() {
   $('#purchase_orders tbody tr').on('click', function(){
   $('#purchase_orders tbody tr').removeClass('highlight');
   $(this).addClass('highlight');
-    purchase_order_show_ajax($(this).attr('id'));
+    purchase_order_show_ajax($(this).attr('data-id'));
   });
 }
 

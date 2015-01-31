@@ -40,7 +40,7 @@ module HtmlHelper
 
     css_class = "#{h} #{n}".squeeze(' ').strip
 
-    content_tag :tr, id: model.id, class: css_class do
+    content_tag :tr, id: css_id(model), data: {id: model.id}, class: css_class do
       yield
     end
   end

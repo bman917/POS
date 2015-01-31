@@ -1,12 +1,14 @@
 module Seeder
 
-  def item_spec_seed
+  def clear_all
     ItemBase.destroy_all
     Item.destroy_all
     Supplier.destroy_all
     Attrib.destroy_all
     PurchaseOrder.destroy_all
+  end
 
+  def basic_seed
     @unit = Unit.find_or_create_by(name: 'Piece', abbrev: 'pcs')
     @attrib = { 
       color:     Attrib.create!(name: 'Color',     display_number: 3),
@@ -14,6 +16,12 @@ module Seeder
       size:      Attrib.create!(name: 'Size',      display_number: 2),
       model:     Attrib.create!(name: 'Model',     display_number: 4)
     }
+
+  end
+
+  def item_spec_seed
+    clear_all
+    basic_seed
   end
 
   def item_spec_create_basic_item
@@ -25,10 +33,8 @@ module Seeder
   end
 
   def create_items(number)
-    item_spec_seed
-    
     @items = []
-    @supplier1 = Supplier.create(name: "Supplier_1")
+    @supplier1 = Supplier.find_or_create_by(name: "Supplier_1")
 
     number.times do | i |
       item = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier1, unit: "piece")      
@@ -39,5 +45,16 @@ module Seeder
       @items << item
     end
     return @items
+  end
+
+  def create_purchase_orders(number)
+    PurchaseOrder.destroy_all
+    expect(ItemPurchaseOrder.all.count).to eq 0
+    
+    @supplier1 = Supplier.find_or_create_by(name: "Supplier_1")
+    number.times do | i |
+      PurchaseOrder.create!(supplier: @supplier1, status: 'PENDING', date: Date.today)      
+    end
+    PurchaseOrder.all
   end
 end
