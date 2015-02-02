@@ -22,7 +22,8 @@
     </table>
 
     <%=div_row(12) do %>
-      <%=link_to 'Add Item', autocomplete_item_purchase_orders_path, class: 'tiny success button left', remote: true%>
+      <%=link_to 'Add Item', autocomplete_item_purchase_orders_path, 
+            id: 'po_detail_add_item_button', class: 'tiny success button left', remote: true%>
       <%=submit_tag 'Delete Items', 
         id: 'delete_item_purchase_order_button',
         class: 'button tiny alert right',

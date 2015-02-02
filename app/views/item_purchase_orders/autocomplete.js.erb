@@ -45,4 +45,9 @@ $(qty_css).on('keyup', function(e){
   }
 });
 
+Mousetrap.stopCallback = function() { return false };
 
+Mousetrap.bind('esc', function(e){
+  $('tr#add_item').remove();
+  Mousetrap.unbind('esc');
+});

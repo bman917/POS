@@ -65,3 +65,13 @@ function purchase_order_show_check_box_listener() {
     }
   });
 }
+
+function purchase_order_show_keyboard_shortcuts() {
+
+
+  Mousetrap.bind('alt+a', function(e){
+    $('#po_detail_add_item_button').click();
+  });
+
+
+}
