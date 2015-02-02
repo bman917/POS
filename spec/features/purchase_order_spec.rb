@@ -8,36 +8,81 @@ describe PurchaseOrder do
     sign_in
   end
 
-  describe 'Create', :js do
+  describe 'Create', :js, :create do
     before(:each) do
       @purchase_order_show_details_css = "#purchase_order_show_details"
       @items = create_items(10)
       visit purchase_orders_path
-    end
 
-    it 'works!' do
       expect(page).to have_content "No Purchase Order Selected"
       
       click_on 'New Purchase Order'
       page.driver.browser.switch_to.alert.accept
       
       expect(page).to have_css @purchase_order_show_details_css
+    end
 
-      within @purchase_order_show_details_css do
-        click_on 'Add Item'
+    describe 'Add Item' do
+      before(:each) do
+        within @purchase_order_show_details_css do
+          click_on 'Add Item'
+        end
       end
-      
-      fill_autocomplete 'item_name', with: "Seeded Item Base"
-      sleep 0.5
-      has_focus = page.evaluate_script("document.activeElement.id") == "item_purchase_order_quantity"
-      expect(has_focus ).to be_truthy
 
-      fill_in 'item_purchase_order_quantity', with: "10"
-      find('#item_purchase_order_quantity').native.send_keys(:return)
-      within @purchase_order_show_details_css do
-        expect(page).to have_css('tr.highlight')
-        expect(page).to have_content('Seeded Item Base')
-        expect(page).to have_no_css('#item_name')
+      it "Initially has no Add button" do
+        within @purchase_order_show_details_css do
+          expect(page).to have_no_selector("tr#add_item a#add_item_button")
+        end
+      end
+
+      it 'Disables Add button link with invalid item name' do
+        fill_autocomplete 'item_name', with: "Seeded Item Base"
+        expect(page).to have_selector("tr#add_item a#add_item_button")
+
+        fill_in 'item_name', with: 'XXXX'
+        page.execute_script %Q{ $('#item_purchase_order_quantity').trigger('focus') }
+        expect(page).to have_no_selector("tr#add_item a#add_item_button")
+      end
+
+      it "rejects invalid quantity", :reject do
+        fill_autocomplete 'item_name', with: "Seeded Item Base"
+        expect(page).to have_selector("tr#add_item a#add_item_button")
+        within 'tr#add_item' do
+          fill_in 'item_purchase_order_quantity', with: "XX"
+          click_on 'Add'
+        end
+        expect(page).to have_content("Save failed")
+        expect(page).to have_content("Quantity is not a number")
+        
+      end
+
+      describe 'Create', :add_item_create do
+        before(:each) do
+          fill_autocomplete 'item_name', with: "Seeded Item Base"
+          sleep 0.5
+          has_focus = page.evaluate_script("document.activeElement.id") == "item_purchase_order_quantity"
+          expect(has_focus ).to be_truthy
+
+          fill_in 'item_purchase_order_quantity', with: "10"
+        end
+        it 'works with return key' do
+          find('#item_purchase_order_quantity').native.send_keys(:return)
+        end
+
+        it 'works with Add button link' do
+          within 'tr#add_item' do
+            click_on 'Add'
+          end
+        end
+
+
+        after(:each) do
+          within @purchase_order_show_details_css do
+            expect(page).to have_css('tr.highlight')
+            expect(page).to have_content('Seeded Item Base')
+            expect(page).to have_no_css('#item_name')
+          end
+        end
       end
     end
   end
@@ -129,6 +174,7 @@ describe PurchaseOrder do
 
       within @purchase_order_show_details_css do
         expect(page).to have_no_content @first_item_purchase_order.item.name
+        expect(page).to have_content "Successfully Deleted 1 item"
       end
 
     end

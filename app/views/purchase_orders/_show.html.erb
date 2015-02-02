@@ -1,93 +1,74 @@
 <div id="purchase_order_show_details">
 
-<%if purchase_order && purchase_order.destroyed? == false %>
-
-<% if purchase_order.created_at.to_date == Date.today %>
-
-  <div class="row">
-    <div class="column small-12">
-      <div data-alert class="alert-box success">
-        * NEW PURCHASE ORDER CREATED TODAY
-      </div>
+  <% if flash[:status]%>
+    <div id="show_details_notifications" class="alert-box info">
+      <%=flash[:status]%>
     </div>
-  </div>
-
-<% end %>
-
-  <div class="row">
-    <div class="column small-8">
-      <span style="font-size: 150%">PO#</span>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
-      <%=hidden_field_tag :purchase_order_id, purchase_order.id %>
-    </div>
-
-    <div class="column small-4">
-      <div class="row">
-        <span class="label"><%= purchase_order.status %></span>
-      </div>
-      <div class="row">
-        <strong>Date:</strong>
-        <%= purchase_order.po_date_short_format %>
-      </div>
-    </div>
-
-  </div>
-  
-
-  <%=div_row(12) do %>
-    <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
+    <% flash.discard(:status) %>
   <% end %>
 
+  <% if flash[:error]%>
+    <div id="show_details_notifications" class="alert-box alert">
+      <%=flash[:error]%>
+    </div>
+    <% flash.discard(:error) %>
+  <% end %>
 
-  <%=div_row(12) do %>
-    <strong>Notes:</strong>
-    <%= purchase_order.notes %>
-  <% end if purchase_order.notes%>
-  <!--%= link_to 'Edit', edit_purchase_order_path(purchase_order) %-->
+  <%if purchase_order && purchase_order.destroyed? == false %>
 
-  <br/>
-
-  <%=form_tag destroy_multiple_item_purchase_orders_path, method: :delete do %>
-    <%=hidden_field_tag :purchase_order_id, purchase_order.id%>
-
-    <table id="po_detail">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th style="width: 8em" colspan="3">Quantity</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% purchase_order.item_purchase_orders.each do | item | %>
-          <%=tr_highlight(item, @item_purchase_order) do %>
-            <td><%=item.item.name%></td>
-            <td style="text-align: right"><%=item.quantity%></td>
-            <td style="font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
-            <td><%=check_box_tag "item_purchase_order_ids[]", item.id %></td>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-
-    <%=div_row(12) do %>
-      <%=link_to 'Add Item', autocomplete_item_purchase_orders_path, class: 'tiny success button left', remote: true%>
-      <%=submit_tag 'Delete Items', 
-        id: 'delete_item_purchase_order_button',
-        class: 'button tiny alert right',
-          disabled: true,
-          data: { confirm: "Delete selected items from PO# #{purchase_order.po_id}"}%>
+    <% if purchase_order.created_at.to_date == Date.today %>
+      <div class="row">
+        <div class="column small-12">
+          <div data-alert class="alert-box success">
+            * NEW PURCHASE ORDER CREATED TODAY
+          </div>
+        </div>
+      </div>
     <% end %>
-  <% end %>
+
+    <div class="row">
+      <div class="column small-8">
+        <span style="font-size: 150%">PO#</span>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
+        <%=hidden_field_tag :purchase_order_id, purchase_order.id %>
+      </div>
+
+      <div class="column small-4">
+        <div class="row">
+          <span class="label"><%= purchase_order.status %></span>
+        </div>
+        <div class="row">
+          <strong>Date:</strong>
+          <%= purchase_order.po_date_short_format %>
+        </div>
+      </div>
+
+    </div>
+      
+
+      <%=div_row(12) do %>
+        <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
+      <% end %>
 
 
+      <%=div_row(12) do %>
+        <strong>Notes:</strong>
+        <%= purchase_order.notes %>
+      <% end if purchase_order.notes%>
 
-<% else %>
-  No Purchase Order Selected.
-<%end%>
+      <br/>
+
+      <%= render partial: 'purchase_orders/show_details_table', 
+            locals: {purchase_order: purchase_order} %>
+
+  <% else %>
+      No Purchase Order Selected.
+  <%end%>
+
+
 
 </div>
 

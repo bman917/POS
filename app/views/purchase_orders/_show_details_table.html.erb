@@ -1,0 +1,33 @@
+<%=form_tag destroy_multiple_item_purchase_orders_path, method: :delete, remote: true do %>
+    <%=hidden_field_tag :purchase_order_id, purchase_order.id%>
+
+    <table id="po_detail">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th style="width: 8em" colspan="3">Quantity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% purchase_order.item_purchase_orders.each do | item | %>
+          <%=tr_highlight(item, @item_purchase_order) do %>
+            <td><%=item.item.name%></td>
+            <td style="text-align: right"><%=item.quantity%></td>
+            <td style="font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
+            <td><%=check_box_tag "item_purchase_order_ids[]", item.id %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%=div_row(12) do %>
+      <%=link_to 'Add Item', autocomplete_item_purchase_orders_path, class: 'tiny success button left', remote: true%>
+      <%=submit_tag 'Delete Items', 
+        id: 'delete_item_purchase_order_button',
+        class: 'button tiny alert right',
+          disabled: true,
+          data: { confirm: "Delete selected items from PO# #{purchase_order.po_id}"}%>
+    <% end %>
+<!-- END FORM -->  
+<% end %>

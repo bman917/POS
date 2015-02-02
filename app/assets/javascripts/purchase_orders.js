@@ -30,6 +30,12 @@ function purchase_order_show_ajax(id) {
     });
 }
 
+function purchase_order_show_notification(message) {
+  $('#show_details_notifications').append(message);
+  $('#show_details_notifications').toggle();
+  $(document).foundation('alert', 'reflow');
+}
+
 function purchase_order_create_listener() {
   supplier_id = $('#po_supplier').val();
   supplier = $('#po_supplier option:selected').text();

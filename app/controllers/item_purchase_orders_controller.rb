@@ -5,17 +5,23 @@ class ItemPurchaseOrdersController < ApplicationController
   def destroy_multiple
     begin
       ret_val = ItemPurchaseOrder.destroy_all(id: params[:item_purchase_order_ids])
-      flash[:status] = "Successfully Deleted #{ret_val.size} Items"
+      flash[:status] = "Successfully Deleted #{ret_val.size} #{"item".pluralize(ret_val.size)}"
+      @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+      
+      respond_to do | format |
+        format.html do 
+          purchase_order_list
+          render 'purchase_orders/index', flash: flash
+        end
+
+        format.js do
+          render 'purchase_orders/show', flash: flash
+        end
+      end
+
     rescue Exception => e
       flash[:error] = "Unexpected error while deleting Items: #{e.message}"
     end
-
-    @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-    purchase_order_list
-
-    render 'purchase_orders/index', flash: flash
-    
-    
   end
 
   def autocomplete
@@ -23,12 +29,14 @@ class ItemPurchaseOrdersController < ApplicationController
 
   def create
     @item_purchase_order = ItemPurchaseOrder.new(item_purchase_order_params)
-    if @item_purchase_order.save
-      @purchase_order = @item_purchase_order.purchase_order
-      render 'purchase_orders/show'
-    else
-      render 'error'
+    
+    unless @item_purchase_order.save
+      flash[:error] = "Save failed. #{@item_purchase_order.errors.full_messages}"
     end
+
+    @purchase_order = @item_purchase_order.purchase_order
+
+    render 'purchase_orders/show'
   end
 
   private
