@@ -88,26 +88,49 @@ describe PurchaseOrder do
   describe 'Show', :js, :show do
     before(:each) do
       @items = create_items(5)
-      @purchase_order = create_purchase_orders(1).first
+      @purchase_order_with_items = create_purchase_orders(1).first
 
       @items.each do | item |
-        @purchase_order.item_purchase_orders.create(item: item, quantity: 10)
+        @purchase_order_with_items.item_purchase_orders.create(item: item, quantity: 10)
       end
 
       visit purchase_orders_path
+
+      @first_record = "#po_list #purchase_orders tbody tr:first"
+      page.evaluate_script("$('#{@first_record}').click();")
     end
 
     it 'works' do
-      first_record = "#po_list #purchase_orders tbody tr:first"
-      page.evaluate_script("$('#{first_record}').click();")
       expect(page).to have_no_content "No Purchase Order Selected"
-      expect(page).to have_content("PO# #{@purchase_order.po_id}")
+      expect(page).to have_content("PO# #{@purchase_order_with_items.po_id}")
 
       within @purchase_order_show_details_css do
         expect(page).to have_content @items.first.name
       end   
     end
 
-  end
+    it 'delete button is disabled initially' do
+      within @purchase_order_show_details_css do
+        expect(page).to have_button('Delete', disabled: true)
+      end
+    end
 
+    it 'delete item works' do
+      @first_item_purchase_order = @purchase_order_with_items.item_purchase_orders.first
+      find(:css, "#item_purchase_order_ids_[value='#{@first_item_purchase_order.id}']").set(true)
+
+      within @purchase_order_show_details_css do
+        click_on 'Delete Items'
+      end   
+
+      text = page.driver.browser.switch_to.alert.text
+      expect(text).to have_content("Delete selected items from PO# #{@purchase_order_with_items.po_id}")
+      page.driver.browser.switch_to.alert.accept
+
+      within @purchase_order_show_details_css do
+        expect(page).to have_no_content @first_item_purchase_order.item.name
+      end
+
+    end
+  end
 end

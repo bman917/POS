@@ -47,3 +47,15 @@ function purchase_order_create_listener() {
 
 }
 
+function purchase_order_show_check_box_listener() {
+  var checkbox_selector = '#purchase_order_show_details input[type="checkbox"]';
+
+  $(checkbox_selector).unbind();
+  $(checkbox_selector).change(function(event) {
+    if ($(checkbox_selector + ":checked").length > 0) {
+      $('#delete_item_purchase_order_button').removeAttr('disabled');
+    } else {
+      $('#delete_item_purchase_order_button').attr('disabled', 'disabled');
+    }
+  });
+}

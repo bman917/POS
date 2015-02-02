@@ -77,9 +77,5 @@ class PurchaseOrdersController < ApplicationController
       params.require(:purchase_order).permit(:supplier_id, :status, :notes, :date)
     end
 
-    def purchase_order_list
-      @status = selected_status
-      @supplier_id = selected_supplier
-      @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
-    end
+
 end

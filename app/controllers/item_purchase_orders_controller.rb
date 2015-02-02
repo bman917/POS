@@ -2,6 +2,22 @@ class ItemPurchaseOrdersController < ApplicationController
 
   respond_to :html, :js
 
+  def destroy_multiple
+    begin
+      ret_val = ItemPurchaseOrder.destroy_all(id: params[:item_purchase_order_ids])
+      flash[:status] = "Successfully Deleted #{ret_val.size} Items"
+    rescue Exception => e
+      flash[:error] = "Unexpected error while deleting Items: #{e.message}"
+    end
+
+    @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+    purchase_order_list
+
+    render 'purchase_orders/index', flash: flash
+    
+    
+  end
+
   def autocomplete
   end
 

@@ -1,6 +1,7 @@
 class PurchaseOrder < ActiveRecord::Base
   belongs_to :supplier
   has_many :item_purchase_orders, dependent: :destroy
+  has_many :items, through: :item_purchase_orders
 
   def po_id
     if id

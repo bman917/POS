@@ -1,4 +1,4 @@
-  <%= will_paginate purchase_orders %>
+  <%= will_paginate purchase_orders, params: { controller: 'purchase_orders', action: 'index'} %>
   <table id="purchase_orders">
     <thead>
       <tr>

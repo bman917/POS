@@ -33,7 +33,7 @@
     <div class="po_panel">
 
       <div id="po_list">
-      <%=render partial: 'table', locals: {purchase_orders: @purchase_orders} %>
+      <%=render partial: 'purchase_orders/table', locals: {purchase_orders: @purchase_orders} %>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
 
   <div class="small-7 columns">
     <div id="pos_details" class="panel">
-      <%=render partial: 'show', locals: {purchase_order: @purchase_order}%>
+      <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order}%>
     </div>
   </div>
 

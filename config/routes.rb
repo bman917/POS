@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :item_purchase_orders do
     collection do
       get 'autocomplete'
+      delete 'destroy_multiple'
     end
   end
 
