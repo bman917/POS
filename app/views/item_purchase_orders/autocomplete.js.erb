@@ -51,3 +51,8 @@ Mousetrap.bind('esc', function(e){
   $('tr#add_item').remove();
   Mousetrap.unbind('esc');
 });
+
+setTimeout(function() {
+  $('#item_name').focus(); 
+}, 100);
+
