@@ -1,0 +1,44 @@
+
+@import "foundation/components/panels";
+$include-html-panel-classes: $include-html-classes !default;
+
+$po-show-top-bar-height: 30px;
+$po-show-menu-bg: #B4B2B2;
+
+#purchase_order_show_details {
+  margin-top: 0;
+  padding-top: 0;
+
+  .contain-to-grid {
+    margin: 0;
+    padding: 0;
+  }
+
+  .top-bar {
+    border: $panel-border-size $panel-border-style $panel-border-color;
+    background: $panel-border-color;
+    height: $po-show-top-bar-height;
+
+    .top-bar-section {
+      ul, li, a {
+        height: $po-show-top-bar-height !important;
+        line-height: $po-show-top-bar-height !important;
+      }
+
+      li:not(.has-form) a:not(.button), label, ul, li {
+        background: $po-show-menu-bg;
+      }
+
+      // Controls the arrow after the menu item
+      .has-dropdown > a:after {
+        top: $po-show-top-bar-height /2;
+      }
+
+      .dropdown label {
+        background: $po-show-menu-bg;
+      }
+    }
+  }
+
+
+}

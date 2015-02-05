@@ -1,18 +1,10 @@
 <div id="purchase_order_show_details">
 
-  <% if flash[:status]%>
-    <div id="show_details_notifications" class="alert-box info">
-      <%=flash[:status]%>
-    </div>
-    <% flash.discard(:status) %>
-  <% end %>
+<%= render 'purchase_orders/show/menu' %>
 
-  <% if flash[:error]%>
-    <div id="show_details_notifications" class="alert-box alert">
-      <%=flash[:error]%>
-    </div>
-    <% flash.discard(:error) %>
-  <% end %>
+<div class="panel">
+
+  <%= render 'purchase_orders/show/alerts' %>
 
   <%if purchase_order && purchase_order.destroyed? == false %>
 
@@ -38,16 +30,16 @@
 
       <div class="column small-4">
         <div class="row">
-          <span class="label"><%= purchase_order.status %></span>
+            <span class="label"><%= purchase_order.status %></span>
         </div>
         <div class="row">
           <strong>Date:</strong>
           <%= purchase_order.po_date_short_format %>
         </div>
       </div>
-
     </div>
-      
+   
+  
 
       <%=div_row(12) do %>
         <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
@@ -59,6 +51,8 @@
         <%= purchase_order.notes %>
       <% end if purchase_order.notes%>
 
+
+
       <br/>
 
       <%= render partial: 'purchase_orders/show_details_table', 
@@ -69,7 +63,7 @@
   <%end%>
 
 
-
+</div>
 </div>
 
 <%=javascript_tag do %>

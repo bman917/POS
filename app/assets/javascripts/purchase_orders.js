@@ -37,10 +37,11 @@ function purchase_order_show_notification(message) {
 }
 
 function purchase_order_create_listener() {
-  supplier_id = $('#po_supplier').val();
-  supplier = $('#po_supplier option:selected').text();
 
   $('a#new_purchase_order').on('click', function() {
+
+    supplier_id = $('#po_supplier').val();
+    supplier = $('#po_supplier option:selected').text();
 
     if (confirm("New Purchase Order for '" + supplier + "'?")) {
       $.ajax({

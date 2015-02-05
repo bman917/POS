@@ -15,8 +15,7 @@
         <ul class="po_filter po_filter_spacings">
           <li>Supplier</li>
           <li><%=select_tag :po_supplier, 
-            options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), 
-            include_blank: true%>
+            options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id)%>
           </li>
           <li>Status</li>
           <li>
@@ -43,7 +42,7 @@
 
 
   <div class="small-7 columns">
-    <div id="pos_details" class="panel">
+    <div id="pos_details">
       <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order}%>
     </div>
   </div>
