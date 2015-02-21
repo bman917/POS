@@ -1,6 +1,15 @@
-$('#purchase_order_show_details').remove();
-$('#pos_details').append('<%=j render partial: 'purchase_orders/show', 
-    locals: {purchase_order: @purchase_order}%>');
-purchase_order_show_check_box_listener();
+$('#purchase_order_show_details').slideUp("fast", 
+  function(){
+    $(this).remove();
 
-$(document).foundation('topbar', 'reflow');
+    $('#pos_details').hide();
+    $('#pos_details').append('<%=j render partial: 'purchase_orders/show', 
+        locals: {purchase_order: @purchase_order}%>');
+    $('#pos_details').slideDown("fast");
+    
+    purchase_order_show_check_box_listener();
+    $(document).foundation('topbar', 'reflow');
+  });
+
+
+

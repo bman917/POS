@@ -1,38 +1,55 @@
 <%=page_title "Item List" %>
 
 <%=form_tag destroy_multiple_items_path, method: :delete do %>
-  <%=div_row(10) do %>
-    <div id="items_actions">
-      <%=submit_tag 'Delete Checked', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
+    <div id="items_actions" style="margin-bottom: -17px">
+      <%=submit_tag 'Delete Checked', class: 'alert button tiny', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
     </div>
-  <% end %>
 
-  <table>
-    <thead>
-      <tr>
-        <th colspan="2">Name</th>
-        <th style="width: 5em">Unit</th>
-        <th style="width: 15em">Supplier</th>
-        <th style="width: 5em" colspan="4"></th>
-      </tr>
-    </thead>
 
-    <tbody>
-      <% @items.each do |item| %>
-        <%=tr_highlight item, @item do%>
-          <td><%= check_box_tag "item_ids[]", item.id %></td>
-          <td><%= item.name %></td>
-          <td><%= item.unit %></td>
-          <td><%= item.supplier.try(:name) %></td>
-          <td><%= link_to view_img, item %></td>
-          <td><%= link_to "Copy", copy_item_path(item) %></td>
-          <td><%= link_to edit_img, edit_item_path(item) %></td>
-          <td><%= link_to delete_img, item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
+<table id="item_selector">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Supplier</th>
+      <th></th>
+      <th></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+
+  </tbody>
+</table>
 <% end %>
+
+<%=javascript_tag do %>
+  $(document).ready( function () {
+
+  columns = <%=raw ItemsDatatable.columns %>;
+  columnDefs = <%=raw ItemsDatatable.columDefs %>;
+
+  $('#item_selector').dataTable( {
+      "lengthChange": false,
+      "paging": true,
+      "pageLength": 20,
+      "pagingType": "simple_numbers",
+      "jQueryUI": false,
+      "processing": true,
+      "serverSide": true,
+      "searching": false,
+      "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
+      "columns": columns,
+      "order": [[1, 'asc']]
+  } );
+
+} );
+
+<% end %>
+
+
 <br>
 
 <%= link_to 'New Item', new_item_path, class: 'button' %>

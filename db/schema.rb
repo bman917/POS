@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "attrib_item_bases", ["attrib_id"], name: "index_attrib_item_bases_on_attrib_id"
-  add_index "attrib_item_bases", ["item_base_id"], name: "index_attrib_item_bases_on_item_base_id"
+  add_index "attrib_item_bases", ["attrib_id"], name: "index_attrib_item_bases_on_attrib_id", using: :btree
+  add_index "attrib_item_bases", ["item_base_id"], name: "index_attrib_item_bases_on_item_base_id", using: :btree
 
   create_table "attrib_item_values", force: true do |t|
     t.integer  "item_id"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "attrib_item_values", ["attrib_id"], name: "index_attrib_item_values_on_attrib_id"
-  add_index "attrib_item_values", ["item_id"], name: "index_attrib_item_values_on_item_id"
+  add_index "attrib_item_values", ["attrib_id"], name: "index_attrib_item_values_on_attrib_id", using: :btree
+  add_index "attrib_item_values", ["item_id"], name: "index_attrib_item_values_on_item_id", using: :btree
 
   create_table "attribs", force: true do |t|
     t.string   "name"
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "attribs", ["display_number"], name: "index_attribs_on_display_number", unique: true
-  add_index "attribs", ["name"], name: "index_attribs_on_name", unique: true
+  add_index "attribs", ["display_number"], name: "index_attribs_on_display_number", unique: true, using: :btree
+  add_index "attribs", ["name"], name: "index_attribs_on_name", unique: true, using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -56,21 +56,21 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "item_bases", ["name"], name: "index_item_bases_on_name"
+  add_index "item_bases", ["name"], name: "index_item_bases_on_name", using: :btree
 
   create_table "item_purchase_orders", force: true do |t|
     t.integer  "item_id"
     t.integer  "purchase_order_id"
     t.integer  "quantity"
-    t.float    "estimated_unit_price"
-    t.float    "estimated_total_price"
+    t.float    "estimated_unit_price",  limit: 24
+    t.float    "estimated_total_price", limit: 24
     t.string   "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "item_purchase_orders", ["item_id"], name: "index_item_purchase_orders_on_item_id"
-  add_index "item_purchase_orders", ["purchase_order_id"], name: "index_item_purchase_orders_on_purchase_order_id"
+  add_index "item_purchase_orders", ["item_id"], name: "index_item_purchase_orders_on_item_id", using: :btree
+  add_index "item_purchase_orders", ["purchase_order_id"], name: "index_item_purchase_orders_on_purchase_order_id", using: :btree
 
   create_table "items", force: true do |t|
     t.integer  "item_base_id"
@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.string   "name"
   end
 
-  add_index "items", ["item_base_id"], name: "index_items_on_item_base_id"
-  add_index "items", ["name", "supplier_id", "unit"], name: "index_items_on_name_and_supplier_id_and_unit", unique: true
-  add_index "items", ["supplier_id"], name: "index_items_on_supplier_id"
+  add_index "items", ["item_base_id"], name: "index_items_on_item_base_id", using: :btree
+  add_index "items", ["name", "supplier_id", "unit"], name: "index_items_on_name_and_supplier_id_and_unit", unique: true, using: :btree
+  add_index "items", ["supplier_id"], name: "index_items_on_supplier_id", using: :btree
 
   create_table "purchase_orders", force: true do |t|
     t.integer  "supplier_id"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "purchase_orders", ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
+  add_index "purchase_orders", ["supplier_id"], name: "index_purchase_orders_on_supplier_id", using: :btree
 
   create_table "suppliers", force: true do |t|
     t.string   "name"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "suppliers", ["name"], name: "index_suppliers_on_name", unique: true
+  add_index "suppliers", ["name"], name: "index_suppliers_on_name", unique: true, using: :btree
 
   create_table "units", force: true do |t|
     t.string   "name"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "updated_at"
   end
 
-  add_index "units", ["name"], name: "index_units_on_name", unique: true
+  add_index "units", ["name"], name: "index_units_on_name", unique: true, using: :btree
 
   create_table "user_manager_users", force: true do |t|
     t.string   "email",                  default: "",       null: false
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.string   "status",                 default: "Active"
   end
 
-  add_index "user_manager_users", ["email"], name: "index_user_manager_users_on_email", unique: true
-  add_index "user_manager_users", ["reset_password_token"], name: "index_user_manager_users_on_reset_password_token", unique: true
+  add_index "user_manager_users", ["email"], name: "index_user_manager_users_on_email", unique: true, using: :btree
+  add_index "user_manager_users", ["reset_password_token"], name: "index_user_manager_users_on_reset_password_token", unique: true, using: :btree
 
 end

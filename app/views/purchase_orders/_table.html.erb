@@ -1,33 +1,36 @@
-  <%= will_paginate purchase_orders, params: { controller: 'purchase_orders', action: 'index'} %>
-  <table id="purchase_orders">
-    <thead>
-      <tr>
-        <th>PO#</th>
-        <th colspan="2">Date</th>
-      </tr>
-    </thead>
+<div id="purchase_orders_wrapper">
+    <%= will_paginate purchase_orders, params: { controller: 'purchase_orders', action: 'index'} %>
+    <table id="purchase_orders">
+      <thead>
+        <tr>
+          <th>PO#</th>
+          <th colspan="2">Date</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <% purchase_orders.each do |purchase_order| %>
-        <%=tr_highlight_simple(purchase_order, @purchase_order) do%>
-          <td class="id"><%= purchase_order.po_id %></td>
-          <td><%= purchase_order.po_date_short_format %></td>
-          <td><%= link_to delete_img, 
-                    purchase_order, 
-                    remote: true,
-                    method: :delete,
-                    data: { confirm: "Delete PO# #{purchase_order.po_id}?"}
-              %>
-          </td>
+      <tbody>
+        <% purchase_orders.each do |purchase_order| %>
+          <%=tr_highlight_simple(purchase_order, @purchase_order) do%>
+            <td class="id click"><%= purchase_order.po_id %></td>
+            <td class="click"><%= purchase_order.po_date_short_format %></td>
+            <td><%= link_to delete_img, 
+                      purchase_order, 
+                      remote: true,
+                      hidden: true,
+                      method: :delete,
+                      data: { confirm: "Delete PO# #{purchase_order.po_id}?"}
+                %>
+            </td>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
-  <%= will_paginate purchase_orders %>
+      </tbody>
+    </table>
+    <%= will_paginate purchase_orders %>
 
 
-  <%=javascript_tag do %>
+    <%=javascript_tag do %>
 
-  purchase_order_table_click_listener();
-  
-  <% end %>
+    purchase_order_table_click_listener();
+    
+    <% end %>
+</div>

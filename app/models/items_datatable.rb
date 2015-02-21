@@ -1,5 +1,6 @@
 class ItemsDatatable
-  delegate :present, :params, :h, :link_to, :number_to_currency, to: :@view
+
+
 
 
   def initialize(view)
@@ -15,17 +16,48 @@ class ItemsDatatable
     }
   end
 
-  private
+  def self.columDefs
+      
+      return_val = '['
+      ItemsDatatable.colum_names.each do | column |
+        if column == "check_box"
+          return_val += "{\"orderable\": false},"
+        else
+          return_val += "null,"
+        end
+      end
+
+      return_val.chop + ']'
+  end
+
+  def self.columns
+      return_val = '['
+      ItemsDatatable.colum_names.each do | column |
+        return_val += "{\"data\": \"#{column}\"},"
+      end
+
+      return_val.chop + ']'
+  end
+
+  def self.colum_names
+    %w(check_box name unit supplier copy edit)
+  end
 
   def data
     filtered_items.map do | item |
-      {
-        DT_RowId: item.id,
-        DT_RowClass: "xxxx",
+      { 
+        DT_RowId: item.id, 
+        # DT_RowClass: "xxxx", 
+        check_box: check_box_tag("item_ids[]", item.id),
+        copy: link_to("Copy", copy_item_path(item)),
         name: item.name,
-        unit: item.unit
+        unit: item.unit,
+        supplier: item.supplier.name,
+        edit: link_to(edit_img, edit_item_path(item))
       }
+
       
+
     end
   end
 
@@ -38,7 +70,7 @@ class ItemsDatatable
   end
 
   def fetch_items
-    search_val = params[:search][:value]
+    search_val = params[:search][:value] if params[:search]
     puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
@@ -48,8 +80,9 @@ class ItemsDatatable
     end
   end
 
-  def columns
-    @columns = [:name, :unit]
+
+  def method_missing(*args, &block)
+    @view.send(*args, &block)
   end
 
 end

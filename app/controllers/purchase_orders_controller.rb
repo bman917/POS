@@ -55,7 +55,8 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def destroy
-    @purchase_order.destroy
+    @purchase_order = @purchase_order.destroy
+
     purchase_order_list
 
     respond_to do | format |

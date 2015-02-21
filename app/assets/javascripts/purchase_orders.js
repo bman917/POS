@@ -15,11 +15,18 @@ function purchase_order_index_ajax() {
     });
 }
 
+/*
+ *Used by purchase_orders/_table.html.erb. Adds a listner so that when a
+ *table row is clicked. An ajax call we be made to display the PO details.
+ */
 function purchase_order_table_click_listener() {
-  $('#purchase_orders tbody tr').on('click', function(){
-  $('#purchase_orders tbody tr').removeClass('highlight');
-  $(this).addClass('highlight');
-    purchase_order_show_ajax($(this).attr('data-id'));
+  $('#purchase_orders tbody tr td.click').on('click', function(){
+    $('#purchase_orders tbody tr td a').hide();
+    $('#purchase_orders tbody tr').removeClass('highlight');
+    var current_row = $(this).closest('tr');
+    current_row.find('a').show();
+    current_row.addClass('highlight');
+    purchase_order_show_ajax(current_row.attr('data-id'));
   });
 }
 
