@@ -1,6 +1,6 @@
 <div id="purchase_order_show_details">
 
-<%= render 'purchase_orders/show/menu' %>
+<%= render partial: 'purchase_orders/show/menu', locals: {purchase_order: purchase_order} %>
 
 <div class="panel">
 
@@ -30,7 +30,7 @@
 
       <div class="column small-4">
         <div class="row">
-            <span class="label"><%= purchase_order.status %></span>
+            <span id="purchase_order_status" class="label"><%= purchase_order.status %></span>
         </div>
         <div class="row">
           <strong>Date:</strong>

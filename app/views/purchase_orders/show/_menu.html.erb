@@ -14,15 +14,21 @@
         </li>
       </ul>
 
+      <% if purchase_order %>
+
       <ul class="right">
         <li class="has-dropdown">
-          <a href="#"></a>
+          <a id="actions_menu" href="#"></a>
           <ul class="dropdown">
-            <li><a href="#">Confirm This PO</a></li>
+            <li><%=link_to 'Confirm This PO', confirm_purchase_order_path(purchase_order), 
+                    data: {confirm: 'Confirm This PO. Are you sure?'},
+                    remote: true%></li>
             <li><a href="#">Print</a></li>
           </ul>
         </li>
       </ul>
+
+      <% end %>
 
     </section>
   </nav>

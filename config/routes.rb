@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :purchase_orders
+  resources :purchase_orders do
+    member do
+      get 'confirm'
+    end
+  end
 
   resources :item_bases 
 

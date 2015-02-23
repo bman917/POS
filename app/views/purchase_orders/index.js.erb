@@ -2,3 +2,9 @@ $('#purchase_orders').remove();
 $('#po_list .pagination').remove();
 $('#po_list').append('<%=j render partial: 'table', 
     locals: {purchase_orders: @purchase_orders}%>');
+
+<% if @purchase_orders.first %>
+$('#po_status').val('<%=@purchase_orders.first.status%>');
+<% end %>
+
+<%=render template: 'purchase_orders/show'%>

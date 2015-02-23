@@ -42,7 +42,12 @@
       "searching": false,
       "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
       "columns": columns,
-      "order": [[1, 'asc']]
+      "order": [[1, 'asc']],
+      "dom": 'T<"clear">lfrtip',
+      "tableTools" : {
+        "aButtons": ["pdf", "print"]
+
+      }
   } );
 
 } );

@@ -141,7 +141,7 @@ describe PurchaseOrder do
 
       visit purchase_orders_path
 
-      @first_record = "#po_list #purchase_orders tbody tr:first"
+      @first_record = "#po_list #purchase_orders tbody tr:first td:first"
       page.evaluate_script("$('#{@first_record}').click();")
     end
 
@@ -176,7 +176,27 @@ describe PurchaseOrder do
         expect(page).to have_no_content @first_item_purchase_order.item.name
         expect(page).to have_content "Successfully Deleted 1 item"
       end
+    end
 
+    describe "Menu", :show_menu, :js do
+      describe "Status Control Options" do
+        it 'has set to confirmed works' do
+
+          initial_row_count = all('table#purchase_orders tr').count
+
+          find('#actions_menu').click
+          click_on('Confirm This PO')
+          page.driver.browser.switch_to.alert.accept
+          within '#show_details_notifications' do
+            expect(page).to have_content ('PO Status Updated')
+          end
+          
+          #Check that the PO status label has been updated
+          expect(find('#purchase_order_status').text).to eq('CONFIRMED')
+
+          expect(page).to have_css('table#purchase_orders tr', :count == (initial_row_count - 1))
+        end
+      end
     end
   end
 end

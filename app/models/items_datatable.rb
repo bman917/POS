@@ -62,7 +62,11 @@ class ItemsDatatable
   end
 
   def filtered_items
-    @filtered_items ||= items.limit(params[:length]).offset(params[:start])
+    @filtered_items ||= if params[:length].to_i <= 0
+        items
+      else
+        items.limit(params[:length]).offset(params[:start])
+      end
   end
 
   def items

@@ -23,6 +23,7 @@
 //= require hide_toggler
 //= require common_tools
 //= require mousetrap.min
+//= require dataTables.tableTools
 //= require_tree .
 
 function init_foundation() {
