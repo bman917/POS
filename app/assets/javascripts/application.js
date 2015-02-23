@@ -22,6 +22,7 @@
 //= require foundation
 //= require hide_toggler
 //= require common_tools
+//= require common_tools/jquery-spin
 //= require mousetrap.min
 //= require dataTables.foundation.min.js
 //= require dataTables.tableTools

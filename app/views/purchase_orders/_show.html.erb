@@ -69,4 +69,6 @@
 <%=javascript_tag do %>
   purchase_order_show_check_box_listener();
   purchase_order_show_keyboard_shortcuts();
+
+  $('a#confirm_po').on('click', overlay);
 <% end %>

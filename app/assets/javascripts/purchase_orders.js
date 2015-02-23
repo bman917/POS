@@ -7,6 +7,7 @@ function purchase_order_index_init_listeners() {
 }
 
 function purchase_order_index_ajax() {
+    overlay();
     status = $('#po_status').val();
     supplier_id = $('#po_supplier').val();
     $.ajax({
@@ -21,6 +22,7 @@ function purchase_order_index_ajax() {
  */
 function purchase_order_table_click_listener() {
   $('#purchase_orders tbody tr td.click').on('click', function(){
+    overlay();
     $('#purchase_orders tbody tr td a').hide();
     $('#purchase_orders tbody tr').removeClass('highlight');
     var current_row = $(this).closest('tr');
@@ -33,7 +35,8 @@ function purchase_order_table_click_listener() {
 function purchase_order_show_ajax(id) {
     $.ajax({
       dataType: 'script',
-      url: "/purchase_orders/" + id
+      url: "/purchase_orders/" + id,
+      complete: remove_overlay
     });
 }
 

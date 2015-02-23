@@ -18,7 +18,6 @@ class PurchaseOrdersController < ApplicationController
 
 
   def index
-
     purchase_order_list
 
     respond_to do | format |
@@ -28,7 +27,6 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def show
-    
     respond_to do | format |
       format.html do
         purchase_order_list
