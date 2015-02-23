@@ -1,70 +1,102 @@
 @import "foundation/components/offcanvas";
 
-.dataTables_processing {
-  float: left;
-  margin: -80px 0 0 300px;
+
+// // .dataTables_wrapper {
+// //   margin-top: -7em;
+// // }
+
+// .dataTables_processing {
+//   float: left;
+//   margin: -80px 0 0 300px;
+// }
+
+// .fg-toolbar {
+//   padding: 5px 0;
+// }
+// .dataTables_filter {
+//   display: inline;
+//   margin: 0 1em;
+//   float: right;
+// }
+
+// .dataTables_info {
+//   margin: 0 1em;
+//   display: inline;
+// }
+
+// .dataTables_paginate {
+//   display: block;
+//   float: right;
+//   margin: 1em 1em;  
+
+//   a {
+//     padding: 3px 3px;
+//     border: 1px solid scale-color($tabbar-bg, $lightness: -50%);
+//     background: $off-canvas-bg;
+//     color: $off-canvas-label-color;
+//     text-decoration: none;
+//     font-size: 1em;
+//     cursor: pointer;
+//   }    
+// }
+
+// .fg-button {
+//   float: right;
+// }
+// .dataTables_length {
+//   margin: 0 1em;
+//   display: inline;
+// }
+
+// table.dataTable {
+
+//   border-collapse: collapse;
+//   margin: 0;
+
+//   .DataTables_sort_icon {
+//     float: right;
+//   }
+
+//   th.ui-state-default {
+//     padding: 5px;
+//   }
+
+//   td {
+//     border: 1px solid #D5D5D5;
+//   }
+
+//   td.sorting_1 {
+//     background: #EEF1F5;
+//   }
+
+//   input[type="checkbox"] {
+//     margin: 5px;
+//   }
+// }
+
+table.dataTable {
+  margin-bottom: 0;
 }
 
-.fg-toolbar {
-  padding: 5px 0;
+
+.dataTables_paginate {
+  display: block;
+  float: right;
+  margin: 1em 1em;  
 }
+
+.dataTables_info {
+  color: $off-canvas-label-color;
+}
+
 .dataTables_filter {
   display: inline;
   margin: 0 1em;
   float: right;
 }
 
-.dataTables_info {
-  margin: 0 1em;
-  display: inline;
-}
-
-.dataTables_paginate {
-  display: block;
-  float: right;
-  margin: 1em 1em;  
-
-  a {
-    padding: 3px 3px;
-    border: 1px solid scale-color($tabbar-bg, $lightness: -50%);
-    background: $off-canvas-bg;
-    color: $off-canvas-label-color;
-    text-decoration: none;
-    font-size: 1em;
-    cursor: pointer;
-  }    
-}
-
-.fg-button {
-  float: right;
-}
-.dataTables_length {
-  margin: 0 1em;
-  display: inline;
-}
-
-table.dataTable {
-
-  border-collapse: collapse;
-  margin: 0;
-
-  .DataTables_sort_icon {
-    float: right;
-  }
-
-  th.ui-state-default {
-    padding: 5px;
-  }
-
-  td {
-    border: 1px solid #D5D5D5;
-  }
-
-  td.sorting_1 {
-    background: #EEF1F5;
-  }
-
-  input[type="checkbox"] {
-    margin: 5px;
-  }
+div.DTTT_container {
+ float: right;
+ margin-top: 25px; 
+ margin-right: 1em;
 }

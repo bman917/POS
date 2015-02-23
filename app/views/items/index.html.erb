@@ -3,7 +3,7 @@
 <%=page_title "Item List" %>
 
 <%=form_tag destroy_multiple_items_path, method: :delete do %>
-    <div id="items_actions" style="margin-bottom: -17px">
+    <div id="items_actions" style="margin: 2em 0 -5em 0">
       <%=submit_tag 'Delete Checked', class: 'alert button tiny', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
     </div>
 
@@ -31,12 +31,14 @@
   $(document).ready( function () {
 
   columns = <%=raw ItemsDatatable.columns %>;
-  columnDefs = <%=raw ItemsDatatable.columDefs %>;
+  columnDefs = [{
+    "orderable": false, "targets": [0,-1,-2]
+  }];
 
   $('#item_selector').dataTable( {
-      "lengthChange": true,
+      "lengthChange": false,
       "paging": true,
-      "pageLength": 50,
+      "pageLength": 100,
       "scrollY": "400px",
       "pagingType": "simple_numbers",
       "jQueryUI": false,
@@ -45,6 +47,7 @@
       "searching": true,
       "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
       "columns": columns,
+      "columnDefs": columnDefs,
       "order": [[1, 'asc']],
       "dom": 'T<"clear">lfrtip',
       "tableTools" : {
@@ -52,12 +55,8 @@
           {
             "sExtends": "pdf",
             "sButtonText": "PDF",
-            "mColumns": [ 1, 2, 3 ],
-            "oSelectorOpts": {
-                page: 'all'
-                }
-          }, "print"]
-
+            "mColumns": [ 1, 2, 3 ]
+          }]
       }
   } );
 

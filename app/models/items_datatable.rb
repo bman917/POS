@@ -1,8 +1,5 @@
 class ItemsDatatable
 
-
-
-
   def initialize(view)
     @view = view
   end
@@ -44,7 +41,7 @@ class ItemsDatatable
   end
 
   def data
-    filtered_items.map do | item |
+    items.map do | item |
       { 
         DT_RowId: item.id, 
         # DT_RowClass: "xxxx", 
@@ -61,14 +58,6 @@ class ItemsDatatable
     end
   end
 
-  def filtered_items
-    @filtered_items ||= if params[:length].to_i <= 0
-        items
-      else
-        items.limit(params[:length]).offset(params[:start])
-      end
-  end
-
   def items
     @items ||= fetch_items
   end
@@ -78,10 +67,27 @@ class ItemsDatatable
     puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%")
+      @items_unordered = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%").includes(:supplier)
     else
-      @items = Item.all
+      @items_unordered = Item.all.includes(:supplier)
     end
+
+    @items_unordered = @items_unordered.limit(params[:length]).offset(params[:start]) if params[:length].to_i >= 0
+
+    ordered_items = @items_unordered
+
+    params[:order].each do | order |
+      index = order[1][:column].to_i || 0
+      dir = order[1][:dir].to_sym || :desc
+      column = ItemsDatatable.colum_names[index]
+      puts "Order Column Index: #{index}, Column: #{column}, Dir: #{dir}"
+      if column
+        ordered_items = @items_unordered.sort_by { | i | i.send(column) }
+        ordered_items = ordered_items.reverse if dir == :desc
+      end
+    end
+
+    ordered_items
   end
 
 
