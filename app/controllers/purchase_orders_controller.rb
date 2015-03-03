@@ -33,7 +33,7 @@ class PurchaseOrdersController < ApplicationController
         render 'index'
       end
 
-      format.js
+      format.js { selected_status }
     end
     
   end
@@ -67,7 +67,8 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def destroy
-    @purchase_order = @purchase_order.destroy
+    @purchase_order.status = 'DELETED'
+    @purchase_order.save!
 
     purchase_order_list
 

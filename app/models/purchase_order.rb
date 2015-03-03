@@ -18,5 +18,4 @@ class PurchaseOrder < ActiveRecord::Base
   def po_date_short_format
     date.to_time.to_s(:med) if date
   end
-
 end

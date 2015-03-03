@@ -20,10 +20,7 @@
         <li class="has-dropdown">
           <a id="actions_menu" href="#"></a>
           <ul class="dropdown">
-            <li><%=link_to 'Confirm This PO', confirm_purchase_order_path(purchase_order), 
-                    data: {confirm: 'Confirm This PO. Are you sure?'},
-                    remote: true, 
-                    id: 'confirm_po'%></li>
+            <li><%=link_to 'Confirm This PO', '#',id: 'confirm_po'%></li>
             <li><a href="#">Print</a></li>
           </ul>
         </li>

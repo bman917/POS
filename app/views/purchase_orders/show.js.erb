@@ -4,12 +4,10 @@ $('#purchase_order_show_details').slideUp("fast",
 
     $('#pos_details').hide();
     $('#pos_details').append('<%=j render partial: 'purchase_orders/show', 
-        locals: {purchase_order: @purchase_order}%>');
+        locals: {purchase_order: @purchase_order, status: @status}%>');
     $('#pos_details').slideDown("fast");
     
     purchase_order_show_check_box_listener();
     $(document).foundation('topbar', 'reflow');
-  });
-
-
-
+  }
+ );

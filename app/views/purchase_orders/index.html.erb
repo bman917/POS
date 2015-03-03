@@ -19,7 +19,7 @@
           </li>
           <li>Status</li>
           <li>
-            <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
+            <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED', 'DELETED'], @status)%>
           </li>
         </ul>
     </div>
@@ -43,7 +43,7 @@
 
   <div class="small-7 columns">
     <div id="pos_details">
-      <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order}%>
+      <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order, status: @status}%>
     </div>
   </div>
 

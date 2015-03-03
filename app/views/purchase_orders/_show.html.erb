@@ -6,7 +6,7 @@
 
   <%= render 'purchase_orders/show/alerts' %>
 
-  <%if purchase_order && purchase_order.destroyed? == false %>
+  <%if show(purchase_order, status) %>
 
     <% if purchase_order.created_at.to_date == Date.today %>
       <div class="row">
@@ -70,5 +70,39 @@
   purchase_order_show_check_box_listener();
   purchase_order_show_keyboard_shortcuts();
 
-  $('a#confirm_po').on('click', overlay);
+  
+<% end %>
+
+<% if purchase_order %>
+  <div id="dialog-confirm" title="Confirm PO# <%=purchase_order.po_id%>?">
+     Are you sure?
+  </div>
+  <%=javascript_tag do %>
+   $(document).ready( function () {
+      $( "#dialog-confirm" ).dialog({
+        autoOpen: false,
+        resizable: false,
+        height:"auto",
+        modal: true,
+        buttons: {
+          "Confirm": function() {
+            $.ajax({
+              dataType: 'script',
+              url: '<%=confirm_purchase_order_path(purchase_order)%>',
+              complete: $( this ).dialog( "close" )
+            });
+          },
+          "Cancel": function() {
+            $( this ).dialog( "close" );
+          }
+        }
+      });
+
+      $('a#confirm_po').on('click', 
+        function(){
+          $( "#dialog-confirm" ).dialog("open")
+        }
+      );
+  } );
+  <% end %>
 <% end %>

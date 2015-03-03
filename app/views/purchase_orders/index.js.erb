@@ -1,4 +1,4 @@
-$('#purchase_orders').remove();
+$('#purchase_orders_wrapper').remove();
 $('#po_list .pagination').remove();
 $('#po_list').append('<%=j render partial: 'table', 
     locals: {purchase_orders: @purchase_orders}%>');

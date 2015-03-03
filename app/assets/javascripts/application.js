@@ -18,6 +18,7 @@
 //= require jquery-ui/widget
 //= require jquery-ui/mouse
 //= require jquery-ui/position
+//= require jquery-ui/dialog
 //= require turbolinks
 //= require foundation
 //= require hide_toggler

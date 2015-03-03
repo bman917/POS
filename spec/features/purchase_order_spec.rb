@@ -94,28 +94,37 @@ describe PurchaseOrder do
     end
 
     it 'works!' do
-
-      first_record = "#po_list #purchase_orders tbody tr:first"
-
+      first_po = @purchase_orders.first
+      first_record = "#po_list #purchase_orders tbody td:first"
+      first_record = "#purchaseorder#{first_po.id}"
+      
       #Click on first record to display it
-      page.evaluate_script("$('#{first_record}').click();")
+      page.evaluate_script("$('#{first_record} td').click();")
       expect(page).to have_content("PO# 000")
 
       id = page.evaluate_script("$('#{first_record}').attr('id');")
       expect(page).to have_selector("#po_list #purchase_orders tbody tr##{id}")
-      within "tr##{id}" do
+      within first_record do
         click_on 'Delete'
       end
 
       #Modal for confirmtin deletion
       page.driver.browser.switch_to.alert.accept
 
-      #Model that confirms the delete was successful
-      text = page.driver.browser.switch_to.alert.text
-      expect(text).to have_content('Deleted')
-      page.driver.browser.switch_to.alert.accept
-
       expect(page).to have_content "No Purchase Order Selected"
+      expect(page).to have_no_css first_record
+
+      #When the PO is deleted it should go to the deleted list
+      select("DELETED", from: 'po_status')
+      expect(page).to have_css first_record
+
+      page.evaluate_script("$('#{first_record} td').click();")
+      expect(page).to have_content("PO# 000")
+      within first_record do
+        click_on 'Delete'
+      end
+      expect(page).to have_content("Permanently Delete PO# #{first_po.po_id}")
+
     end
   end
 
