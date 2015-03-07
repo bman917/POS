@@ -1,7 +1,20 @@
 class PurchaseOrdersController < ApplicationController
-  before_action :set_purchase_order, only: [:show, :edit, :update, :destroy, :confirm]
+  before_action :set_purchase_order, only: [:show, :edit, :update, :destroy, :confirm, :pending]
 
   respond_to :html, :js
+
+  def pending
+    @purchase_order.status = "PENDING"
+    if @purchase_order.save
+      flash[:status] = "PO Status Updated"
+    else
+      flash[:error] = "PO Status Update Failed"
+    end
+
+    #params[:status] = @purchase_order.status
+    purchase_order_list
+    render 'index'
+  end
 
   def confirm
     @purchase_order.status = "CONFIRMED"

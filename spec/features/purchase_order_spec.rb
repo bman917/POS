@@ -99,8 +99,7 @@ describe PurchaseOrder do
       first_record = "#purchaseorder#{first_po.id}"
       
       #Click on first record to display it
-      page.evaluate_script("$('#{first_record} td').click();")
-      expect(page).to have_content("PO# 000")
+      click_po_on_purchase_order_table(first_po)
 
       id = page.evaluate_script("$('#{first_record}').attr('id');")
       expect(page).to have_selector("#po_list #purchase_orders tbody tr##{id}")
@@ -115,15 +114,15 @@ describe PurchaseOrder do
       expect(page).to have_no_css first_record
 
       #When the PO is deleted it should go to the deleted list
-      select("DELETED", from: 'po_status')
-      expect(page).to have_css first_record
+      # select("DELETED", from: 'po_status')
+      # expect(page).to have_css first_record
 
-      page.evaluate_script("$('#{first_record} td').click();")
-      expect(page).to have_content("PO# 000")
-      within first_record do
-        click_on 'Delete'
-      end
-      expect(page).to have_content("Permanently Delete PO# #{first_po.po_id}")
+      # page.evaluate_script("$('#{first_record} td').click();")
+      # expect(page).to have_content("PO# 000")
+      # within first_record do
+      #   click_on 'Delete'
+      # end
+      # expect(page).to have_content("Permanently Delete PO# #{first_po.po_id}")
 
     end
   end
@@ -195,7 +194,12 @@ describe PurchaseOrder do
 
           find('#actions_menu').click
           click_on('Confirm This PO')
-          page.driver.browser.switch_to.alert.accept
+          
+          expect(page).to have_content ("Confirm PO# #{@purchase_order_with_items.po_id}?")
+          within('.ui-dialog') do
+            click_on('Confirm')
+          end
+
           within '#show_details_notifications' do
             expect(page).to have_content ('PO Status Updated')
           end
@@ -204,8 +208,47 @@ describe PurchaseOrder do
           expect(find('#purchase_order_status').text).to eq('CONFIRMED')
 
           expect(page).to have_css('table#purchase_orders tr', :count == (initial_row_count - 1))
+
+          #When the PO is confirmed it should go to the confirmed list
+          select("CONFIRMED", from: 'po_status')
+          within 'table#purchase_orders' do
+            expect(page).to have_content(@purchase_order_with_items.po_id)
+          end
+
+          initial_row_count = all('table#purchase_orders tr').count
+
+          click_po_on_purchase_order_table(@purchase_order_with_items)
+
+          find('#actions_menu').click
+          within ("#purchase_order_show_details") do
+            expect(page).to have_no_content("Confirm This PO")
+            click_on("Set PO to PENDING")
+          end
+
+          expect(page).to have_content ("Set PO# #{@purchase_order_with_items.po_id} to PENDING?")
+          within('.ui-dialog') do
+            click_on('Set to Pending')
+          end    
+
+          within '#show_details_notifications' do
+            expect(page).to have_content ('PO Status Updated')
+          end
+          
+          #Check that the PO status label has been updated
+          expect(find('#purchase_order_status').text).to eq('PENDING')
+
+          expect(page).to have_css('table#purchase_orders tr', :count == (initial_row_count - 1))
         end
       end
     end
+  end
+end
+
+#Clikc on a PO in the Purchase Order table
+def click_po_on_purchase_order_table(purchase_order)
+  po_css_id = "#purchaseorder#{purchase_order.id}"
+  page.evaluate_script("$('#{po_css_id} td').click();")
+  within ("#purchase_order_show_details") do
+    expect(page).to have_content("PO# #{purchase_order.po_id}")
   end
 end

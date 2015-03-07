@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :purchase_orders do
     member do
       get 'confirm'
+      get 'pending'
     end
   end
 

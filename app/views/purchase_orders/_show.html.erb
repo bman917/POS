@@ -1,108 +1,82 @@
+
 <div id="purchase_order_show_details">
 
 <%= render partial: 'purchase_orders/show/menu', locals: {purchase_order: purchase_order} %>
 
-<div class="panel">
+  <div class="panel">
 
-  <%= render 'purchase_orders/show/alerts' %>
+    <%= render 'purchase_orders/show/alerts' %>
 
-  <%if show(purchase_order, status) %>
+    <%if show(purchase_order, status) %>
 
-    <% if purchase_order.created_at.to_date == Date.today %>
+      <% if purchase_order.created_at.to_date == Date.today %>
+        <div class="row">
+          <div class="column small-12">
+            <div data-alert class="alert-box success">
+              * NEW PURCHASE ORDER CREATED TODAY
+            </div>
+          </div>
+        </div>
+      <% end %>
+
       <div class="row">
-        <div class="column small-12">
-          <div data-alert class="alert-box success">
-            * NEW PURCHASE ORDER CREATED TODAY
+        <div class="column small-8">
+          <span style="font-size: 150%">PO#</span>
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
+          <%=hidden_field_tag :purchase_order_id, purchase_order.id %>
+        </div>
+
+        <div class="column small-4">
+          <div class="row">
+              <span id="purchase_order_status" class="label"><%= purchase_order.status %></span>
+          </div>
+          <div class="row">
+            <strong>Date:</strong>
+            <%= purchase_order.po_date_short_format %>
           </div>
         </div>
       </div>
-    <% end %>
+     
+    
 
-    <div class="row">
-      <div class="column small-8">
-        <span style="font-size: 150%">PO#</span>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <strong style="font-size: 250%"><%= purchase_order.po_id %></strong>
-        <%=hidden_field_tag :purchase_order_id, purchase_order.id %>
-      </div>
-
-      <div class="column small-4">
-        <div class="row">
-            <span id="purchase_order_status" class="label"><%= purchase_order.status %></span>
-        </div>
-        <div class="row">
-          <strong>Date:</strong>
-          <%= purchase_order.po_date_short_format %>
-        </div>
-      </div>
-    </div>
-   
-  
-
-      <%=div_row(12) do %>
-        <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
-      <% end %>
+        <%=div_row(12) do %>
+          <span style="font-size: 200%"><%= purchase_order.supplier.name %></span>
+        <% end %>
 
 
-      <%=div_row(12) do %>
-        <strong>Notes:</strong>
-        <%= purchase_order.notes %>
-      <% end if purchase_order.notes%>
+        <%=div_row(12) do %>
+          <strong>Notes:</strong>
+          <%= purchase_order.notes %>
+        <% end if purchase_order.notes%>
 
 
 
-      <br/>
+        <br/>
 
-      <%= render partial: 'purchase_orders/show_details_table', 
-            locals: {purchase_order: purchase_order} %>
+        <%= render partial: 'purchase_orders/show_details_table', 
+              locals: {purchase_order: purchase_order} %>
 
-  <% else %>
-      No Purchase Order Selected.
-  <%end%>
+    <% else %>
+        No Purchase Order Selected.
+    <%end%>
 
-
-</div>
-</div>
-
-<%=javascript_tag do %>
-  purchase_order_show_check_box_listener();
-  purchase_order_show_keyboard_shortcuts();
-
-  
-<% end %>
-
-<% if purchase_order %>
-  <div id="dialog-confirm" title="Confirm PO# <%=purchase_order.po_id%>?">
-     Are you sure?
+  <!--end panel-->
   </div>
-  <%=javascript_tag do %>
-   $(document).ready( function () {
-      $( "#dialog-confirm" ).dialog({
-        autoOpen: false,
-        resizable: false,
-        height:"auto",
-        modal: true,
-        buttons: {
-          "Confirm": function() {
-            $.ajax({
-              dataType: 'script',
-              url: '<%=confirm_purchase_order_path(purchase_order)%>',
-              complete: $( this ).dialog( "close" )
-            });
-          },
-          "Cancel": function() {
-            $( this ).dialog( "close" );
-          }
-        }
-      });
 
-      $('a#confirm_po').on('click', 
-        function(){
-          $( "#dialog-confirm" ).dialog("open")
-        }
-      );
-  } );
+  <%=javascript_tag do %>
+    purchase_order_show_check_box_listener();
+    purchase_order_show_keyboard_shortcuts();
+
+    
   <% end %>
-<% end %>
+
+
+  <% if can_confirm purchase_order %>
+ 
+  <% end %>
+
+<!--end purchase_order_show_details-->
+</div>

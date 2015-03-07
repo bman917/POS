@@ -1,0 +1,34 @@
+<% if can_confirm purchase_order %>
+  <li><%=link_to 'Confirm This PO', '#',id: 'confirm_po'%></li>
+
+  <div id="dialog-confirm" title="Confirm PO# <%=purchase_order.po_id%>?">
+    Are you sure?
+  </div>
+  <%=javascript_tag do %>
+
+        $( "#dialog-confirm" ).dialog({
+          autoOpen: false,
+          resizable: false,
+          height:"auto",
+          modal: true,
+          buttons: {
+            "Confirm": function() {
+              $.ajax({
+                dataType: 'script',
+                url: '<%=confirm_purchase_order_path(purchase_order)%>',
+                complete: $( this ).dialog( "close" )
+              });
+            },
+            "Cancel": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        $('a#confirm_po').on('click', 
+          function(){
+            $( "#dialog-confirm" ).dialog("open")
+          }
+        );
+  <% end %>
+<% end %>

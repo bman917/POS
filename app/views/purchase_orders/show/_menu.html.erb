@@ -1,3 +1,8 @@
+<%
+  presenter = PurchaseOrderShowPresenter.new(purchase_order, self)
+%>
+
+
 <div class="contain-to-grid">
   <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
 
@@ -20,7 +25,12 @@
         <li class="has-dropdown">
           <a id="actions_menu" href="#"></a>
           <ul class="dropdown">
-            <li><%=link_to 'Confirm This PO', '#',id: 'confirm_po'%></li>
+            
+            <%= presenter.render_menu "confirm" %>
+            <%= presenter.render_menu "pending" %>
+
+
+
             <li><a href="#">Print</a></li>
           </ul>
         </li>

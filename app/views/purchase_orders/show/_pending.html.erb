@@ -1,0 +1,40 @@
+<% if purchase_order.status != 'PENDING' %>
+  <li><%=link_to 'Set PO to PENDING', '#',id: 'pending_po'%></li>
+
+  <div id="dialog_confirm_change_to_pending" title="Set PO# <%=purchase_order.po_id%> to PENDING?">
+    Are you sure?
+  </div>
+  <%=javascript_tag do %>
+
+    $('a#pending_po').on('click', 
+      function(){
+        $( "#dialog_confirm_change_to_pending" ).dialog("open")
+      }
+    );
+
+   $(document).ready( function () {
+      $( "#dialog_confirm_change_to_pending" ).dialog({
+        autoOpen: false,
+        resizable: false,
+        height:"auto",
+        modal: true,
+        buttons: {
+          "Set to Pending": function() {
+            $.ajax({
+              dataType: 'script',
+              url: '<%=pending_purchase_order_path(purchase_order)%>',
+              complete: $( this ).dialog( "close" )
+            });
+          },
+          "Cancel": function() {
+            $( this ).dialog( "close" );
+          }
+        }
+      });
+
+
+    } );
+  <% end %>  
+
+
+<% end %>
