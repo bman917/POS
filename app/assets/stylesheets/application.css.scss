@@ -20,6 +20,7 @@
  *= require hide_toggler.overlay
  *= dataTables.foundation.css
  *= require dataTables.tableTools
+ *= require libnotify
  *= require_tree .
  *= require_self
  *= require foundation_and_overrides

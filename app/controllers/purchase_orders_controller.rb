@@ -11,9 +11,7 @@ class PurchaseOrdersController < ApplicationController
       flash[:error] = "PO Status Update Failed"
     end
 
-    #params[:status] = @purchase_order.status
     purchase_order_list
-    render 'index'
   end
 
   def confirm
@@ -24,9 +22,7 @@ class PurchaseOrdersController < ApplicationController
       flash[:error] = "PO Status Update Failed"
     end
 
-    #params[:status] = @purchase_order.status
     purchase_order_list
-    render 'index'
   end
 
 

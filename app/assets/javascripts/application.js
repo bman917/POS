@@ -27,6 +27,7 @@
 //= require mousetrap.min
 //= require dataTables.foundation.min.js
 //= require dataTables.tableTools
+//= require humane.min
 //= require_tree .
 
 function init_foundation() {

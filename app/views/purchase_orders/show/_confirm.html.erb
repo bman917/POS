@@ -5,7 +5,7 @@
     Are you sure?
   </div>
   <%=javascript_tag do %>
-
+        $('.ui-dialog').remove();
         $( "#dialog-confirm" ).dialog({
           autoOpen: false,
           resizable: false,

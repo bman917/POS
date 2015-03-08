@@ -19,13 +19,9 @@
 <%= render 'layouts/navigation'%>
 
 
-<div class="row full-height">
+<div class="row full-height" style="max-width: 100%;">
 
-
-
-
-
-  <div class="side_nav columns small-2">
+  <div class="side_nav columns small-2 large-1" style=" box-shadow:0 0 5px black">
       <ul class="off-canvas-list">
         <li><label>Suppliers</label></li>
         <li><%=link_to 'Suppliers', suppliers_path%></li>
@@ -41,7 +37,13 @@
       </ul>
   </div>
 
-  <div class="main columns small-10">
+  <div class="main columns small-10 large-11">
+<!--       <div id="notice" class="row" style="background-color:black;height:4em; box-shadow:0 0 10px black; position: absolute;width:100%;z-index:2;opacity:.5">
+        <div class="column" style="height:inherit">
+          <span style="display:table-cell;vertical-align:middle;height:inherit;color:white">Purchase Order Created.</span>
+        </div>
+      </div> -->
+
       <div class="row">
       <% flash.each do |name, msg| %>
        <div id="pos_alert" class="column small-6 small-centered" style="margin-top: 1em;">

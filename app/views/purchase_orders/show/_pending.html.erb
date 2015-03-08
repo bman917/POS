@@ -5,7 +5,7 @@
     Are you sure?
   </div>
   <%=javascript_tag do %>
-
+    $('.ui-dialog').remove();
     $('a#pending_po').on('click', 
       function(){
         $( "#dialog_confirm_change_to_pending" ).dialog("open")

@@ -120,3 +120,12 @@ def fill_autocomplete(field, options = {})
   end
 end
 
+#Clikc on a PO in the Purchase Order table
+def click_po_on_purchase_order_table(purchase_order)
+  po_css_id = "#purchaseorder#{purchase_order.id}"
+  page.evaluate_script("$('#{po_css_id} td').click();")
+  within ("#purchase_order_show_details") do
+    expect(page).to have_content("PO# #{purchase_order.po_id}")
+  end
+end
+
