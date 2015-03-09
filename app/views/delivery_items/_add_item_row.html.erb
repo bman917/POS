@@ -1,0 +1,17 @@
+<tr id='add_item'>
+    <td>
+      <%=text_field_tag :item_name, [], 
+          placeholder: "Enter item name or item code...",  
+          autofocus: true, 
+          class: 'text'%>
+      <%=hidden_field_tag 'delivery_item[item_id]'%>
+    </td>
+    <td colspan="2">
+      <%=text_field_tag 'delivery_item[quantity]', [], style: 'width: 4em'%>
+    </td>
+    <td>
+      <%=link_to 'Add', 'javascript:delivery_item_create_ajax()', 
+            id: 'add_item_button', class: 'tiny success button hide'%>
+      <!--a href="#" class="close">&times;</a-->
+    </td>
+</tr>

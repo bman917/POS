@@ -1,0 +1,11 @@
+<%=render template: 'deliveries/show'%>
+
+delivery_index_ajax();
+
+setTimeout(function() {
+  $('tr#<%=@delivery.id%>').addClass('highlight');
+  humane.log("New Delivery Created");
+}, 1000);
+
+remove_overlay();
+

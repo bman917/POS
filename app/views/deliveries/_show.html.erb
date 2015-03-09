@@ -1,0 +1,63 @@
+
+<div id="delivery_show_details">
+
+  <div class="panel">
+
+    <%if show_delivery(delivery) %>
+
+      <% if delivery.created_at.to_date == Date.today %>
+        <div class="row">
+          <div class="column small-12">
+            <div data-alert class="alert-box success">
+              * DELIVERY CREATED TODAY
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="column small-8">
+          <span style="font-size: 150%">DR#</span>
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          <strong style="font-size: 250%"><%= delivery.id %></strong>
+          <%=hidden_field_tag :delivery_id, delivery.id %>
+        </div>
+
+        <div class="column small-4">
+          <div class="row">
+            <strong>Date:</strong>
+            <%= delivery.date_short_format %>
+          </div>
+        </div>
+      </div>
+     
+    
+
+        <%=div_row(12) do %>
+          <span style="font-size: 200%"><%= delivery.supplier.name %></span>
+        <% end %>
+
+
+        <%=div_row(12) do %>
+          <strong>Notes:</strong>
+          <%= delivery.notes %>
+        <% end if delivery.notes%>
+
+
+
+        <br/>
+
+        <%= render partial: 'deliveries/show_details_table', 
+              locals: {delivery: delivery} %>
+
+    <% else %>
+        No Delivery Selected.
+    <%end%>
+
+  <!--end panel-->
+  </div>
+
+
+</div>

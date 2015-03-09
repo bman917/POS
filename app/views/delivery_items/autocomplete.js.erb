@@ -1,5 +1,5 @@
-var item_id_css = '#item_purchase_order_item_id';
-var qty_css = '#item_purchase_order_quantity';
+var item_id_css = '#delivery_item_item_id';
+var qty_css = '#delivery_item_quantity';
 
 $('tr#add_item').remove();
 $('#po_detail tbody').append("<%=j render 'add_item_row'%>");
@@ -35,12 +35,12 @@ $(qty_css).on('keyup', function(e){
 
   var qty_has_value = $(qty_css).val().trim().length > 0;
   var item_id_has_value = $(item_id_css).val().trim().length > 0;
-  var qty_has_focus = document.activeElement.id == 'item_purchase_order_quantity'
+  var qty_has_focus = document.activeElement.id == 'delivery_item_quantity'
 
   if (e.which == enter_key && qty_has_focus && qty_has_value && item_id_has_value) {
     
     //do a post to save the new item
-    item_purchase_order_create_ajax();
+    delivery_item_create_ajax();
     //alert("Item saved! ID: " +  $(item_id_css).val() + ", Qty: " + $(qty_css).val());
   }
 });

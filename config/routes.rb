@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :delivery_items do
+    collection do
+      get 'autocomplete'
+      delete 'destroy_multiple'
+    end
+  end
+
+  resources :deliveries
+
   resources :item_purchase_orders do
     collection do
       get 'autocomplete'

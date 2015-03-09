@@ -1,0 +1,25 @@
+<% url = POS::Application.routes.url_helpers %>
+
+/**
+ * Triggers an ajax POST to create a new ItemPurchaseOrder
+ * Used by autocomplete.js.erb.
+ * Gets values from delivery_items/_add_item_row.html.erb 
+ */
+function delivery_item_create_ajax() {
+
+  var item_id_css = '#delivery_item_item_id';
+  var qty_css = '#delivery_item_quantity';
+
+    $.ajax({
+        url: '<%=url.delivery_items_path%>',
+        type: "POST",
+        data: {
+          'delivery_item[item_id]': $(item_id_css).val(), 
+          'delivery_item[quantity]': $(qty_css).val(),
+          'delivery_item[purchase_order_id]': $('#purchase_order_id').val(),
+          'delivery_item[delivery_id]': $('#delivery_id').val()
+        }
+    });
+
+    //alert("Item saved! ID: " +  $(item_id_css).val() + ", Qty: " + $(qty_css).val());
+}

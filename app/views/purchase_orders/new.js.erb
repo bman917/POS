@@ -5,7 +5,8 @@ purchase_order_index_ajax();
 
 setTimeout(function() {
   $('tr#<%=@purchase_order.id%>').addClass('highlight');
-}, 500);
+  humane.log("New Purchase Order Created");
+}, 1000);
 
 
-$('#purchase_order_show_details .alert-box').show();
+

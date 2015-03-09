@@ -1,0 +1,13 @@
+$('#delivery_show_details').slideUp("fast", 
+  function(){
+    $(this).remove();
+
+    $('#pos_details').hide();
+    $('#pos_details').append('<%=j render partial: 'deliveries/show', 
+        locals: {delivery: @delivery, status: @status}%>');
+    $('#pos_details').slideDown("fast");
+    
+    // delivery_show_check_box_listener();
+    $(document).foundation('topbar', 'reflow');
+  }
+ );

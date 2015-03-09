@@ -1,0 +1,36 @@
+<div id="deliveries_wrapper">
+    <%= will_paginate deliveries, params: { controller: 'deliveries', action: 'index'} %>
+    <table id="deliveries">
+      <thead>
+        <tr>
+          <th>DR#</th>
+          <th colspan="2">Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% deliveries.each do |delivery| %>
+          <%=tr_highlight_simple(delivery, @delivery) do%>
+            <td class="id click"><%= delivery.id %></td>
+            <td class="click"><%= delivery.date_short_format %></td>
+            <td><%= link_to delete_img, 
+                      delivery, 
+                      remote: true,
+                      hidden: true,
+                      method: :delete,
+                      data: { confirm: "Delete PO# #{delivery.id}?"}
+                %>
+            </td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate deliveries %>
+
+
+    <%=javascript_tag do %>
+
+    delivery_table_click_listener();
+    
+    <% end %>
+</div>

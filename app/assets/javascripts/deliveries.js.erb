@@ -1,0 +1,84 @@
+function delivery_index_init_listeners() {
+
+  $('#po_status').change(delivery_index_ajax);
+  $('#po_supplier').change(delivery_index_ajax);
+  delivery_table_click_listener();
+  delivery_create_listener();
+}
+
+function delivery_index_ajax() {
+    overlay();
+    status = $('#po_status').val();
+    supplier_id = $('#po_supplier').val();
+    $.ajax({
+      dataType: 'script',
+      url: "/deliveries?status=" + status +"&supplier_id=" + supplier_id
+    });
+}
+
+/*
+ *Used by deliveries/_table.html.erb. Adds a listner so that when a
+ *table row is clicked. An ajax call we be made to display the PO details.
+ */
+function delivery_table_click_listener() {
+  $('#deliveries tbody tr td.click').on('click', function(){
+    overlay();
+    $('#deliveries tbody tr td a').hide();
+    $('#deliveries tbody tr').removeClass('highlight');
+    var current_row = $(this).closest('tr');
+    current_row.find('a').show();
+    current_row.addClass('highlight');
+    delivery_show_ajax(current_row.attr('data-id'));
+  });
+}
+
+function delivery_show_ajax(id) {
+    $.ajax({
+      dataType: 'script',
+      url: "/deliveries/" + id,
+      complete: remove_overlay
+    });
+}
+
+function delivery_show_notification(message) {
+  $('#show_details_notifications').append(message);
+  $('#show_details_notifications').toggle();
+  $(document).foundation('alert', 'reflow');
+}
+
+function delivery_create_listener() {
+
+  $('a#new_delivery').on('click', function() {
+
+    supplier_id = $('#po_supplier').val();
+    supplier = $('#po_supplier option:selected').text();
+
+    if (confirm("New Delivery for '" + supplier + "'?")) {
+      $.ajax({
+        dataType: 'script',
+        url: "/deliveries/new?supplier_id=" + supplier_id      
+      });
+    }
+    return false;
+  });
+
+}
+
+function delivery_show_check_box_listener() {
+  var checkbox_selector = '#delivery_show_details input[type="checkbox"]';
+
+  $(checkbox_selector).unbind();
+  $(checkbox_selector).change(function(event) {
+    if ($(checkbox_selector + ":checked").length > 0) {
+      $('#delete_item_delivery_button').removeAttr('disabled');
+    } else {
+      $('#delete_item_delivery_button').attr('disabled', 'disabled');
+    }
+  });
+}
+
+function delivery_show_keyboard_shortcuts() {
+  Mousetrap.bind('alt+a', function(e){
+    $('#po_detail_add_item_button').click();
+  });
+}

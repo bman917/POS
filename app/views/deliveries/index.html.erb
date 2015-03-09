@@ -1,0 +1,76 @@
+<h1>Deliveries</h1>
+
+<div class="row">
+
+
+  <div id="po_item_panel" class="columns small-4 large-3">
+    <div class="po_panel">
+        <ul class="po_date_filter po_filter_spacings">
+          <li>From</li>
+          <li>To</li>
+          <li><%=date_field(:from, :date_filter)%></li>
+          <li><%=date_field(:to, :date_filter)%></li>
+        </ul>
+
+        <ul class="po_filter po_filter_spacings">
+          <li>Supplier</li>
+          <li><%=select_tag :po_supplier, 
+            options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id)%>
+          </li>
+        </ul>
+    </div>
+
+    <h4><small>Confirmed PO Items</small></h4>
+    <div id="item_purchase_order_panel" class="po_panel" 
+    style="max-height: 200px; overflow-y: scroll;">
+
+      <%=render partial: 'deliveries/item_purchase_orders_table', locals: {deliveries: @deliveries} %>
+
+    </div>
+
+    <h4><small>Recently Created DRs</small></h4>
+    <div class="po_panel" 
+    style="max-height: 200px; overflow-y: scroll;">
+
+      <div id="po_list">
+      <%=render partial: 'deliveries/deliveries_table', locals: {deliveries: @deliveries} %>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="small-7 large-5 columns">
+      <%= link_to 'New Delivery', 
+          new_delivery_path, class: 'tiny button', 
+          remote: true, id: 'new_delivery',
+          data: { confirm: 'Create New Delivery?'} %>  
+    <div id="pos_details">
+      <%=render partial: 'deliveries/show', locals: {delivery: @delivery, status: @status}%>
+    </div>
+  </div>
+
+
+
+  <!-- START COLUMN 1 -->
+  <div class="large-3 columns end">
+
+
+
+
+    
+  </div>
+  <!-- END COLUMN 1 -->
+
+
+
+
+</div>
+
+<%=javascript_tag do %>
+
+delivery_index_init_listeners();
+
+<% end %>
+
+<%= link_to 'New Delivery', new_delivery_path %>

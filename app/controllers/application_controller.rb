@@ -24,4 +24,12 @@ class ApplicationController < ActionController::Base
     @purchase_orders = PurchaseOrder.where(status: @status, supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
   end
 
+  def delivery_list
+    @status = selected_status
+    @supplier_id = selected_supplier
+    @deliveries = Delivery.where(supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
+    purchase_orders = PurchaseOrder.where(supplier: @supplier_id )
+    @purchase_order_items = ItemPurchaseOrder.where(purchase_order: purchase_orders)
+  end
+
 end

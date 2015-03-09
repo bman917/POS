@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128165009) do
+ActiveRecord::Schema.define(version: 20150309075047) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -49,6 +49,33 @@ ActiveRecord::Schema.define(version: 20150128165009) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "deliveries", force: true do |t|
+    t.date     "date"
+    t.integer  "supplier_id"
+    t.string   "supplier_dr_number"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deliveries", ["supplier_id"], name: "index_deliveries_on_supplier_id", using: :btree
+
+  create_table "delivery_items", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "delivery_id"
+    t.integer  "purchase_order_id"
+    t.integer  "quantity"
+    t.float    "unit_price",        limit: 24
+    t.float    "total_price",       limit: 24
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delivery_items", ["delivery_id"], name: "index_delivery_items_on_delivery_id", using: :btree
+  add_index "delivery_items", ["item_id"], name: "index_delivery_items_on_item_id", using: :btree
+  add_index "delivery_items", ["purchase_order_id"], name: "index_delivery_items_on_purchase_order_id", using: :btree
 
   create_table "item_bases", force: true do |t|
     t.string   "name"

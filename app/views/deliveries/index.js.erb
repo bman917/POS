@@ -1,0 +1,10 @@
+$('#deliveries_wrapper').remove();
+$('#item_purchase_order').remove();
+$('#po_list .pagination').remove();
+$('#po_list').append('<%=j render partial: 'deliveries_table', 
+    locals: {deliveries: @deliveries}%>');
+
+$('#item_purchase_order_panel').append('<%=j render partial: 'item_purchase_orders_table', 
+    locals: {deliveries: @deliveries}%>');
+
+remove_overlay();

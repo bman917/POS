@@ -1,0 +1,16 @@
+<table id="item_purchase_order">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @purchase_order_items.each do |po_item| %>
+    <tr>
+      <td><%=po_item.item.name%></td>
+      <td><%=po_item.quantity%></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

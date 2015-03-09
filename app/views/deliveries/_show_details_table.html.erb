@@ -1,0 +1,34 @@
+<%=form_tag destroy_multiple_delivery_items_path, method: :delete, remote: true do %>
+    <%=hidden_field_tag :delivery_id, delivery.id%>
+
+    <table id="po_detail">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th style="width: 8em" colspan="3">Quantity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% delivery.delivery_items.each do | item | %>
+          <%=tr_highlight(item, @item_delivery) do %>
+            <td><%=item.item.name%></td>
+            <td style="text-align: right"><%=item.quantity%></td>
+            <td style="font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
+            <td><%=check_box_tag "item_delivery_ids[]", item.id %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%=div_row(12) do %>
+      <%=link_to 'Add Item', autocomplete_delivery_items_path, 
+            id: 'po_detail_add_item_button', class: 'tiny success button left', remote: true%>
+      <%=submit_tag 'Delete Items', 
+        id: 'delete_item_delivery_button',
+        class: 'button tiny alert right',
+          disabled: true,
+          data: { confirm: "Delete selected items from PO# #{delivery.id}"}%>
+    <% end %>
+<!-- END FORM -->  
+<% end %>
