@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     @status = selected_status
     @supplier_id = selected_supplier
     @deliveries = Delivery.where(supplier: @supplier_id).includes(:supplier).order(id: :desc, date: :desc).paginate(:page => params[:page])
-    purchase_orders = PurchaseOrder.where(supplier: @supplier_id )
+    purchase_orders = PurchaseOrder.where(supplier: @supplier_id, status: 'CONFIRMED' )
     @purchase_order_items = ItemPurchaseOrder.where(purchase_order: purchase_orders)
   end
 
