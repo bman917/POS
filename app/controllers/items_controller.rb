@@ -3,15 +3,20 @@ class ItemsController < ApplicationController
 
   respond_to :html, :js
 
+
   def autocomplete
   end
 
   def json
+    
+    @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, supplier: selected_supplier)
+    
     if params[:term]
       #When there is a :term paramter then it means this is an autocomplete json
       render json: ItemsAutocomplete.new(view_context)
     else
-      render json: ItemsDatatable.new(view_context)
+      render json: @items_datatable
     end
   end
 
@@ -36,6 +41,8 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.active
+    @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @items_datatable = ItemsDatatable.new(view_context, @column_names)
     respond_with(@items)
   end
 

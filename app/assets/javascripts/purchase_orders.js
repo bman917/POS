@@ -14,6 +14,12 @@ function purchase_order_index_ajax() {
       dataType: 'script',
       url: "/purchase_orders?status=" + status +"&supplier_id=" + supplier_id
     });
+    //alert('reload');
+    
+
+    setTimeout(function() {
+       $('#item_selector').DataTable().ajax.reload();
+      }, 100);
 }
 
 /*

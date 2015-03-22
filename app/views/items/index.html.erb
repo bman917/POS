@@ -15,6 +15,7 @@
       <th>Name</th>
       <th>Unit</th>
       <th>Supplier</th>
+      <th>Pending Orders</th>
       <th></th>
       <th></th>
 
@@ -30,7 +31,7 @@
 <%=javascript_tag do %>
   $(document).ready( function () {
 
-  columns = <%=raw ItemsDatatable.columns %>;
+  columns = <%=raw @items_datatable.columns %>;
   columnDefs = [{
     "orderable": false, "targets": [0,-1,-2]
   }];

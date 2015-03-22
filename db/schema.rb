@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309075047) do
+ActiveRecord::Schema.define(version: 20150321145346) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150309075047) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "pending_orders"
   end
 
   add_index "items", ["item_base_id"], name: "index_items_on_item_base_id", using: :btree

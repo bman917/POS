@@ -1,7 +1,10 @@
 class ItemsDatatable
 
-  def initialize(view)
+
+  def initialize(view, colum_names, options = {})
     @view = view
+    @colum_names = colum_names
+    @options = options
   end
 
   def as_json(options={})
@@ -13,10 +16,10 @@ class ItemsDatatable
     }
   end
 
-  def self.columDefs
+  def columDefs
       
       return_val = '['
-      ItemsDatatable.colum_names.each do | column |
+      @colum_names.each do | column |
         if column == "check_box"
           return_val += "{\"orderable\": false},"
         else
@@ -27,17 +30,13 @@ class ItemsDatatable
       return_val.chop + ']'
   end
 
-  def self.columns
+  def columns
       return_val = '['
-      ItemsDatatable.colum_names.each do | column |
+      @colum_names.each do | column |
         return_val += "{\"data\": \"#{column}\"},"
       end
 
       return_val.chop + ']'
-  end
-
-  def self.colum_names
-    %w(check_box name unit supplier copy edit)
   end
 
   def data
@@ -46,10 +45,12 @@ class ItemsDatatable
         DT_RowId: item.id, 
         # DT_RowClass: "xxxx", 
         check_box: check_box_tag("item_ids[]", item.id),
+        input: number_field_tag("item_ids[]", nil, id: item.id, style: "width: 4em"),
         copy: link_to("Copy", copy_item_path(item)),
         name: item.name,
         unit: item.unit,
         supplier: item.supplier.name,
+        pending_orders: item.pending_orders,
         edit: link_to(edit_img, edit_item_path(item))
       }
 
@@ -72,6 +73,8 @@ class ItemsDatatable
       @items_unordered = Item.all.includes(:supplier)
     end
 
+    @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
+
     @items_unordered = @items_unordered.limit(params[:length]).offset(params[:start]) if params[:length].to_i >= 0
 
     ordered_items = @items_unordered
@@ -79,7 +82,7 @@ class ItemsDatatable
     params[:order].each do | order |
       index = order[1][:column].to_i || 0
       dir = order[1][:dir].to_sym || :desc
-      column = ItemsDatatable.colum_names[index]
+      column = @colum_names[index]
       puts "Order Column Index: #{index}, Column: #{column}, Dir: #{dir}"
       if column
         ordered_items = @items_unordered.sort_by { | i | i.send(column) }

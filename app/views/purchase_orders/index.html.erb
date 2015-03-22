@@ -1,5 +1,70 @@
 <h1>Purchase Orders</h1>
 
+
+  <label>Supplier</label>
+  <%=select_tag :po_supplier, 
+    options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), style: "height: 2.5em;font-size:150%;font-weight:bolder" %>
+<br/>
+
+
+<table id="item_selector">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Pending Orders</th>
+      <th>Order Qty</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+
+  </tbody>
+</table>
+
+<%=javascript_tag do %>
+  $(document).ready( function () {
+
+  columns = <%=raw @items_datatable.columns %>;
+  columnDefs = [{
+    "orderable": false, "targets": [0,-1,-2]
+  }];
+
+  $('#item_selector').dataTable( {
+      "stateSave": true,
+      "lengthChange": false,
+      "paging": true,
+      "pageLength": 100,
+      "scrollY": "400px",
+      "scrollCollapse": true,
+      "pagingType": "simple_numbers",
+      "jQueryUI": false,
+      "processing": true,
+      "serverSide": true,
+      "searching": true,
+      "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
+      "columns": columns,
+      "columnDefs": columnDefs,
+      "order": [[1, 'asc']],
+      "dom": 'Tlfrtip',
+      "tableTools" : {
+        "aButtons": [
+          {
+            "sExtends": "pdf",
+            "sButtonText": "PDF",
+            "mColumns": [ 1, 2, 3 ]
+          }]
+      }
+  } );
+
+} );
+
+<% end %>
+
+<br/>
+<br/>
+
 <div class="row">
 
   <!-- START COLUMN 1 -->

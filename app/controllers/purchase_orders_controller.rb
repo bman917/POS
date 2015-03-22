@@ -25,9 +25,16 @@ class PurchaseOrdersController < ApplicationController
     purchase_order_list
   end
 
+  def column_names
+    %w(name unit pending_orders input)
+  end
+
 
   def index
     purchase_order_list
+
+    @items_datatable = ItemsDatatable.new(view_context, 
+      column_names, supplier: selected_supplier)
 
     respond_to do | format |
       format.html

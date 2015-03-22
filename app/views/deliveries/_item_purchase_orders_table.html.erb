@@ -1,16 +1,19 @@
+<%=form_tag items_path method: :post do %>
 <table id="item_purchase_order">
   <thead>
     <tr>
-      <th>Item</th>
+      <th colspan="2">Item</th>
       <th>Quantity</th>
     </tr>
   </thead>
   <tbody>
   <% @purchase_order_items.each do |po_item| %>
     <tr>
+      <td><%=check_box_tag "item_ids[]", po_item.id%></td>
       <td><%=po_item.item.name%></td>
       <td><%=po_item.quantity%></td>
     </tr>
   <% end %>
   </tbody>
 </table>
+<% end %>

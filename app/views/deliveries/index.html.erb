@@ -1,17 +1,8 @@
 <h1>Deliveries</h1>
 
 <div class="row">
-
-
   <div id="po_item_panel" class="columns small-4 large-3">
     <div class="po_panel">
-        <ul class="po_date_filter po_filter_spacings">
-          <li>From</li>
-          <li>To</li>
-          <li><%=date_field(:from, :date_filter)%></li>
-          <li><%=date_field(:to, :date_filter)%></li>
-        </ul>
-
         <ul class="po_filter po_filter_spacings">
           <li>Supplier</li>
           <li><%=select_tag :po_supplier, 
@@ -22,7 +13,7 @@
 
     <h4><small>Undelivered PO Items</small></h4>
     <div id="item_purchase_order_panel" class="po_panel" 
-    style="max-height: 200px; overflow-y: scroll;">
+          style="max-height: 300px; overflow-y: scroll;">
 
       <%=render partial: 'deliveries/item_purchase_orders_table', locals: {deliveries: @deliveries} %>
 
@@ -30,7 +21,7 @@
 
     <h4><small>Recently Created DRs</small></h4>
     <div class="po_panel" 
-    style="max-height: 200px; overflow-y: scroll;">
+    style="max-height: 150px; overflow-y: scroll;">
 
       <div id="po_list">
       <%=render partial: 'deliveries/deliveries_table', locals: {deliveries: @deliveries} %>
