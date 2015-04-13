@@ -26,7 +26,7 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def column_names
-    %w(name unit pending_orders input)
+    %w(input name unit pending_orders)
   end
 
 

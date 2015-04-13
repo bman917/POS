@@ -10,6 +10,19 @@ class ItemsController < ApplicationController
   def json
     
     @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @items_datatable = ItemsDatatable.new(view_context, @column_names)
+    
+    if params[:term]
+      #When there is a :term paramter then it means this is an autocomplete json
+      render json: ItemsAutocomplete.new(view_context)
+    else
+      render json: @items_datatable
+    end
+  end
+
+  def json_filter_by_supplier
+    
+    @column_names = %w(check_box name unit supplier pending_orders copy edit)
     @items_datatable = ItemsDatatable.new(view_context, @column_names, supplier: selected_supplier)
     
     if params[:term]

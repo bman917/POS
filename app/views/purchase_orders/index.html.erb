@@ -6,15 +6,16 @@
     options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), style: "height: 2.5em;font-size:150%;font-weight:bolder" %>
 <br/>
 
+<%=form_tag destroy_multiple_items_path, method: :delete do %>
 
 <table id="item_selector">
   <thead>
     <tr>
+      <th>Order Qty</th>
       <th>Name</th>
       <th>Unit</th>
-      <th>Pending Orders</th>
-      <th>Order Qty</th>
-      
+      <th>Confirmed Orders</th>
+
     </tr>
   </thead>
 
@@ -22,6 +23,12 @@
 
   </tbody>
 </table>
+<div id="items_actions" style="margin: 1em 0 0 0">
+  <%=submit_tag 'Add Checked To PO', class: 'success button tiny', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
+</div>
+
+
+<% end %>
 
 <%=javascript_tag do %>
   $(document).ready( function () {
@@ -34,16 +41,16 @@
   $('#item_selector').dataTable( {
       "stateSave": true,
       "lengthChange": false,
-      "paging": true,
-      "pageLength": 100,
-      "scrollY": "400px",
+      "paging": false,
+      "pageLength": 10000,
+      "scrollY": "300px",
       "scrollCollapse": true,
       "pagingType": "simple_numbers",
       "jQueryUI": false,
       "processing": true,
       "serverSide": true,
       "searching": true,
-      "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
+      "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
       "columns": columns,
       "columnDefs": columnDefs,
       "order": [[1, 'asc']],

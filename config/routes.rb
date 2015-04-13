@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   resources :items do
     get  :json, on: :collection
     post :json, on: :collection
+    get  :json_filter_by_supplier, on: :collection
+    post :json_filter_by_supplier, on: :collection
 
     collection do
       post 'add_attrib'
