@@ -1,73 +1,30 @@
 <h1>Purchase Orders</h1>
 
-
   <label>Supplier</label>
   <%=select_tag :po_supplier, 
-    options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id), style: "height: 2.5em;font-size:150%;font-weight:bolder" %>
+    options_from_collection_for_select(
+      Supplier.all, 'id', 'name', @supplier_id), 
+    style: "height: 2.5em;font-size:150%;font-weight:bolder" %>
+
 <br/>
 
-<%=form_tag destroy_multiple_items_path, method: :delete do %>
+<div class="row">
+  <div class="column small-6">
+      <%=render partial: 'purchase_orders/index/data_table', locals: {items_datatable: @items_datatable} %>
+  </div>
 
-<table id="item_selector">
-  <thead>
-    <tr>
-      <th>Order Qty</th>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Confirmed Orders</th>
+  <div class="column small-6 large-5 end">
+    <div id="pos_details">
+      <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order, status: @status}%>
+    </div>
 
-    </tr>
-  </thead>
 
-  <tbody>
-
-  </tbody>
-</table>
-<div id="items_actions" style="margin: 1em 0 0 0">
-  <%=submit_tag 'Add Checked To PO', class: 'success button tiny', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
+  </div>
 </div>
 
 
-<% end %>
 
-<%=javascript_tag do %>
-  $(document).ready( function () {
 
-  columns = <%=raw @items_datatable.columns %>;
-  columnDefs = [{
-    "orderable": false, "targets": [0,-1,-2]
-  }];
-
-  $('#item_selector').dataTable( {
-      "stateSave": true,
-      "lengthChange": false,
-      "paging": false,
-      "pageLength": 10000,
-      "scrollY": "300px",
-      "scrollCollapse": true,
-      "pagingType": "simple_numbers",
-      "jQueryUI": false,
-      "processing": true,
-      "serverSide": true,
-      "searching": true,
-      "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
-      "columns": columns,
-      "columnDefs": columnDefs,
-      "order": [[1, 'asc']],
-      "dom": 'Tlfrtip',
-      "tableTools" : {
-        "aButtons": [
-          {
-            "sExtends": "pdf",
-            "sButtonText": "PDF",
-            "mColumns": [ 1, 2, 3 ]
-          }]
-      }
-  } );
-
-} );
-
-<% end %>
 
 <br/>
 <br/>
@@ -113,11 +70,7 @@
   <!-- END COLUMN 1 -->
 
 
-  <div class="small-7 large-5 columns end">
-    <div id="pos_details">
-      <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order, status: @status}%>
-    </div>
-  </div>
+
 
 </div>
 

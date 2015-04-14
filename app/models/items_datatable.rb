@@ -31,9 +31,11 @@ class ItemsDatatable
   end
 
   def columns
+      length = {input: "4em", name: "30em", unit: "3em", pending_orders: "3em"}
+
       return_val = '['
       @colum_names.each do | column |
-        return_val += "{\"data\": \"#{column}\"},"
+        return_val += "{\"data\": \"#{column}\", \"width\": \"#{length[column.to_sym]}\" },"
       end
 
       return_val.chop + ']'
@@ -45,13 +47,13 @@ class ItemsDatatable
         DT_RowId: item.id, 
         # DT_RowClass: "xxxx", 
         check_box: check_box_tag("item_ids[]", item.id),
-        input: number_field_tag("item_ids[]", nil, id: item.id, style: "width: 4em"),
+        input: number_field_tag("item_ids[]", nil, id: item.id, class: "order_qty"),
         copy: link_to("Copy", copy_item_path(item)),
         name: item.name,
         unit: item.unit,
         supplier: item.supplier.name,
         pending_orders: item.pending_orders,
-        edit: link_to(edit_img, edit_item_path(item))
+        edit: link_to(edit_img, edit_item_path(item)),
       }
 
       
