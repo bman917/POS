@@ -41,13 +41,20 @@ class ItemsDatatable
       return_val.chop + ']'
   end
 
+  def input_qty(item_id)
+    content_tag :div do
+      content = number_field_tag("items[][qty]", nil, class: "order_qty")
+      content << hidden_field_tag("items[][id]", item_id)
+    end.html_safe
+  end
+
   def data
     items.map do | item |
       { 
         DT_RowId: item.id, 
         # DT_RowClass: "xxxx", 
         check_box: check_box_tag("item_ids[]", item.id),
-        input: number_field_tag("item_ids[]", nil, id: item.id, class: "order_qty"),
+        input: input_qty(item.id),
         copy: link_to("Copy", copy_item_path(item)),
         name: item.name,
         unit: item.unit,

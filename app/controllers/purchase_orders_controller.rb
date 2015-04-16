@@ -3,11 +3,29 @@ class PurchaseOrdersController < ApplicationController
 
   respond_to :html, :js
 
+  def add_items
+    @purchase_order = PurchaseOrder.where(supplier: selected_supplier, status: 'PENDING').last
+    
+    items = params[:items]
+    items.each do |i|
+      
+      if (true if Float(i[:qty]) rescue false)
+        puts "Item: ID=#{i[:id]}, QTY=#{i[:qty]}"
+        ipo = ItemPurchaseOrder.new(item_id: i[:id], 
+          purchase_order_id: @purchase_order.id, 
+          quantity: i[:qty])
+        @purchase_order.item_purchase_orders << ipo  
+      end
+    end
+    @purchase_order.save!
+    render 'show'
+  end
+
   def pending
     @purchase_order.status = "PENDING"
     if @purchase_order.save
       flash[:status] = "PO Status Updated"
-    else
+     else
       flash[:error] = "PO Status Update Failed"
     end
 

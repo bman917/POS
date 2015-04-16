@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       get 'confirm'
       get 'pending'
     end
+    collection do
+      post 'add_items'
+    end
   end
 
   resources :item_bases 
