@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def selected_status
+    puts "session status: #{session[:status]}"
     @status = params[:status] || session[:status] || 'PENDING'
     session[:status] = @status
   end

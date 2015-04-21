@@ -57,7 +57,6 @@ class PurchaseOrdersController < ApplicationController
 
   def index
     purchase_order_list
-    session[:status] = 'PENDING'
 
     @items_datatable = items_datatable
 

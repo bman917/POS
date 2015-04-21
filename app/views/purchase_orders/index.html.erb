@@ -42,21 +42,12 @@
         </ul>
 
         <ul class="po_filter po_filter_spacings">
-          <li>Supplier</li>
-          <li><%=select_tag :po_supplier, 
-            options_from_collection_for_select(Supplier.all, 'id', 'name', @supplier_id)%>
-          </li>
           <li>Status</li>
           <li>
             <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
           </li>
         </ul>
     </div>
-
-    <%= link_to 'New Purchase Order', 
-          new_purchase_order_path, class: 'expand tiny button', 
-          remote: true, id: 'new_purchase_order',
-          data: { confirm: 'Create New Purchase Order?'} %>
 
     <div class="po_panel">
 
