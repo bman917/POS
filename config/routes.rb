@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'admin/reset_purchase_orders'
+
   resources :delivery_items do
     collection do
       get 'autocomplete'
@@ -27,6 +29,8 @@ Rails.application.routes.draw do
   end
 
   resources :item_bases 
+
+  get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
 
   get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
 
