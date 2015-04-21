@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
 
+  def items_datatable
+    items_datatable = ItemsDatatable.new(view_context, 
+      column_names, supplier: selected_supplier)
+  end
+
+
 
   def selected_supplier
     @supplier_id = params[:supplier_id] || session[:supplier_id] || Supplier.all.first.id

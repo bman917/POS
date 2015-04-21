@@ -1,10 +1,14 @@
 class PurchaseOrdersController < ApplicationController
   before_action :set_purchase_order, only: [:show, :edit, :update, :destroy, :confirm, :pending]
+  before_action :last_purchase_order, only: [:add_items, :index]
 
   respond_to :html, :js
 
-  def add_items
+  def last_purchase_order
     @purchase_order = PurchaseOrder.where(supplier: selected_supplier, status: 'PENDING').last
+  end
+
+  def add_items
     
     items = params[:items]
     items.each do |i|
@@ -47,12 +51,11 @@ class PurchaseOrdersController < ApplicationController
     %w(name unit pending_orders input)
   end
 
-
   def index
     purchase_order_list
+    session[:status] = 'PENDING'
 
-    @items_datatable = ItemsDatatable.new(view_context, 
-      column_names, supplier: selected_supplier)
+    @items_datatable = items_datatable
 
     respond_to do | format |
       format.html

@@ -7,9 +7,14 @@ class ItemsController < ApplicationController
   def autocomplete
   end
 
+  def column_names
+    %w(check_box name unit supplier pending_orders copy edit)
+  end
+
+
   def json
     
-    @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @column_names = column_names
     @items_datatable = ItemsDatatable.new(view_context, @column_names)
     
     if params[:term]
@@ -22,7 +27,7 @@ class ItemsController < ApplicationController
 
   def json_filter_by_supplier
     
-    @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @column_names = column_names
     @items_datatable = ItemsDatatable.new(view_context, @column_names, supplier: selected_supplier)
     
     if params[:term]
@@ -239,8 +244,10 @@ class ItemsController < ApplicationController
 
     modified_item_parms = create_attrib_item_values
     modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
-
+    modified_item_parms[:pending_orders] = 0
     @item = Item.new(modified_item_parms)
+    @items_datatable = items_datatable
+
     if @item.save
       @items = Item.active
       flash[:success] = "Saved '#{@item.name}'"
