@@ -5,9 +5,12 @@ class PurchaseOrder < ActiveRecord::Base
   after_save :update_item
 
   def update_item
-    if status_changed?(from: 'CONFIRMED', to: 'PENDING')
+    if status_changed?(from: 'CONFIRMED', to: 'PENDING') || status_changed?(from: 'CONFIRMED', to: 'DELETED')
       item_purchase_orders.each { | ipo | ipo.decrement_item}
+    elsif status_changed?(from: 'PENDING', to: 'CONFIRMED')
+      item_purchase_orders.each { | ipo | ipo.increment_item}
     end
+
   end
 
   def po_id

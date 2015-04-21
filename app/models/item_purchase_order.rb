@@ -3,10 +3,10 @@ class ItemPurchaseOrder < ActiveRecord::Base
   belongs_to :purchase_order
   validates :quantity, numericality: true
 
-  after_save :update_item
-  after_destroy :decrement_item
+  #after_save :update_item
+  #after_destroy :decrement_item
 
-  def update_item
+  def increment_item
   	item.pending_orders += quantity
   	item.save!
   end

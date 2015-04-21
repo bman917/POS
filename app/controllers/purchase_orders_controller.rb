@@ -10,6 +10,10 @@ class PurchaseOrdersController < ApplicationController
 
   def add_items
     
+    unless @purchase_order
+      @purchase_order = PurchaseOrder.create(supplier_id: selected_supplier, status: 'PENDING')
+    end
+
     items = params[:items]
     items.each do |i|
       

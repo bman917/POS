@@ -1,53 +1,55 @@
-<%=form_tag add_items_purchase_orders_path, method: :post, data: {remote: true} do %>
-  <table id="item_selector">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Unit</th>
-        <th>Confirmed</th>
-        <th>Order</th>
-      </tr>
-    </thead>
+<div id="items">
+  <%=form_tag add_items_purchase_orders_path, method: :post, data: {remote: true} do %>
+    <table id="item_selector">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Unit</th>
+          <th>Confirmed</th>
+          <th>Order</th>
+        </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
 
-    </tbody>
-  </table>
-  <div id="items_actions" style="float: right;">
-    <%=submit_tag 'Add', class: 'add_btn tiny'%>
-  </div>
-<% end %>
+      </tbody>
+    </table>
+    <div id="items_actions" style="float: right;">
+      <%=submit_tag 'Add', class: 'add_btn tiny'%>
+    </div>
+  <% end %>
 
-<%=javascript_tag do %>
-  $(document).ready( function () {
-    columns = <%=raw items_datatable.columns %>;
-    columnDefs = [{
-      "orderable": false, "targets": [0,-1,-2]
-    }];
+  <%=javascript_tag do %>
+    $(document).ready( function () {
+      columns = <%=raw items_datatable.columns %>;
+      columnDefs = [{
+        "orderable": false, "targets": [0,-1,-2]
+      }];
 
-    $('#item_selector').dataTable( {
-        "stateSave": true,
-        "lengthChange": false,
-        "paging": false,
-        "pageLength": 10000,
-        "scrollY": "300px",
-        "scrollCollapse": true,
-        "pagingType": "simple_numbers",
-        "jQueryUI": false,
-        "processing": false,
-        "serverSide": true,
-        "searching": true,
-        "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
-        "columns": columns,
-        "columnDefs": columnDefs,
-        "order": [[1, 'asc']],
-        "dom": 'lfrtip'
-    } );
+      $('#item_selector').dataTable( {
+          "stateSave": true,
+          "lengthChange": false,
+          "paging": false,
+          "pageLength": 10000,
+          "scrollY": "300px",
+          "scrollCollapse": true,
+          "pagingType": "simple_numbers",
+          "jQueryUI": false,
+          "processing": false,
+          "serverSide": true,
+          "searching": true,
+          "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
+          "columns": columns,
+          "columnDefs": columnDefs,
+          "order": [[1, 'asc']],
+          "dom": 'lfrtip'
+      } );
 
-    $('#item_selector').on('draw.dt', function() {
-        $('.order_qty').spinner();
-    });
+      $('#item_selector').on('draw.dt', function() {
+          $('.order_qty').spinner();
+      });
 
-} );
+  } );
 
-<% end %>
+  <% end %>
+</div>

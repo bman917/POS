@@ -3,5 +3,7 @@ $('#purchase_orders_wrapper').remove();
 $('#po_list').append('<%=j render partial: 'table', 
     locals: {purchase_orders: @purchase_orders}%>');
 
+
+
 <%=render template: 'purchase_orders/show'%>
 
