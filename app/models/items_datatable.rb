@@ -10,9 +10,9 @@ class ItemsDatatable
   def as_json(options={})
     {
       draw: params[:draw],
+      data: data,
       recordsTotal: Item.all.count,
-      recordsFiltered: items.count,
-      data: data
+      recordsFiltered: @recordsFiltered
     }
   end
 
@@ -52,7 +52,6 @@ class ItemsDatatable
     items.map do | item |
       { 
         DT_RowId: item.id, 
-        # DT_RowClass: "xxxx", 
         check_box: check_box_tag("item_ids[]", item.id),
         input: input_qty(item.id),
         copy: link_to("Copy", copy_item_path(item)),
@@ -62,9 +61,6 @@ class ItemsDatatable
         pending_orders: item.pending_orders,
         edit: link_to(edit_img, edit_item_path(item)),
       }
-
-      
-
     end
   end
 
@@ -83,6 +79,9 @@ class ItemsDatatable
     end
 
     @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
+
+    @recordsFiltered = @items_unordered.count
+    puts @recordsFiltered
 
     @items_unordered = @items_unordered.limit(params[:length]).offset(params[:start]) if params[:length].to_i >= 0
 

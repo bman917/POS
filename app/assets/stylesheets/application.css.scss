@@ -17,14 +17,14 @@
  *= require jquery-ui/spinner
  *= require user_manager
  *= require foundation
+ *= require foundation_and_overrides
  *= require common
  *= require hide_toggler.overlay
- *= dataTables.foundation.css
  *= require dataTables.tableTools
+ *= require dataTables.jqueryui.scss
  *= require libnotify
  *= require_tree .
  *= require_self
- *= require foundation_and_overrides
  */
  html, body, .full-height {
   height: 100% !important;
@@ -46,11 +46,3 @@ table {
 table tr.highlight {
   background: #A9F6AB;
 }
-
-select:focus, input:focus, textarea:focus, a:focus {
-  //box-shadow: -10px 0px 0px #888888;
-  font-weight: bolder;
-
-  box-shadow: -3px 0px 0px #888888;
-} 
-

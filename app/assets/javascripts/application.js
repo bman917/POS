@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
-//= require dataTables/jquery.dataTables
 //= require jquery-ui/core
 //= require jquery-ui/widget
 //= require jquery-ui/mouse
@@ -26,7 +25,7 @@
 //= require common_tools
 //= require common_tools/jquery-spin
 //= require mousetrap.min
-//= require dataTables.foundation.min.js
+//= require jquery.dataTables.min
 //= require dataTables.tableTools
 //= require humane.min
 //= require_tree .

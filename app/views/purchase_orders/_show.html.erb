@@ -59,6 +59,13 @@
         <%= render partial: 'purchase_orders/show_details_table', 
               locals: {purchase_order: purchase_order} %>
 
+    <%=javascript_tag do %>
+      purchase_order_show_check_box_listener();
+      purchase_order_show_keyboard_shortcuts();
+
+      $('#item_selector').DataTable().ajax.reload();
+    <% end %>
+  
     <% else %>
         No Purchase Order Selected.
     <%end%>
@@ -66,12 +73,7 @@
   <!--end panel-->
   </div>
 
-  <%=javascript_tag do %>
-    purchase_order_show_check_box_listener();
-    purchase_order_show_keyboard_shortcuts();
 
-    $('#item_selector').DataTable().ajax.reload();
-  <% end %>
 
 
   <% if can_confirm purchase_order %>

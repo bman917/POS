@@ -3,15 +3,11 @@
 <%=page_title "Item List" %>
 
 <%=form_tag destroy_multiple_items_path, method: :delete do %>
-    <div id="items_actions" style="margin: 2em 0 -5em 0">
-      <%=submit_tag 'Delete Checked', class: 'alert button tiny', data: { confirm: 'Delete Checked Items. Are you sure?' }%>
-    </div>
 
-
-<table id="item_selector">
+<table id="item_selector" class="display">
   <thead>
     <tr>
-      <th></th>
+      <th class="dt-center"><%=image_submit_tag 'gtk-delete.png', size: '14x14', data: { confirm: 'Delete Checked Items. Are you sure?' }%></th>
       <th>Name</th>
       <th>Unit</th>
       <th>Supplier</th>
@@ -32,16 +28,16 @@
   $(document).ready( function () {
 
   columns = <%=raw @items_datatable.columns %>;
-  columnDefs = [{
-    "orderable": false, "targets": [0,-1,-2]
-  }];
+  columnDefs = [
+    { "orderable": false, "targets": [0,-1,-2]},
+    { "className": "dt-center", "targets": [0]}  //center checkbox
+  ];
 
   $('#item_selector').dataTable( {
       "stateSave": true,
       "lengthChange": false,
       "paging": true,
-      "pageLength": 100,
-      "scrollY": "400px",
+      "pageLength": "100",
       "pagingType": "simple_numbers",
       "jQueryUI": false,
       "processing": true,
