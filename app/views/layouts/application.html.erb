@@ -10,49 +10,27 @@
     <%= csrf_meta_tags %>
   </head>
   <body id="content">
-    <div id="wait_message" class="hidden">
-      <%=image_tag 'loading_bar.gif', size: "125x20"%>
-    </div>
     <%= render 'layouts/navigation'%>
-    <div class="row full-height" style="max-width: 100%;">
-      <!--   <div class="side_nav columns small-2 large-1" style=" box-shadow:0 0 5px black">
-        <ul class="off-canvas-list">
-          <li><label>Suppliers</label></li>
-          <li><%=link_to 'Suppliers', suppliers_path%></li>
-          <li><label>Item Config</label></li>
-          <li><%=link_to 'Attributes', attribs_path%></li>
-          <li><%=link_to 'Categories', categories_path%></li>
-          <li><%=link_to 'Units', units_path%></li>
-          <li><label>Items</label></li>
-          <li><%=link_to 'Manage Items', items_path%></li>
-          <li><%=link_to 'New Item', new_item_path%></li>
-          <li><label>Purchase Orders</label></li>
-          <li><%=link_to 'PO List', purchase_orders_path%></li>
-          <li><%=link_to 'Deliveries', deliveries_path%></li>
-        </ul>
-      </div> -->
-      <div class="main columns small-10 large-11">
-        <!--       <div id="notice" class="row" style="background-color:black;height:4em; box-shadow:0 0 10px black; position: absolute;width:100%;z-index:2;opacity:.5">
-          <div class="column" style="height:inherit">
-            <span style="display:table-cell;vertical-align:middle;height:inherit;color:white">Purchase Order Created.</span>
-          </div>
-        </div> -->
-        <div class="row">
-          <% flash.each do |name, msg| %>
-          <div id="pos_alert" class="column small-6 small-centered" style="margin-top: 1em;">
-            <div data-alert class=" alert-box warning">
-              <%= content_tag :div, msg, id: "flash_#{name}" %>
-              <a href="#" class="close">&times;</a>
+    
+        <div id="wait_message" class="hidden">
+          <%=image_tag 'loading_bar.gif', size: "125x20"%>
+        </div>
+
+        <div class="row full-height" style="max-width: 100%;">
+          <div class="row">
+            <% flash.each do |name, msg| %>
+            <div id="pos_alert" class="column small-6 small-centered" style="margin-top: 1em;">
+              <div data-alert class=" alert-box warning">
+                <%= content_tag :div, msg, id: "flash_#{name}" %>
+                <a href="#" class="close">&times;</a>
+              </div>
             </div>
-          </div>
-          <% end %>
+            <% end %>
         </div>
-        <div class="row">
-          <div class="large-12 columns">
-            <br>
-            <%= yield %>
-          </div>
-        </div>
+
+      <div style="margin: 1%">
+        <%= yield %>
       </div>
+  
     </body>
   </html>

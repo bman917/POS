@@ -2,6 +2,11 @@
 
 <%=page_title "Item List" %>
 
+<div id="controls" style="float: left; margin-top: 1em">
+<%= link_to 'New Item', new_item_path, class: 'pos_action' %>
+<%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action', data: {confirm: 'Are you sure?'} %>
+</div>
+
 <%=form_tag destroy_multiple_items_path, method: :delete do %>
 
 <table id="item_selector" class="display">
@@ -55,7 +60,10 @@
             "sButtonText": "PDF",
             "mColumns": [ 1, 2, 3 ]
           }]
-      }
+      },
+      "drawCallback": function( settings ) {
+          $('#controls').prependTo($('.dataTables_wrapper'));
+        }
   } );
 
 } );
@@ -65,6 +73,3 @@
 
 <br>
 
-<%= link_to 'New Item', new_item_path, class: 'button' %>
-<%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'alert button',
-      data: {confirm: 'Are you sure?'} %>

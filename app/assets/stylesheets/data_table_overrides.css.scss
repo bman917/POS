@@ -406,10 +406,13 @@ table.dataTable td {
     // Filtering input
     .dataTables_filter {
         float: right;
-        text-align: right;
+        text-align: left;
  
         input {
+            display: inline;
             margin-left: 0.5em;
+            margin-right: 0.5em;
+            width: 15em;
         }
     }
  

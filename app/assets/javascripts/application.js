@@ -26,7 +26,7 @@
 //= require common_tools/jquery-spin
 //= require mousetrap.min
 //= require jquery.dataTables.min
-//= require dataTables.tableTools
+//require dataTables.tableTools
 //= require humane.min
 //= require_tree .
 
