@@ -20,8 +20,7 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/spinner
 //= require turbolinks
-//= require modernizr
-//= require foundation.min
+//= require foundation
 //= require hide_toggler
 //= require common_tools
 //= require common_tools/jquery-spin

@@ -6,7 +6,7 @@ gem 'rails', '4.1.8'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -72,7 +72,7 @@ gem 'devise'
 gem 'paper_trail', '~> 3.0.1'
 gem 'will_paginate', '~> 3.0.6'
 gem 'rack-mini-profiler'
-#gem 'foundation-rails'
+gem 'foundation-rails'
 #gem 'user_manager', :path => '/home/jchan/engines/user_manager'
 gem 'user_manager', github: 'bman917/user_manager'
 gem 'common_assets', github: 'bman917/common_assets'
