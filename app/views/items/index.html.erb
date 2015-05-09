@@ -2,14 +2,20 @@
 
 <%=page_title "Item List" %>
 
-<div id="controls" style="float: left; margin-top: 1em">
+<div id="controls" style="float: left; margin-top: .25em; width: 75%">
+  <%=select_tag :po_supplier, 
+    options_from_collection_for_select(
+      Supplier.all, 'id', 'name', @supplier_id), 
+    style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
 <%= link_to 'New Item', new_item_path, class: 'pos_action' %>
 <%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action', data: {confirm: 'Are you sure?'} %>
+
 </div>
+
 
 <%=form_tag destroy_multiple_items_path, method: :delete do %>
 
-<table id="item_selector" class="display">
+<table id="item_selector" class="display" width="100%">
   <thead>
     <tr>
       <th class="dt-center"><%=image_submit_tag 'gtk-delete.png', size: '14x14', data: { confirm: 'Delete Checked Items. Are you sure?' }%></th>
