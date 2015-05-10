@@ -1,16 +1,9 @@
-<tr id="attrib_<%=attrib.id%>"class="attrib_row">
-  <th><%=attrib.name%></th>
-  <td>
-  <div class="row">
-    <div class="column small-10">
-      <%=text_field_tag "attrib[#{attrib.id}]", value%>
-    </div>
-    <div class="column small-2">
-      <%=link_to delete_img, 
-          "javascript:$('tr#attrib_#{attrib.id}').hide('fast',function(){ $(this).remove(); })",
-          tabindex: "-1"
+<label id="attrib_<%=attrib.id%>"class="attrib_row">
+  <span><%=attrib.name%> :</span>
+  <%=text_field_tag "attrib[#{attrib.id}]", value, style: "display:inline"%>
+  <%=link_to raw("&#215;"), 
+          "javascript:$('label#attrib_#{attrib.id}').hide('fast',function(){ $(this).remove(); })",
+          tabindex: "-1", style: "color: lightgray; font-weight: bolder; font-size:1.5em"
         %>
-    </div>
-  </td>
-</tr>
+</label>
 

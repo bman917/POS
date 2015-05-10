@@ -1,7 +1,7 @@
-$("tr.attrib_row").hide('slow',function(){ 
+$("label.attrib_row").hide('slow',function(){ 
   $(this).remove(); 
 });
 
 <% @attribs.each do | attrib | %>
-  $('#item_display #description_column').before("<%=j render partial: '/items/attrib_input_row2', locals: {attrib: attrib, value: ""}%>");
+  $('#item_display #description_column').before("<%=j render partial: '/items/attrib_input_row', locals: {attrib: attrib, value: ""}%>");
 <% end if @attribs %>

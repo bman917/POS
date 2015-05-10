@@ -1,12 +1,12 @@
 //Style for turning a link into a POS button
 
-.pos_action {
+.pos_action, input[type="submit"].pos_action {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
     padding: 5px 20px;
     border: 1px solid #9e9e9e;
-    border-radius: 3px;
+    border-radius: 4px;
     background: #dedede;
     background: -webkit-gradient(linear, left top, left bottom, from(#dedede), to(#ededed));
     background: -moz-linear-gradient(top, #dedede, #ededed);

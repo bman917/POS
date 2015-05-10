@@ -1,66 +1,14 @@
-// Place all the styles related to the Items controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-// div#add_attrib {
-//   margin: -20px 0 -20px -15px;
-//   float: left;
-// }
-
-// div#save_button_row {
-//   margin: 0 0 0 50px;
-//   clear: both;
-// }
-
-// form#new_item table#item_display {
-
-// background-color: #DDDDDD;
-//   div {
-//     padding: 0;
-//   }
-
-//   a.tiny {
-//     margin: 0;
-//     margin-left: 2px;
-//     padding: 10px;
-//     border-radius: 5px;
-//   }
-
-
-//   input, select {
-//     //padding: 2px;
-//     //padding-top: 10px;
-//     //margin: 0;
-//     //border-bottom: 0;
-//   }
-
-//   tr, th, td { 
-//     line-height:0; 
-//     margin: 0;
-//     padding: 0;
-//     background-color: #DDDDDD;
-//   }
-
-//   // div.row {
-//   //   margin: -5px;
-
-//   // }
-
-//   a {
-//     margin: 0;
-//   }
-
-// }
-
-
 /* #### bootstrap Form #### */
+/* Copied from http://www.sanwebe.com/2013/10/css-html-form-styles */
 
-$std_width: 300px;
+$form_width: 700px;
+$std_input_width: 375px;
 
 .bootstrap-frm {
     margin-left:auto;
     margin-right:auto;
 
-    max-width: 700px;
+    width: $form_width;
     background: #FFF;
     padding: 20px 30px 20px 30px;
     font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -107,7 +55,8 @@ $std_width: 300px;
     margin-top: 3px;
     outline: 0 none;
     padding: 5px 0px 5px 5px;
-    width: $std_width;
+    $form_width: 700px;
+    width: $std_input_width;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;    
@@ -123,14 +72,16 @@ $std_width: 300px;
     -moz-appearance: none;
     text-indent: 0.01px;
     text-overflow: '';
-    width: $std_width;
+    $form_width: 700px;
+    width: $std_input_width;
     height: 35px;
     line-height:15px;
 }
 .bootstrap-frm textarea{
     height:100px;
     padding: 5px 0px 0px 5px;
-    width: $std_width;
+    $form_width: 700px;
+    width: $std_input_width;
 }
 .bootstrap-frm .button {
     background: #FFF;

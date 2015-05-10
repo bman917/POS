@@ -50,3 +50,9 @@ pre {
     list-style: square;
   }
 }
+
+ul.two_columns {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2; 
+}

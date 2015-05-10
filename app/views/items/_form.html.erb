@@ -1,137 +1,77 @@
-<div class"row">
-<div class="column small-12">
+<p>
+<%= simple_form_for @item, html: { id: "item_display", class: 'bootstrap-frm' } do |f| %>
+<h1><%="#{action_name} Item".titleize%></h1>
 
-<%=javascript_tag do %>
-$(document).ready(function(){
-  $('.toggler_link').hide_toggler();
-  $('.show_help_link').hide_toggler();
-});
-<% end %>
-
-<%= simple_form_for @item do |f| %>
-
-    <% if @item.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
-
-        <ul>
-        <% @item.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
+<% if @item.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  <ul>
+    <% @item.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
     <% end %>
-
-<%=small_div do %>
-  <div class="toggler_parent">
-      <%=link_to 'Keyboard shortcuts', '', class: 'help show_help_link label secondary'%>
-      <div id="help" class="togger_child hidden">
-        <ul>
-          <li><kbd>alt</kbd>+<kbd>b</kbd> -Add New Item Base</li>
-          <li><kbd>alt</kbd>+<kbd>s</kbd> -Add New Supplier</li>
-          <li><kbd>alt</kbd>+<kbd>a</kbd> -Add New Attribute</li>
-        </ul>
-      </div>
-  </div>
+  </ul>
+</div>
 <% end %>
+
+<!-- START KEYBAORD SHORTCUTS-->
+<!--%= render 'keyboard_shortcuts'%-->
+<!-- END KEYBAORD SHORTCUTS-->
 
 <%
-  select_input_html_options = {}
-  add_button_html_options = {class: "tiny success button", tabindex: -1}
+select_input_html_options = {}
+add_button_html_options = {class: "tiny success button", tabindex: -1}
 %>
 
-<%=div_row 'max' do %>
+<label for="item_name">
+  <span>Item Base :</span>
+  <%= f.association :item_base, label_method: :name, label: false,  prompt: "Choose Item Base", input_html: select_input_html_options %>
+  <%=modal_link_to "Add", add_item_base_to_new_item_form_path, add_button_html_options %>
+</label>
 
-<table id="item_display">
-  <tr>
-    <th style="width: 11em"><%=f.label :name, "Item Base"%></th>
-    </th>
-    <td id="base_item_column">
-      <div class="row">
-        <div class="column small-10">
-          <%= f.association :item_base, label_method: :name, label: false,  prompt: "Choose Item Base", input_html: select_input_html_options %>
-        </div>
-        <div class="column small-2">
-          <%=modal_link_to "Add", add_item_base_to_new_item_form_path, add_button_html_options %>
-        </div>
-      </div>
+<label for="supplier">
+  <span>Supplier :</span>
+  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
+  <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
+</label>
 
-    </td>
-  </tr>
+<label for="unit">
+  <span>Unit :</span>
+  <%= f.input :unit, label: false,
+  collection: Unit.order(:name),
+  label_method: :name,
+  value_method: :name,
+  prompt: "Choose a Unit",
+  input_html: select_input_html_options %>
+</label>
 
-  <tr>
-    <th><%=f.label :supplier%></th>
-    <td id="supplier_column">
-      <div class="row">
-        <div class="column small-10">
-          <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
-        </div>
-        <div class="column small-2">
-            <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
-        </div>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <th><%=f.label :unit %></th>
-    <td>
-      <%=div_row 10 do %>
-        <%= f.input :unit, label: false, 
-              collection: Unit.order(:name), 
-              label_method: :name,
-              value_method: :name, 
-              prompt: "Choose a Unit" %>
-        <% end %>
-      </td>
-  </tr>
-  
-  <% @base_attribs.each do | attrib_item_value | %>
-    <%=render partial: 'attrib_input_row', 
-              locals: { attrib: attrib_item_value.attrib, 
-                        value: attrib_item_value.value} %>
-  <% end if @base_attribs%>
+<!-- START ADDING ATTRIBUTES -->
+<% @base_attribs.each do | attrib_item_value | %>
+<%=render partial: 'attrib_input_row',
+locals: { attrib: attrib_item_value.attrib,
+value: attrib_item_value.value} %>
+<% end if @base_attribs%>
+<!-- END ADDING ATTRIBUTES -->
 
-  <tr id="description_column">
-    <th><%=f.label :description%></th>
-    <td>
-      <%=div_row 10 do %>
-        <%= f.input :description, label: false%>
-      <%end%>
-    </td>
-  </tr>
+<label id="description_column" for="description" style="display:none">
+  <span>Description :</span>
+  <%= f.input :description, label: false, input_html: select_input_html_options %>
+</label>
 
-</table>
+<label for="add_attribute">
+  <span></span>
+    <%=modal_link_to "Add Attribute", list_attribs_path, 
+    { id: 'add_attrb_button',class: "tiny button"} %>
+  <%= f.submit :submit, value: "Save", class: 'pos_action', style: "float:right; margin-right: 3.5em; width: 141px; height: 40px;" %>
+</label>
 
-<% end  %>
+<%= link_to '<-- Back To Items List', items_path %>
 
-<%=div_row 'max', id: "add_attrib" do %>
-    <%=modal_link_to "Add Attribute", list_attribs_path, { id: 'add_attrb_button', class: 'button tiny success'} %>
-<% end %>
-
-<div class="row" id="save_button_row">
-  <div class="small-10 column">
-      <div class="row">
-        <div class="small-10 small-offset-2 column">
-          <%= f.button :submit, value: "Save", class: 'expand' %>
-        </div>
-      </div>
-  </div>
-</div>
-
-
-<% end %>
-
-</div>
-</div>
+<% end %> <!-- END SIMPLE FORM -->
 
 <%=javascript_tag do %>
-
 item_form_bind_key_listeners();
 item_form_focus();
 item_form_ajax_for_item_base_select();
-
 Mousetrap.stopCallback = function() { return false };
-
 var xhr;
-
 <% end %>

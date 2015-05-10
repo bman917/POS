@@ -1,6 +1,8 @@
-<h2>Add Attribute</h2>
-<%= form_tag add_attrib_items_path, method: :post, remote: true, id: 'list_attrib' do %>
-  <ul>  
+
+<%= form_tag add_attrib_items_path, method: :post, remote: true, 
+      id: 'list_attrib', class: 'bootstrap-frm' do %>
+<h1>Add Attribute</h1>
+  <ul class="two_columns">  
   <% Attrib.active.each do | attrib | %>
     <li>
       <%=check_box_tag 'attrib[]', attrib.id, false, id: "attrib_#{attrib.id}"%>
@@ -8,14 +10,14 @@
     </li>
   <% end %>
   </ul>
-  <%=button_tag 'Select'%>
+  <%=button_tag 'Select', class: 'pos_action'%>
 <% end %>
 
 <%=javascript_tag do %>
   setTimeout(function() {
     $('#list_attrib input[type="checkbox"]:first').focus();
     }, 250);
-  $('#modal_form').addClass('small');
+
 <% end %>
 
 <a id="close" class="close-reveal-modal">&#215;</a>
