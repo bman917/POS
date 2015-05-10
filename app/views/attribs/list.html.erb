@@ -1,6 +1,6 @@
 
 <%= form_tag add_attrib_items_path, method: :post, remote: true, 
-      id: 'list_attrib', class: 'bootstrap-frm' do %>
+      id: 'list_attrib', class: 'bootstrap-frm', style: 'width: 80%' do %>
 <h1>Add Attribute</h1>
   <ul class="two_columns">  
   <% Attrib.active.each do | attrib | %>
@@ -17,7 +17,6 @@
   setTimeout(function() {
     $('#list_attrib input[type="checkbox"]:first').focus();
     }, 250);
-
 <% end %>
 
 <a id="close" class="close-reveal-modal">&#215;</a>
