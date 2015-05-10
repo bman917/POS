@@ -1,0 +1,18 @@
+<%=javascript_tag do %>
+$(document).ready(function(){
+  $('.toggler_link').hide_toggler();
+  $('.show_help_link').hide_toggler();
+});
+<% end %>
+<%=small_div do %>
+  <div class="toggler_parent">
+      <%=link_to 'Keyboard shortcuts', '', class: 'help show_help_link label secondary'%>
+      <div id="help" class="togger_child hidden">
+        <ul>
+          <li><kbd>alt</kbd>+<kbd>b</kbd> -Add New Item Base</li>
+          <li><kbd>alt</kbd>+<kbd>s</kbd> -Add New Supplier</li>
+          <li><kbd>alt</kbd>+<kbd>a</kbd> -Add New Attribute</li>
+        </ul>
+      </div>
+  </div>
+<% end %> 

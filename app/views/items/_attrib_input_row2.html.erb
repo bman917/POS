@@ -1,0 +1,9 @@
+<label id="attrib_<%=attrib.id%>"class="attrib_row">
+  <span><%=attrib.name%></span>
+  <%=text_field_tag "attrib[#{attrib.id}]", value, style: "display:inline"%>
+  <%=link_to delete_img, 
+          "javascript:$('label#attrib_#{attrib.id}').hide('fast',function(){ $(this).remove(); })",
+          tabindex: "-1"
+        %>
+</label>
+

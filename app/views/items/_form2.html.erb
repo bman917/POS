@@ -1,0 +1,78 @@
+<%= simple_form_for @item, html: { id: "item_display", class: 'bootstrap-frm' } do |f| %>
+<h1>Item</h1>
+
+<% if @item.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  <ul>
+    <% @item.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<!-- START KEYBAORD SHORTCUTS-->
+<!--%= render 'keyboard_shortcuts'%-->
+<!-- END KEYBAORD SHORTCUTS-->
+
+<%
+select_input_html_options = {}
+add_button_html_options = {class: "tiny success button", tabindex: -1}
+%>
+
+<label for="item_name">
+  <span>Item Base :</span>
+  <%= f.association :item_base, label_method: :name, label: false,  prompt: "Choose Item Base", input_html: select_input_html_options %>
+  <%=modal_link_to "Add", add_item_base_to_new_item_form_path, add_button_html_options %>
+</label>
+
+<label for="supplier">
+  <span>Supplier :</span>
+  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
+  <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
+</label>
+
+<label for="unit">
+  <span>Unit :</span>
+  <%= f.input :unit, label: false,
+  collection: Unit.order(:name),
+  label_method: :name,
+  value_method: :name,
+  prompt: "Choose a Unit",
+  input_html: select_input_html_options %>
+</label>
+
+<!-- START ADDING ATTRIBUTES -->
+<% @base_attribs.each do | attrib_item_value | %>
+<%=render partial: 'attrib_input_row2',
+locals: { attrib: attrib_item_value.attrib,
+value: attrib_item_value.value} %>
+<% end if @base_attribs%>
+<!-- END ADDING ATTRIBUTES -->
+
+<label id="description_column" for="description" style="display:none">
+  <span>Description :</span>
+  <%= f.input :description, label: false, input_html: select_input_html_options %>
+</label>
+
+<label>
+  <span></span>
+    <%=modal_link_to "Add Attribute", list_attribs_path, 
+    { id: 'add_attrb_button',class: "tiny button"} %>
+</label>
+
+<label>
+  <span></span>
+  <%= f.button :submit, value: "Save", class: 'button', style: "float:right" %>
+</label>
+
+<% end %> <!-- END SIMPLE FORM -->
+
+<%=javascript_tag do %>
+item_form_bind_key_listeners();
+item_form_focus();
+item_form_ajax_for_item_base_select();
+Mousetrap.stopCallback = function() { return false };
+var xhr;
+<% end %>
