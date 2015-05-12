@@ -60,10 +60,12 @@
               locals: {purchase_order: purchase_order} %>
 
     <%=javascript_tag do %>
-      purchase_order_show_check_box_listener();
-      purchase_order_show_keyboard_shortcuts();
-
-      $('#item_selector').DataTable().ajax.reload();
+      $(document).ready( function () {
+        purchase_order_show_check_box_listener();
+        purchase_order_show_keyboard_shortcuts();
+        $('#item_selector').DataTable().ajax.reload();
+        }
+      );
     <% end %>
   
     <% else %>

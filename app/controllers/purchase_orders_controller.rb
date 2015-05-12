@@ -52,7 +52,7 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def column_names
-    %w(name unit pending_orders input)
+    %w(summary pending_orders input)
   end
 
   def index

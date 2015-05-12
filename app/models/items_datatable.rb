@@ -59,6 +59,7 @@ class ItemsDatatable
         unit: item.unit,
         supplier: item.supplier.name,
         pending_orders: item.pending_orders,
+        summary: "#{item.name} <span class='unit'>(#{item.unit})</span>",
         edit: link_to(edit_img, edit_item_path(item)),
       }
     end
