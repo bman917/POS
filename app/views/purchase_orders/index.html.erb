@@ -11,64 +11,21 @@
 <br/>
 
 <div class="row">
-  <div id="items_container" class="column small-6">
+  <div id="items_container" class="column small-4">
       <%=render partial: 'purchase_orders/index/data_table', locals: {items_datatable: @items_datatable} %>
   </div>
 
-  <div class="column small-6 large-5 end">
+  <div class="column small-5">
     <div id="pos_details">
       <%=render partial: 'purchase_orders/show', locals: {purchase_order: @purchase_order, status: @status}%>
     </div>
-
-
   </div>
-</div>
 
-
-
-
-
-<br/>
-<br/>
-
-<div class="row">
-
-  <!-- START COLUMN 1 -->
-  <div class="small-5 large-3 columns">
-    <div class="po_panel">
-        <ul class="po_date_filter po_filter_spacings">
-          <li>From</li>
-          <li>To</li>
-          <li><%=date_field(:from, :date_filter)%></li>
-          <li><%=date_field(:to, :date_filter)%></li>
-        </ul>
-
-        <ul class="po_filter po_filter_spacings">
-          <li>Status</li>
-          <li>
-            <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], @status)%>
-          </li>
-        </ul>
-    </div>
-
-    <div class="po_panel">
-
-      <div id="po_list">
-      <%=render partial: 'purchase_orders/table', locals: {purchase_orders: @purchase_orders} %>
-      </div>
-    </div>
-
-    
+  <div class="column small-3">
+    <%=render partial: 'purchase_orders/po_list', locals: {purchase_orders: @purchase_orders, purchase_order: @purchase_order, status: @status}%>
   </div>
-  <!-- END COLUMN 1 -->
-
-
-
-
 </div>
 
 <%=javascript_tag do %>
-
-purchase_order_index_init_listeners();
-
+  purchase_order_index_init_listeners();
 <% end %>

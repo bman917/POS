@@ -1,0 +1,28 @@
+  <!-- START COLUMN 1 -->
+  <div class="small-5 large-3 columns">
+    <div class="po_panel">
+        <ul class="po_date_filter po_filter_spacings">
+          <li>From</li>
+          <li>To</li>
+          <li><%=date_field(:from, :date_filter)%></li>
+          <li><%=date_field(:to, :date_filter)%></li>
+        </ul>
+
+        <ul class="po_filter po_filter_spacings">
+          <li>Status</li>
+          <li>
+            <%=select_tag :po_status, options_for_select(['PENDING', 'CONFIRMED'], status)%>
+          </li>
+        </ul>
+    </div>
+
+    <div class="po_panel">
+
+      <div id="po_list">
+      <%=render partial: 'purchase_orders/table', locals: {purchase_orders: purchase_orders} %>
+      </div>
+    </div>
+
+    
+  </div>
+  <!-- END COLUMN 1 -->

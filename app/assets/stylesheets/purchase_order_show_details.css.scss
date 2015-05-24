@@ -1,0 +1,15 @@
+@import 'purchase_order_constants';
+
+#purchase_order_show_details {
+
+  width: $std_with;
+  height: $std_height;
+  background-color: $bg_color;
+
+  #items_container {
+    .unit {
+      font-style: italic;
+      color: #A4A4A4;
+    }
+  }
+}

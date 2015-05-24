@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th style="width: 8em" colspan="3">Quantity</th>
+          <th colspan="3">Quantity</th>
         </tr>
       </thead>
 
@@ -13,9 +13,9 @@
         <% purchase_order.item_purchase_orders.each do | item | %>
           <%=tr_highlight(item, @item_purchase_order) do %>
             <td><%=item.item.name%></td>
-            <td style="text-align: right"><%=item.quantity%></td>
-            <td style="font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
-            <td><%=check_box_tag "item_purchase_order_ids[]", item.id %></td>
+            <td style="width: 40px;text-align: right"><%=item.quantity%></td>
+            <td style="width: 40px;font-size: 85%;font-style: italic"><%=item.item.unit.pluralize(item.quantity)%></td>
+            <td style="width: 20px"><%=check_box_tag "item_purchase_order_ids[]", item.id %></td>
           <% end %>
         <% end %>
       </tbody>

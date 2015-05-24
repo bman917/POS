@@ -1,68 +1,53 @@
-#items_container {
-.unit {
-  font-style: italic;
-  color: #A4A4A4;
-}
+@import 'purchase_order_constants';
 
+.purchase_orders_item_select {
 
-}
-
-$bg_color: #DDDDDD;
-$std_with: 400px;
-$border_radius: 5px;
-
-.dataTables_wrapper {
-	background-color: $bg_color;
-
-	border-top-left-radius: $border_radius;
-	border-top-right-radius: $border_radius;
-
-	.dataTables_filter {
-		float: left;
-		margin-top: 1em;
-		margin-left: 1em;
-		
-		label input {
-			width: 22em;
-		}
-	}
-
-	.dataTables_scrollBody {
-		border-top: 1px solid black;
-		background-color: #F2F2F2;
-	}
-	.dataTables_scrollHeadInner {
-
-		// fixes the gap between the scroll bar and header
-		background: #F5F5F5;
-		margin-bottom: -2px;
-		margin-top: -1px;
-	}
-}
-
-
-
-#items { 
-	width: $std_with 
-}
-
-#items_actions {
-	width: $std_with;
-	height: 40px;
-	background: $bg_color;
-	padding: 4px;
-	border-bottom-left-radius: $border_radius;
-	border-bottom-right-radius: $border_radius;
-}
-
-#item_selector {
-  .ui-spinner {
-    height: 30px;
-    padding: 0;
+  width: $std_with;
+  #items_container {
+    .unit {
+      font-style: italic;
+      color: #A4A4A4;
+    }
   }
-
-  .ui-spinner-input {
-    padding: 5px 5px 10px 5px;
-    margin: 0;
+  .dataTables_wrapper { 
+    background-color: $bg_color;
+    border-top-left-radius: $border_radius;
+    border-top-right-radius: $border_radius;
+    .dataTables_filter {
+      float: left;
+      margin-top: 1em;
+      margin-left: 1em;
+      label input {
+        width: 22em;
+      }
+    }
+    .dataTables_scrollBody {
+      border-top: 1px solid black;
+      background-color: #F2F2F2;
+    }
+    .dataTables_scrollHeadInner {
+      // fixes the gap between the scroll bar and header
+      background: #F5F5F5;
+      margin-bottom: -2px;
+      margin-top: -1px;
+    }
+  }
+  #items_actions {
+    width: $std_with;
+    height: 40px;
+    background: $bg_color;
+    padding: 4px;
+    border-bottom-left-radius: $border_radius;
+    border-bottom-right-radius: $border_radius;
+  }
+  #item_selector {
+    .ui-spinner {
+      height: 30px;
+      padding: 0;
+    }
+    .ui-spinner-input {
+      padding: 5px 5px 10px 5px;
+      margin: 0;
+    }
   }
 }
