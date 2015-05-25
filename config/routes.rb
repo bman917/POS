@@ -74,7 +74,8 @@ Rails.application.routes.draw do
   get 'portal/index'
 
   mount UserManager::Engine, at: "/user_manager"
-  root "portal#index"
+  # root "portal#index"
+  root "items#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
