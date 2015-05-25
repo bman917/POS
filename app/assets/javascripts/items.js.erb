@@ -1,5 +1,24 @@
 <% url = POS::Application.routes.url_helpers %>
 
+/*
+Used by item/index. 
+This will trigger ItemsController/index as a script.
+
+Usage:
+1. When supplier is changed, triggering this function 
+   will relaod the items datable with the items for the 
+   selected supplier
+*/
+function item_controller_index_ajax() {
+  overlay();
+  supplier_id = $('#po_supplier').val();
+  $.ajax({
+    dataType: 'script',
+    url: "/items?supplier_id=" + supplier_id,
+    complete: function() {$('#item_selector').DataTable().ajax.reload(); }
+  });
+}
+
 function open_item_form()
 {
   $('#modal_form').foundation('reveal', 'open', {

@@ -58,8 +58,8 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.active
-    @column_names = %w(check_box name unit supplier pending_orders copy edit)
+    @items = Item.where(supplier_id: selected_supplier)
+    @column_names = %w(check_box summary copy edit)
     @items_datatable = ItemsDatatable.new(view_context, @column_names)
     respond_with(@items)
   end

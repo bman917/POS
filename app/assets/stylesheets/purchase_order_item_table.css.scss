@@ -1,6 +1,6 @@
 @import 'purchase_order_constants';
 
-.purchase_orders_item_select {
+.purchase_orders_item_select, .item_list {
 
   width: $std_with;
   #items_container {
@@ -9,10 +9,20 @@
       color: #A4A4A4;
     }
   }
+  .dataTables_info {
+    padding-left: 1em;
+  }
+  .dataTables_paginate {
+    padding-bottom: .5em;
+  }
   .dataTables_wrapper { 
     background-color: $bg_color;
-    border-top-left-radius: $border_radius;
-    border-top-right-radius: $border_radius;
+    border-radius: $border_radius;
+
+    table tr {
+      height: 32px;
+    }
+
     .dataTables_filter {
       float: left;
       margin-top: 1em;

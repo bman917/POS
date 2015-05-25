@@ -2,38 +2,31 @@
 
 <%=page_title "Item List" %>
 
-<div id="controls" style="float: left; margin-top: .25em; width: 75%">
-  <%=select_tag :po_supplier, 
-    options_from_collection_for_select(
-      Supplier.all, 'id', 'name', @supplier_id), 
-    style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
-<%= link_to 'New Item', new_item_path, class: 'pos_action' %>
-<%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action', data: {confirm: 'Are you sure?'} %>
+  <div id="controls" style="float: left; margin-top: .25em; min-width: 500px">
+    <%=select_tag :po_supplier, 
+      options_from_collection_for_select(
+        Supplier.all, 'id', 'name', @supplier_id), 
+      style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
+    <%= link_to 'New Item', new_item_path, class: 'pos_action' %>
+    <%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action hide', data: {confirm: 'Are you sure?'} %>
+  </div>
 
-</div>
+  <div style="min-width: 800px;max-width: 1000px" class="item_list">
+    <%=form_tag destroy_multiple_items_path, method: :delete do %>
+      <table id="item_selector" class="display">
+        <thead>
+          <tr>
+            <th style="width:20px"><%=image_submit_tag 'gtk-delete.png', style: 'height:17px', data: { confirm: 'Delete Checked Items. Are you sure?' }%></th>
+            <th>Name</th>
+            <th style="width:20px"></th><th style="width:20px"></th>
+          </tr>
+        </thead>
+        <tbody/>
+      </table>
+    <% end %>
+  </div>
 
 
-<%=form_tag destroy_multiple_items_path, method: :delete do %>
-
-<table id="item_selector" class="display" width="100%">
-  <thead>
-    <tr>
-      <th class="dt-center"><%=image_submit_tag 'gtk-delete.png', size: '14x14', data: { confirm: 'Delete Checked Items. Are you sure?' }%></th>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Supplier</th>
-      <th>Confirmed Orders</th>
-      <th></th>
-      <th></th>
-
-    </tr>
-  </thead>
-
-  <tbody>
-
-  </tbody>
-</table>
-<% end %>
 
 <%=javascript_tag do %>
   $(document).ready( function () {
@@ -44,7 +37,12 @@
     { "className": "dt-center", "targets": [0]}  //center checkbox
   ];
 
+  $('#po_supplier').change(item_controller_index_ajax);
+
   $('#item_selector').dataTable( {
+      "autoWidth": false,
+      "scrollY": "500",
+      "bScrollCollapse": false,
       "stateSave": true,
       "lengthChange": false,
       "paging": true,
@@ -54,7 +52,7 @@
       "processing": true,
       "serverSide": true,
       "searching": true,
-      "ajax": {"url": "<%=json_items_path%>", "type": "POST"},
+      "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
       "columns": columns,
       "columnDefs": columnDefs,
       "order": [[1, 'asc']],
@@ -66,10 +64,10 @@
             "sButtonText": "PDF",
             "mColumns": [ 1, 2, 3 ]
           }]
-      },
-      "drawCallback": function( settings ) {
-          $('#controls').prependTo($('.dataTables_wrapper'));
-        }
+      }
+      // , "drawCallback": function( settings ) {
+      //     $('#controls').prependTo($('.dataTables_wrapper'));
+      //   }
   } );
 
 } );
