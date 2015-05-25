@@ -12,8 +12,8 @@
         <%=link_to 'Inventory', "#"%>
         <ul class="dropdown">
           <li><%=link_to 'Item List', main_app.items_path%></li>
-          <!-- <li><%=link_to 'Purchase Orders', purchase_orders_path%></li> -->
-          <!-- <li><%=link_to 'Deliveries', deliveries_path%></li> -->
+          <!-- <li><%=link_to 'Purchase Orders', main_app.purchase_orders_path%></li> -->
+          <!-- <li><%=link_to 'Deliveries', main_app.deliveries_path%></li> -->
         </ul>
       </li>
     </ul>
@@ -40,6 +40,7 @@
   </section>
   <% end %>
 </nav>
+
 <%=javascript_tag do %>
 //Remove all links from tab cycle
 $(document).ready(function(){
