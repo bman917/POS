@@ -37,3 +37,11 @@ production:
   username: pos_admin
   password: <%=ENV['MYSQL_PASSWORD']%>
   host: localhost
+
+pi:
+  adapter: mysql2
+  database: pos_production
+  pool: 5
+  username: pos_admin
+  password: <%=ENV['MYSQL_PASSWORD']%>
+  host: localhost
