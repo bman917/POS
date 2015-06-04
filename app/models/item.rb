@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   validates :item_base, presence: true
   validates :supplier, presence: true
   validates :unit, presence: true
-  validates_with ItemNameValidator, on: :create
+  validates_with ItemNameValidator, on: [:create, :update]
 
   belongs_to :item_base
   belongs_to :supplier

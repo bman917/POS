@@ -249,9 +249,8 @@ class ItemsController < ApplicationController
     @items_datatable = items_datatable
 
     if @item.save
-      @items = Item.active
       flash[:success] = "Saved '#{@item.name}'"
-      render 'index'
+      render_index
     else
       render 'new'
     end
@@ -260,8 +259,16 @@ class ItemsController < ApplicationController
   def update
     modified_item_parms = create_attrib_item_values
     modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
-    @item.update(modified_item_parms)
-    respond_with(@item)
+    @item.assign_attributes(modified_item_parms)
+    
+    unless @item.changed && @item.save
+      render 'edit'
+      return
+    end
+
+    flash[:success] = "Saved '#{@item.name}'"
+    render_index
+
   end
 
   def destroy
@@ -274,6 +281,13 @@ class ItemsController < ApplicationController
   end
 
   private
+    def render_index
+      @column_names = %w(check_box summary copy edit)
+      @items_datatable = ItemsDatatable.new(view_context, @column_names)
+      @items = Item.active
+      render 'index'
+    end
+
     def set_item
       @item = Item.find(params[:id])
     end
