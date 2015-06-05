@@ -132,6 +132,20 @@ class ItemsController < ApplicationController
     modified_item_parms[:attrib_values] = @base_attribs
     modified_item_parms
   end
+  def create_item_params(attribs) 
+    @base_attribs = []
+    @attribs = attribs
+    @attribs.keys.each do | key |
+      @base_attribs << AttribItemValue.new(attrib_id: key, value: @attribs[key])
+      #puts "AttribItemValue: #{@base_attribs.last.attrib.id}, #{@base_attribs.last.value}"
+    end if @attribs
+    #puts "Attribs: #{@attribs}, @base_attribs: #{@base_attribs.size}"
+    modified_item_parms = item_params
+    modified_item_parms[:attrib_values] = @base_attribs
+    modified_item_parms[:pending_orders] = 0
+    handle_new_item_base_add_supplier(modified_item_parms)
+  end
+
 
   def do_it(key, comma_delimited_val, orig_attribs)
     ret_val = []
@@ -150,110 +164,36 @@ class ItemsController < ApplicationController
 
     params_attrib = []
     orig_attribs = params[:attrib]
-    attribs_clone = orig_attribs.clone
-    stage_2 = {}
 
-    #check if there are comma-separated values
-    comma = orig_attribs.find_all do |key, value| 
-      value.include?(",")
+    new_items = []
+    attribs = ItemsHelper.generate_attribs(orig_attribs)
+    attribs.each do |attrib|
+      item_params_with_attrib_item_values = create_item_params(attrib)
+      new_items << Item.new(item_params_with_attrib_item_values)
     end
 
-    no_comma = orig_attribs.reject do |key, value| 
-      value.include?(",")
-    end
+    # modified_item_parms = create_attrib_item_values
+    # modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
+    # modified_item_parms[:pending_orders] = 0
+    # @item = Item.new(modified_item_parms)
 
-    puts "commas: #{comma}"
-    puts "no_comma: #{no_comma}"
-
-#commas: [["7041", "1mm, 2mm, 3mm"], ["7040", "Black, White, Grey"]]
-#no_comma: {"7043"=>"Linso"}
-
-# Transform ["7041", "1mm, 2mm, 3mm"] to:
-# {"7043"=>
-#  [
-#   [{"7043"=>"Linso"},{"7041"=>"1mm"}],
-#   [{"7043"=>"Linso"},{"7041"=>"2mm"}],
-#   [{"7043"=>"Linso"},{"7041"=>"3mm"}]
-#  ],
-#  "7040"=>
-#  [
-#   [{"7040"=>"Linso"},{"7040"=>"Black"}],
-#   [{"7040"=>"Linso"},{"7040"=>"White"}],
-#   [{"7040"=>"Linso"},{"7040"=>"Grey"}]
-#  ]
-# }
-
-
-    comma.each do | attrib, val | 
-      ary = val.strip.squeeze(",").squeeze(" ").split(',')
-      ary.each do | ary_val |
-        tmp = no_comma.clone
-        tmp[attrib] = ary_val
-        stage_2[attrib] ||= []
-        stage_2[attrib] << tmp
+    Item.transaction do
+      new_items.each do |item| 
+        @item = item
+        item.save! 
       end
-    end if comma
-
-
-    puts "STAGE 2: #{stage_2}"
-
-    stage_3 = []
-
-    
-
-
-    comma.each do | attrib, val | 
-      
-        ary = val.strip.squeeze(",").squeeze(" ").split(',')
-        puts "Processing Attrib: #{attrib}, ary: #{ary}"
-
-        others = stage_2.reject {|a,v| a == attrib}
-        puts "Others: #{others}"
-
-        ary.each do | ary_val |
-          others.each do | o_key, array_of_hash | 
-            array_of_hash.each do |hash| 
-              hash[attrib] = ary_val.strip
-              puts "Updated: #{o_key}, with: #{hash[attrib]} "
-              stage_3 << hash.clone
-            end
-          end
-        end
-      
-    end    
-
-    puts "STAGE 3: #{stage_3}"
-
-
-
-    # stage_2.each do | attrib, val_array |
-    #   puts "Processing Attrib: #{attrib}, val_array: #{val_array}"
-    #   others = stage_2.reject {|a,v| a == attrib}
-    #   puts "Others: #{others}"
-    #   val_array.each do | val |
-    #     others.each do | o_key, array_of_hash | 
-    #       array_of_hash.each { |hash| hash[attrib] = val}
-    #     end
-    #   end
-    #   puts "Others After: #{others}"
-    # end
-
-    
-    
-
-
-    modified_item_parms = create_attrib_item_values
-    modified_item_parms = handle_new_item_base_add_supplier(modified_item_parms)
-    modified_item_parms[:pending_orders] = 0
-    @item = Item.new(modified_item_parms)
-    @items_datatable = items_datatable
-
-    if @item.save
-      flash[:success] = "Saved '#{@item.name}'"
-      render_index
-    else
-      render 'new'
     end
+
+    item_names = new_items.map { |item| item.name }
+    flash[:success] = "Saved '#{item_names}'"
+    render_index
+
+   rescue ArgumentError => a
+      @item = Item.new(item_params)
+      @item.errors.add(:commas, ': Only one attribute is allowed comma-delimited values.')
+      render 'new'
+   rescue ActiveRecord::RecordInvalid => e
+      render 'new'
   end
 
   def update
