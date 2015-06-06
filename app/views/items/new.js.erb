@@ -1,5 +1,2 @@
-$('#yeild_content').fadeOut("fast", function() { 
-	$(this).empty(); 
-	$('#yeild_content').append('<%=j render('form')%>');
-	$('#yeild_content').fadeIn("fast");
-});
+$('#yeild_content').empty();
+$('#yeild_content').append('<%=j render('form')%>');
