@@ -8,7 +8,8 @@ class Attrib < ActiveRecord::Base
   after_save :update_item_names, if: :display_number_updated
 
   def display_number_updated
-    self.changes[:display_number].try(:size) > 0 && items.try(:count) > 0
+    new_display_number = self.changes[:display_number].try(:size) || -1
+    new_display_number > 0 && items.try(:count) > 0
   end
 
 
