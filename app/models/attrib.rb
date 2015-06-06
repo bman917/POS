@@ -18,7 +18,7 @@ class Attrib < ActiveRecord::Base
   #the Item names also need to be updated
   #
   def update_item_names
-    puts "Display number of #{self.name} changed. Updating names of '#{items.count}' Items...."
+    #puts "Display number of #{self.name} changed. Updating names of '#{items.count}' Items...."
     items.each { | i | i.populate_name.save }
   end
 end

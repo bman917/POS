@@ -9,6 +9,7 @@ module Seeder
   end
 
   def basic_seed
+    seed_supplier
     @unit = Unit.find_or_create_by(name: 'Piece', abbrev: 'pcs')
     @attrib = { 
       color:     Attrib.create!(name: 'Color',     display_number: 3),
@@ -16,7 +17,10 @@ module Seeder
       size:      Attrib.create!(name: 'Size',      display_number: 2),
       model:     Attrib.create!(name: 'Model',     display_number: 4)
     }
+  end
 
+  def seed_supplier
+    @supplier1 = Supplier.find_or_create_by(name: "Supplier_1")
   end
 
   def item_spec_seed

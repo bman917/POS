@@ -71,7 +71,7 @@ class ItemsDatatable
 
   def fetch_items
     search_val = params[:search][:value] if params[:search]
-    puts "Search Value: #{search_val}"
+    #puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
       @items_unordered = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%").includes(:supplier)
@@ -82,7 +82,6 @@ class ItemsDatatable
     @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
 
     @recordsFiltered = @items_unordered.count
-    puts @recordsFiltered
 
     @items_unordered = @items_unordered.limit(params[:length]).offset(params[:start]) if params[:length].to_i >= 0
 
@@ -92,7 +91,7 @@ class ItemsDatatable
       index = order[1][:column].to_i || 0
       dir = order[1][:dir].to_sym || :desc
       column = @colum_names[index]
-      puts "Order Column Index: #{index}, Column: #{column}, Dir: #{dir}"
+      #puts "Order Column Index: #{index}, Column: #{column}, Dir: #{dir}"
       if column
         ordered_items = @items_unordered.sort_by { | i | i.send(column) }
         ordered_items = ordered_items.reverse if dir == :desc

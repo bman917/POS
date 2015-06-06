@@ -29,8 +29,7 @@ class AttribsController < ApplicationController
   def create
     @attrib = Attrib.new(attrib_params)
     if @attrib.save
-      @attribs = Attrib.active
-      render 'index'
+      render_index
     else
       respond_with(@attrib)
     end
@@ -43,11 +42,18 @@ class AttribsController < ApplicationController
   end
 
   def destroy
-    @attrib.destroy
-    respond_with(@attrib)
+    unless @attrib.destroy
+      flash[:error] = "Unable to delete #{@attrib.name} attribute. #{@attrib.errors.full_messages.join(',')}"
+    end
+    render_index
   end
 
   private
+    def render_index
+      @attribs = Attrib.active
+      render 'index'
+    end
+
     def set_attrib
       @attrib = Attrib.find(params[:id])
     end

@@ -2,13 +2,15 @@ require 'rails_helper'
 
 describe Attrib do 
   before(:each) do
-    Attrib.delete_all
+    clear_all
+    @supplier = seed_supplier
     @existing_2 = Attrib.create!(name: "Existing Two", display_number: 2)
     @existing_3 = Attrib.create!(name: "Existing Three", display_number: 3)
     @existing_1 = Attrib.create!(name: "Existing One", display_number: 1)
 
     sign_in
     visit attribs_path
+    expect(page).to have_css("table#attrib tbody tr")
   end
 
   describe "Index", :index do
@@ -19,6 +21,29 @@ describe Attrib do
       end
     end
   end
+
+  describe "Delete", js: true, delete: true do
+    it "Works!" do
+      within("table#attrib tbody tr#attrib#{@existing_1.id}") do
+        click_on "Delete"
+        page.driver.browser.switch_to.alert.accept
+      end
+      expect(page).to have_no_content(@existing_1.name)
+    end
+
+    it "Errors when attrib is linked to an item" do
+      @basic_item = Item.new(item_base_name: "Seeded Item Base", supplier: @supplier, unit: "piece")
+      @basic_item.add_attrib(@existing_1, "Red")
+      @basic_item.save!
+      within("table#attrib tbody tr#attrib#{@existing_1.id}") do
+        click_on "Delete"
+        page.driver.browser.switch_to.alert.accept
+      end
+      expect(page).to have_content(@existing_1.name)
+      expect(page).to have_content("Unable to delete #{@existing_1.name}")
+    end
+  end
+
   
   describe "Create", js: true do
     before(:each) do

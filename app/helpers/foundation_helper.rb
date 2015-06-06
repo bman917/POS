@@ -13,9 +13,9 @@ module FoundationHelper
   # Adds button css class
   def modal_button(name, options=nil, html_options={})
     if html_options[:class] == nil
-      html_options[:class] = 'button'
-    elsif html_options[:class].include?('button') == false
-      html_options[:class] += ' button'
+      html_options[:class] = 'pos_action'
+    elsif html_options[:class].include?('pos_action') == false
+      html_options[:class] += ' pos_action'
     end
     modal_link_to(name, options, html_options)
   end
