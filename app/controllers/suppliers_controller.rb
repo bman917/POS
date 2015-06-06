@@ -34,10 +34,17 @@ class SuppliersController < ApplicationController
   end
 
   def create
+    puts "request.referer: #{request.referer.end_with?('items')}"
     @supplier = Supplier.new(supplier_params)
     if @supplier.save
-      @suppliers = Supplier.all
-      render 'index'
+      session[:supplier_id] = @supplier.id
+      flash[:success] = "Successfully created Supplier: #{@supplier.name}"
+      if request.referer.end_with?('items')
+        redirect_to '/items'
+      else
+        @suppliers = Supplier.all
+        render 'index'
+      end
     else
       respond_with(@supplier)
     end

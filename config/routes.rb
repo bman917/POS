@@ -34,12 +34,11 @@ Rails.application.routes.draw do
 
   get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
 
-
   get  'item/new/add/item_base' => 'item_bases#add_to_new_item_form', as: 'add_item_base_to_new_item_form'
   post 'item/new/add/item_base' => 'item_bases#script_to_add_to_select', as: 'item_base_script_to_add_to_select'
   get  'item/new/add/supplier' => 'suppliers#add_to_new_item_form', as: 'add_supplier_to_new_item_form'
   post 'item/new/add/supplier' => 'suppliers#script_to_add_to_select', as: 'supplier_script_to_add_to_select'
-
+  get  'items/switch_supplier/:supplier_id' => 'items#index_switch_supplier', as: 'items_switch_supplier'
 
   resources :items do
     get  :json, on: :collection

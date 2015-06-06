@@ -1,1 +1,10 @@
-remove_overlay();
+$('#yeild_content').fadeOut("fast", function() { 
+	$(this).empty(); 
+	$('#yeild_content').append('<%=j render('index')%>');
+	$('#app_msg').empty();
+	<% flash.each do |name, msg| %>
+	$('#app_msg').append('<span><%=msg%></span>');
+	<% end %>
+	$('#yeild_content').fadeIn("fast");
+});
+

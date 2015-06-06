@@ -11,7 +11,7 @@
       <li class="has-dropdown">
         <%=link_to 'Inventory', "#"%>
         <ul class="dropdown">
-          <li><%=link_to 'Item List', main_app.items_path%></li>
+          <li><%=link_to 'Item List', '#', :onclick => "Turbolinks.visit('#{main_app.items_path}')"%></li>
           <!-- <li><%=link_to 'Purchase Orders', main_app.purchase_orders_path%></li> -->
           <!-- <li><%=link_to 'Deliveries', main_app.deliveries_path%></li> -->
         </ul>

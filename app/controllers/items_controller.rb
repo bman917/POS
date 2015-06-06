@@ -58,10 +58,15 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.where(supplier_id: selected_supplier)
-    @column_names = %w(check_box summary copy edit)
-    @items_datatable = ItemsDatatable.new(view_context, @column_names)
-    respond_with(@items)
+    render_index
+  end
+
+  def index_switch_supplier
+    prepare_index
+    respond_to do |format|
+      format.html { render 'index' }
+      format.js { render 'reload_data_table'}
+    end
   end
 
   def show
@@ -71,6 +76,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new(item_base: ItemBase.new)
+    @item.supplier_id = selected_supplier
     @attribs = [Attrib.first]
 
     @item_base = ItemBase.all.first
@@ -184,8 +190,8 @@ class ItemsController < ApplicationController
       end
     end
 
-    item_names = new_items.map { |item| item.name }
-    flash[:success] = "Saved '#{item_names}'"
+    item_names = new_items.map { |item| item.summary }
+    flash[:success] = "Saved #{item_names}"
     render_index
 
    rescue ArgumentError => a
@@ -221,10 +227,13 @@ class ItemsController < ApplicationController
   end
 
   private
-    def render_index
+    def prepare_index
+      @supplier_id = selected_supplier
       @column_names = %w(check_box summary copy edit)
       @items_datatable = ItemsDatatable.new(view_context, @column_names)
-      @items = Item.active
+    end
+    def render_index
+      prepare_index
       render 'index'
     end
 

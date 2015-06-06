@@ -1,5 +1,6 @@
-<p>
-<%= simple_form_for @item, html: { id: "item_display", class: 'bootstrap-frm' } do |f| %>
+<div id="content" data-no-transition-cache>
+<p/>
+<%= simple_form_for @item, html: { id: "item_display", class: 'bootstrap-frm', remote: true} do |f| %>
 <h1><%="#{action_name} Item".titleize%></h1>
 
 <% if @item.errors.any? %>
@@ -22,17 +23,18 @@ select_input_html_options = {}
 add_button_html_options = {class: "tiny success button", tabindex: -1}
 %>
 
+<label for="supplier">
+  <span>Supplier :</span>
+  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
+  <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
+</label>
+
 <label for="item_name">
   <span>Item Base :</span>
   <%= f.association :item_base, label_method: :name, label: false,  prompt: "Choose Item Base", input_html: select_input_html_options %>
   <%=modal_link_to "Add", add_item_base_to_new_item_form_path, add_button_html_options %>
 </label>
 
-<label for="supplier">
-  <span>Supplier :</span>
-  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
-  <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
-</label>
 
 <label for="unit">
   <span>Unit :</span>
@@ -64,7 +66,7 @@ value: attrib_item_value.value} %>
   <%= f.submit :submit, value: "Save", class: 'pos_action', style: "float:right; margin-right: 3.5em; width: 141px; height: 40px;" %>
 </label>
 
-<%= link_to '<-- Back To Items List', items_path %>
+<%= link_to '<-- Back To Items List', items_path, remote: true %>
 
 <% end %> <!-- END SIMPLE FORM -->
 
@@ -75,3 +77,4 @@ item_form_ajax_for_item_base_select();
 Mousetrap.stopCallback = function() { return false };
 var xhr;
 <% end %>
+</div>

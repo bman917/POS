@@ -1,0 +1,83 @@
+<% content_for :title, "Item List" %>
+
+<%=page_title "Item List" %>
+
+  <div id="controls" style="float: left; margin-top: .25em; min-width: 500px">
+    <%=select_tag :po_supplier, 
+      options_from_collection_for_select(
+        Supplier.all, 'id', 'name', @supplier_id), 
+      style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
+    <%= link_to 'New Item', new_item_path, class: 'pos_action', remote: true %>
+    <%= modal_button 'New Supplier', new_supplier_path%>
+    <%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action hide', data: {confirm: 'Are you sure?'} %>
+  </div>
+
+  <div style="min-width: 800px;max-width: 1000px" class="item_list">
+    <%=form_tag destroy_multiple_items_path, method: :delete do %>
+      <table id="item_selector" class="display">
+        <thead>
+          <tr>
+            <th style="width:20px"><%=image_submit_tag 'gtk-delete.png', style: 'height:17px', data: { confirm: 'Delete Checked Items. Are you sure?' }%></th>
+            <th>Name</th>
+            <th style="width:20px"></th><th style="width:20px"></th>
+          </tr>
+        </thead>
+        <tbody/>
+      </table>
+    <% end %>
+  </div>
+
+
+
+<%=javascript_tag do %>
+  $(document).ready( function () {
+
+  columns = <%=raw @items_datatable.columns %>;
+  columnDefs = [
+    { "orderable": false, "targets": [0,-1,-2]},
+    { "className": "dt-center", "targets": [0]}  //center checkbox
+  ];
+
+  $('#po_supplier').change(item_controller_index_ajax);
+
+  $('#item_selector').dataTable( {
+      "autoWidth": false,
+      "scrollY": "500",
+      "bScrollCollapse": false,
+      "stateSave": true,
+      "lengthChange": false,
+      "paging": true,
+      "pageLength": "100",
+      "pagingType": "simple_numbers",
+      "jQueryUI": false,
+      "processing": true,
+      "serverSide": true,
+      "searching": true,
+      "ajax": {"url": "<%=json_filter_by_supplier_items_path%>", "type": "POST"},
+      "columns": columns,
+      "columnDefs": columnDefs,
+      "order": [[1, 'asc']],
+      "dom": 'T<"clear">lfrtip',
+      "tableTools" : {
+        "aButtons": [
+          {
+            "sExtends": "pdf",
+            "sButtonText": "PDF",
+            "mColumns": [ 1, 2, 3 ]
+          }]
+      }
+      // , "drawCallback": function( settings ) {
+      //     $('#controls').prependTo($('.dataTables_wrapper'));
+      //   }
+  } );
+
+  //document.addEventListener("page:load", $('#item_selector').DataTable().ajax.reload());
+} );
+
+
+
+<% end %>
+
+
+<br>
+

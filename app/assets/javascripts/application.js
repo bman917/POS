@@ -19,7 +19,6 @@
 //= require jquery-ui/position
 //= require jquery-ui/dialog
 //= require jquery-ui/spinner
-//= require turbolinks
 //= require foundation
 //= require hide_toggler
 //= require common_tools
@@ -28,6 +27,7 @@
 //= require jquery.dataTables.min
 //require dataTables.tableTools
 //= require humane.min
+//= require turbolinks
 //= require_tree .
 
 function init_foundation() {
@@ -83,6 +83,17 @@ $(document).on('page:load', bind_short_cut_for_toggler);
 //because it is triggered at the end of the loading process.
 $(document).on('page:receive', unbind_all_keyboard_listeners);
 $(document).on('page:receive', function(){ Mousetrap.reset() });
+
+$(document).on("submit", "form[data-turboform]", function(e) {
+    Turbolinks.visit(this.action+(this.action.indexOf('?') == -1 ? '?' : '&')+$(this).serialize());
+    return false;
+});
+
+// //enableTransitionCache is said to bring some speed boost.
+// //The overlays gets in the way of this.
+// document.removeEventListener("page:receive", remove_overlay);
+// Turbolinks.enableTransitionCache();
+// remove_overlay();
 //============================
 // END Tourbolinks Configuration
 //============================

@@ -11,25 +11,18 @@
   </head>
   <body id="content">
     <%= render 'layouts/navigation'%>
-    
         <div id="wait_message" class="hidden">
           <%=image_tag 'loading_bar.gif', size: "125x20"%>
         </div>
-
-        <div class="row full-height" style="max-width: 100%;">
-          <div class="row">
-            <% flash.each do |name, msg| %>
-            <div id="pos_alert" class="column small-6 small-centered" style="margin-top: 1em;">
-              <div data-alert class=" alert-box warning">
-                <%= content_tag :div, msg, id: "flash_#{name}" %>
-                <a href="#" class="close">&times;</a>
-              </div>
-            </div>
-            <% end %>
+        <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
+          :
+          <% flash.each do |name, msg| %>
+              <%= content_tag :span, msg, id: "flash_#{name}" %>
+          <% end %>
         </div>
 
-      <div style="margin: 1%">
-        <%= yield %>
+      <div id="yeild_content" style="margin: 1%">
+          <%= yield %>
       </div>
   
     </body>

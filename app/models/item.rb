@@ -64,4 +64,8 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def summary
+    "#{name} (#{unit})"
+  end
+
 end

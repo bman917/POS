@@ -54,12 +54,12 @@ class ItemsDatatable
         DT_RowId: item.id, 
         check_box: check_box_tag("item_ids[]", item.id),
         input: input_qty(item.id),
-        copy: link_to("Copy", copy_item_path(item)),
+        copy: link_to("Copy", copy_item_path(item), remote: true),
         name: item.name,
         unit: item.unit,
         supplier: item.supplier.name,
         pending_orders: item.pending_orders,
-        summary: "#{item.name} <span class='unit'>(#{item.unit})</span>",
+        summary: "#{item.name} <span class='unit'>(#{item.unit.humanize})</span>",
         edit: link_to(edit_img, edit_item_path(item)),
       }
     end

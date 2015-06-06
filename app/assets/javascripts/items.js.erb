@@ -10,12 +10,10 @@ Usage:
    selected supplier
 */
 function item_controller_index_ajax() {
-  overlay();
   supplier_id = $('#po_supplier').val();
   $.ajax({
     dataType: 'script',
-    url: "/items?supplier_id=" + supplier_id,
-    complete: function() {$('#item_selector').DataTable().ajax.reload(); }
+    url: "/items/switch_supplier/" + supplier_id
   });
 }
 
