@@ -7,7 +7,10 @@
       options_from_collection_for_select(
         Supplier.all, 'id', 'name', @supplier_id), 
       style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
+    
     <%= link_to 'New Item', new_item_path, class: 'pos_action', remote: true %>
+    <%= link_to 'New Item', new_item_path, class: 'pos_action', remote: true %>
+
     <%= modal_button 'New Supplier', new_supplier_path%>
     <%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action hide', data: {confirm: 'Are you sure?'} %>
   </div>
