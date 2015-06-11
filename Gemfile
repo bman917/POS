@@ -69,7 +69,7 @@ end
 gem 'cancancan'
 gem 'devise'
 
-gem 'paper_trail', '~> 3.0.1'
+gem 'paper_trail', '~> 4.0.0.rc'
 gem 'will_paginate', '~> 3.0.6'
 gem 'rack-mini-profiler'
 gem 'foundation-rails'

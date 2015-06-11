@@ -15,6 +15,8 @@ class Item < ActiveRecord::Base
     class_name: 'AttribItemValue', 
     :dependent => :destroy
 
+  has_many :item_prices, :dependent => :destroy
+
   has_many :attribs, through: :attrib_values
 
   before_validation :populate_item_base, :populate_name
@@ -66,6 +68,16 @@ class Item < ActiveRecord::Base
 
   def summary
     "#{name} (#{unit})"
+  end
+
+  def price_summary
+    reg = item_prices.find_or_create_by(name: 'REGULAR').price || "-"
+    whl = item_prices.find_or_create_by(name: 'WHOLESALE').price || "-"
+    if reg.eql?("-") && whl.eql?("-")
+      ""
+    else
+      "#{reg} / #{whl}"
+    end
   end
 
 end

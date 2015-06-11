@@ -10,11 +10,13 @@ class ApplicationController < ActionController::Base
       column_names, supplier: selected_supplier)
   end
 
-
-
   def selected_supplier
     @supplier_id = params[:supplier_id] || session[:supplier_id] || Supplier.all.first.id
     session[:supplier_id] = @supplier_id
+  end
+
+  def clear_selected_supplier
+    session[:supplier_id] = nil
   end
 
   def selected_status

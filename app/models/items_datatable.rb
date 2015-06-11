@@ -52,13 +52,14 @@ class ItemsDatatable
     items.map do | item |
       { 
         DT_RowId: item.id, 
-        check_box: check_box_tag("item_ids[]", item.id),
+        check_box: check_box_tag("item_ids[]", item.id, nil, class: 'icb'),
         input: input_qty(item.id),
         copy: link_to("Copy", copy_item_path(item), remote: true),
         name: item.name,
         unit: item.unit,
         supplier: item.supplier.name,
         pending_orders: item.pending_orders,
+        price_summary: item.price_summary,
         summary: "#{item.name} <span class='unit'>(#{item.unit.humanize})</span>",
         edit: link_to(edit_img, edit_item_path(item)),
       }

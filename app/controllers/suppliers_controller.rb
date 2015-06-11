@@ -39,12 +39,7 @@ class SuppliersController < ApplicationController
     if @supplier.save
       session[:supplier_id] = @supplier.id
       flash[:success] = "Successfully created Supplier: #{@supplier.name}"
-      if request.referer.end_with?('items')
-        redirect_to '/items'
-      else
-        @suppliers = Supplier.all
-        render 'index'
-      end
+      redirect_to '/items'
     else
       respond_with(@supplier)
     end
@@ -58,6 +53,7 @@ class SuppliersController < ApplicationController
 
   def destroy
     @supplier.destroy
+    clear_selected_supplier
     respond_with(@supplier)
   end
 

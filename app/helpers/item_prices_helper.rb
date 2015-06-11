@@ -1,0 +1,2 @@
+module ItemPricesHelper
+end

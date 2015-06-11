@@ -42,6 +42,27 @@ class ItemsController < ApplicationController
     @items = Item.active
   end
 
+  def set_multiple_price
+
+    ids = params[:item_ids]
+    Item.transaction do
+
+      price = params[:price_value]
+      name = params[:price_type]
+
+      items = Item.find(params[:item_ids])
+      items.each do |item|
+        item_price = item.item_prices.find_or_create_by(name: name)
+        item_price.price = price
+        item_price.save!
+      end
+      flash[:status] = "Successfully Updated #{name} Price of #{ids.size} Items"
+    end if ids 
+
+    render_index
+
+  end
+
   def destroy_multiple
     begin
       ret_val = Item.destroy_all(id: params[:item_ids])
@@ -49,8 +70,7 @@ class ItemsController < ApplicationController
     rescue Exception => e
       flash[:error] = "Unexpected error while deleting Items: #{e.message}"
     end
-    @items = Item.active
-    redirect_to action: 'index', flash: flash
+    render_index
   end
 
   def add_attrib
@@ -188,10 +208,10 @@ class ItemsController < ApplicationController
         @item = item
         item.save! 
       end
+       flash[:success] = "Successfully Created #{new_items.size} Items"
     end
 
-    item_names = new_items.map { |item| item.summary }
-    flash[:success] = "Saved #{item_names}"
+    
     render_index
 
    rescue ArgumentError => a
@@ -228,8 +248,9 @@ class ItemsController < ApplicationController
 
   private
     def prepare_index
-      @supplier_id = selected_supplier
-      @column_names = %w(check_box summary copy edit)
+      @supplier_id = item_params[:supplier_id] if (params && params[:item])
+      @supplier_id ||= selected_supplier
+      @column_names = %w(check_box summary price_summary copy edit)
       @items_datatable = ItemsDatatable.new(view_context, @column_names)
     end
     def render_index
