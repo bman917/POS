@@ -1,6 +1,6 @@
 <%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%>
 
-<div id="no_item" title="No Items Selected">
+<div id="error" title="No Items Selected">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
 
@@ -14,7 +14,7 @@
 	Type:
 	<%=select_tag :dialog_price_type, options_for_select(['REGULAR', 'WHOLESALE'], 'REGULAR') %>
 	Price:
-	<%=number_field_tag :dialog_price_value, nil, max: 1000000 %>
+	<%=number_field_tag :dialog_price_value, nil, max: 1000000, autofocus: true %>
 </div>
 
 <%=hidden_field_tag :price_value%>

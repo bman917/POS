@@ -13,7 +13,7 @@
   </div>
 
   <div style="min-width: 800px;max-width: 1000px" class="item_list">
-    <%=form_tag destroy_multiple_items_path, id: 'item_form', method: :delete do %>
+    <%=form_tag destroy_multiple_items_path, id: 'item_form', method: :delete, remote: true do %>
       <table id="item_selector" class="display">
         <thead>
           <tr>

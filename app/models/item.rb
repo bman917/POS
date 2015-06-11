@@ -71,7 +71,13 @@ class Item < ActiveRecord::Base
   end
 
   def price_summary
-    "#{item_prices.find_or_create_by(name: 'REGULAR').price} #{item_prices.find_or_create_by(name: 'WHOLESALE').price}"
+    reg = item_prices.find_or_create_by(name: 'REGULAR').price || "-"
+    whl = item_prices.find_or_create_by(name: 'WHOLESALE').price || "-"
+    if reg.eql?("-") && whl.eql?("-")
+      ""
+    else
+      "#{reg} / #{whl}"
+    end
   end
 
 end
