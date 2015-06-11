@@ -1,0 +1,24 @@
+<%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%>
+
+<div id="no_item" title="No Items Selected">
+	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
+</div>
+
+
+<div id="dialog" title="Select Action">
+    <%= link_to 'Set Price', '#', id: 'price_link', class: 'pos_action', style: 'margin: 1em 3em 1em 1em'%>
+    <%= link_to 'Delete', '#', id: 'delete', class: 'pos_action'%>
+</div>
+
+<div id="setprice" title="Set Price">
+	Type:
+	<%=select_tag :dialog_price_type, options_for_select(['REGULAR', 'WHOLESALE'], 'REGULAR') %>
+	Price:
+	<%=number_field_tag :dialog_price_value, nil, max: 1000000 %>
+</div>
+
+<%=hidden_field_tag :price_value%>
+<%=hidden_field_tag :price_type%>
+
+
+<%=javascript_include_tag 'item_index_dialog'%>

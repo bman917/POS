@@ -29,6 +29,7 @@
 //= require humane.min
 //= require turbolinks
 //= require_tree .
+//= stub item_index_dialog
 
 function init_foundation() {
   $(document).foundation();

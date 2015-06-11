@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :item_prices
+
   get 'admin/reset_purchase_orders'
 
   resources :delivery_items do
@@ -49,6 +51,7 @@ Rails.application.routes.draw do
     collection do
       post 'add_attrib'
       post 'create_similar'
+      post 'set_multiple_price'
       delete 'destroy_multiple'
       get 'select'
       get 'autocomplete'

@@ -1,0 +1,67 @@
+<% url = POS::Application.routes.url_helpers %>
+
+//Used by items/_actions.html.erb
+
+$(document).ready( function () {
+
+  position = { my: "left top", at: "left bottom", of: "#opener"};
+  close_button = { 
+      text: "Close", icons: { primary: "ui-icon-close"},
+      click: function() {$( this ).dialog( "close" );}
+    };
+
+  $( "#no_item" ).dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
+
+  $( "#dialog" ).dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
+
+
+  $( "#opener" ).click(function() {
+    checked = $("#item_form .icb:checked").length;
+    if (checked == 0) {
+      $( "#no_item" ).dialog( "open" );
+    } else {
+      $( "#dialog" ).dialog( "open" );
+    }
+  });
+  
+  //Delete
+  $('#dialog #delete').unbind('click');
+  $('#dialog #delete').on('click', function() { 
+      result = confirm("Delete Checked Items. Are you sure?");
+      $( "#dialog" ).dialog( "close" );
+      if (result) {
+        overlay();
+        $('#item_form').attr('action', '<%=url.destroy_multiple_items_path%>');
+        $('#item_form').submit();
+      }
+  });
+
+  //Set Price
+  $('#dialog #price_link').unbind('click');
+  $('#dialog #price_link').on('click', function() { 
+    $('#dialog').dialog("close");
+    $('#setprice').dialog("open");
+    $('#dialog_price_value').focus();
+  });
+
+  
+  $( "#setprice" ).dialog({ autoOpen: false, modal: true, position: position, buttons: [
+    {
+      text: "Ok",
+      icons: {
+        primary: "ui-icon-tag"
+      },
+      click: function() {
+        overlay();
+        
+        $('#item_form input[name=price_value').val($('#dialog_price_value').val());
+        $('#item_form input[name=price_type').val($('#dialog_price_type').val());
+        //alert($('#hidden_price').val());
+        $('#item_form input[name=_method').val('POST');
+        $('#item_form').attr('action', '<%=url.set_multiple_price_items_path%>');
+        $('#item_form').submit();
+        $('#setprice').dialog("close");
+      }
+    }
+  ]});
+});

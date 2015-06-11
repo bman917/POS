@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321145346) do
+ActiveRecord::Schema.define(version: 20150609164450) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 20150321145346) do
   end
 
   add_index "item_bases", ["name"], name: "index_item_bases_on_name", using: :btree
+
+  create_table "item_prices", force: true do |t|
+    t.integer  "item_id"
+    t.float    "price",      limit: 24
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_prices", ["item_id"], name: "index_item_prices_on_item_id", using: :btree
 
   create_table "item_purchase_orders", force: true do |t|
     t.integer  "item_id"
@@ -162,5 +172,16 @@ ActiveRecord::Schema.define(version: 20150321145346) do
 
   add_index "user_manager_users", ["email"], name: "index_user_manager_users_on_email", unique: true, using: :btree
   add_index "user_manager_users", ["reset_password_token"], name: "index_user_manager_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "versions", force: true do |t|
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

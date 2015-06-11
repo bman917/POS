@@ -42,6 +42,26 @@ class ItemsController < ApplicationController
     @items = Item.active
   end
 
+  def set_multiple_price
+
+    ids = params[:item_ids]
+    Item.transaction do
+
+      price = params[:price_value]
+      name = params[:price_type]
+
+      items = Item.find(params[:item_ids])
+      items.each do |item|
+        item_price = item.item_prices.find_or_create_by(name: name)
+        item_price.price = price
+        item_price.save!
+      end
+
+    end if ids 
+
+    redirect_to action: 'index', flash: flash
+  end
+
   def destroy_multiple
     begin
       ret_val = Item.destroy_all(id: params[:item_ids])
@@ -229,7 +249,7 @@ class ItemsController < ApplicationController
   private
     def prepare_index
       @supplier_id = selected_supplier
-      @column_names = %w(check_box summary copy edit)
+      @column_names = %w(check_box summary price_summary copy edit)
       @items_datatable = ItemsDatatable.new(view_context, @column_names)
     end
     def render_index
