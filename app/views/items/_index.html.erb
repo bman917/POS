@@ -23,7 +23,9 @@
             <%=render '/items/actions'%>
             </th>
             <th>Name</th>
-            <th style="width:20px">R/W</th>
+            <th>
+              <span title="Regular / Wholesale">Price</span>
+            </th>
             <th style="width:20px"><!--Copy --></th>
             <th style="width:20px"><!--Edit --></th>
           </tr>
@@ -37,7 +39,7 @@
 <%=javascript_tag do %>
 $(document).ready( function () {
 
-
+$( document ).tooltip();
   columns = <%=raw @items_datatable.columns %>;
   columnDefs = [
     { "orderable": false, "targets": [0,-1,-2]},

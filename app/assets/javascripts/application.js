@@ -19,6 +19,7 @@
 //= require jquery-ui/position
 //= require jquery-ui/dialog
 //= require jquery-ui/spinner
+//= require jquery-ui/tooltip
 //= require foundation
 //= require hide_toggler
 //= require common_tools
