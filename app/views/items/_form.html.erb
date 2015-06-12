@@ -25,7 +25,7 @@ add_button_html_options = {class: "tiny success button", tabindex: -1}
 
 <label for="supplier">
   <span>Supplier :</span>
-  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: select_input_html_options %>
+  <%= f.association :supplier, label: false, label_method: :name, prompt: "Choose a Supplier", input_html: {style: "font-weight: bolder; background: #DCDCDC url('../images/down-arrow.png') no-repeat right"} %>
   <%=modal_link_to "Add", add_supplier_to_new_item_form_path, add_button_html_options %>
 </label>
 

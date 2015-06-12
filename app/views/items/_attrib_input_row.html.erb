@@ -3,7 +3,7 @@
   <%=text_field_tag "attrib[#{attrib.id}]", value, style: "display:inline"%>
   <%=link_to raw("&#215;"), 
           "javascript:$('label#attrib_#{attrib.id}').hide('fast',function(){ $(this).remove(); })",
-          tabindex: "-1", style: "color: lightgray; font-weight: bolder; font-size:1.5em"
+          tabindex: "-1", style: "color: gray; font-weight: bolder; font-size:1.5em"
         %>
 </label>
 

@@ -1,16 +1,16 @@
 <%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%>
 
-<div id="error" title="No Items Selected">
+<div id="error" title="No Items Selected" style="display:none">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
 
 
-<div id="dialog" title="Select Action">
+<div id="dialog" title="Select Action" style="display:none">
     <%= link_to 'Set Price', '#', id: 'price_link', class: 'pos_action', style: 'margin: 1em 3em 1em 1em'%>
     <%= link_to 'Delete', '#', id: 'delete', class: 'pos_action'%>
 </div>
 
-<div id="setprice" title="Set Price">
+<div id="setprice" title="Set Price" style="display:none">
 	Type:
 	<%=select_tag :dialog_price_type, options_for_select(['REGULAR', 'WHOLESALE'], 'REGULAR') %>
 	Price:

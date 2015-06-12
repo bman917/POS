@@ -24,9 +24,9 @@ $(document).ready( function () {
             $( "#error").dialog( "option", "title", "Price must be a valid number" );
             $( "#error" ).dialog( "open" );
           } else {
-            $('#item_form input[name=price_value').val(price);
-            $('#item_form input[name=price_type').val($('#dialog_price_type').val());
-            $('#item_form input[name=_method').val('POST');
+            $('#item_form input[name=price_value]').val(price);
+            $('#item_form input[name=price_type]').val($('#dialog_price_type').val());
+            $('#item_form input[name=_method]').val('POST');
             $('#item_form').attr('action', '<%=url.set_multiple_price_items_path%>');
             $('#item_form').submit();
             $('#setprice').dialog("close");
@@ -60,7 +60,7 @@ $(document).ready( function () {
       result = confirm("Delete Checked Items. Are you sure?");
       $( "#dialog" ).dialog( "close" );
       if (result) {
-        $('#item_form input[name=_method').val('DELETE');
+        $('#item_form input[name=_method]').val('DELETE');
         $('#item_form').attr('action', '<%=url.destroy_multiple_items_path%>');
         $('#item_form').submit();
       }

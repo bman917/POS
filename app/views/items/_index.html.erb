@@ -6,7 +6,7 @@
     <%=select_tag :po_supplier, 
       options_from_collection_for_select(
         Supplier.all, 'id', 'name', @supplier_id), 
-      style: "height: 2.5em;font-size:100%;width: 350px; padding: 0" %>
+      style: "height: 2.5em;font-size:100%;width: 350px; padding: 0; font-weight: bolder" %>
     
     <%= link_to 'New Item', new_item_path, class: 'pos_action', remote: true %>
 
@@ -35,7 +35,7 @@
 
 
 <%=javascript_tag do %>
-  $(document).ready( function () {
+$(document).ready( function () {
 
 
   columns = <%=raw @items_datatable.columns %>;
@@ -48,7 +48,7 @@
 
   $('#item_selector').dataTable( {
       "autoWidth": false,
-      "scrollY": "500",
+      "scrollY": "370",
       "bScrollCollapse": false,
       "stateSave": true,
       "lengthChange": false,
@@ -78,7 +78,22 @@
   } );
 
   //document.addEventListener("page:load", $('#item_selector').DataTable().ajax.reload());
-} );
+
+  //Even listener so that when row is clicked. The checkbox in the row is toggled
+  $('#item_selector').on('draw.dt', function() {
+        $('#item_selector tr').unbind('click');
+
+        $('#item_selector tr').on('click', function() {
+            checkbox = $(this).find('.icb');
+            val = checkbox.is(":checked");
+            newval = !val;
+            checkbox.prop('checked', newval);
+        });
+  });
+
+
+//END DOCUMENT READY
+});
 
 
 

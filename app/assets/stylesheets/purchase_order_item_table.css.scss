@@ -25,10 +25,12 @@
 
     .dataTables_filter {
       float: left;
-      margin-top: 1em;
+      margin-top: 7px;
+      margin-bottom: -7px;
       margin-left: 1em;
       label input {
         width: 22em;
+        height: 2em;
       }
     }
     .dataTables_scrollBody {

@@ -4,28 +4,28 @@
 $form_width: 700px;
 $std_input_width: 375px;
 $input_font_color: #000;
+$border_color: darkgrey;
 
 .bootstrap-frm {
-    margin-left:auto;
-    margin-right:auto;
+    margin-left:1%;
 
     width: $form_width;
-    background: #FFF;
+
     padding: 20px 30px 20px 30px;
     font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $input_font_color;
     text-shadow: 1px 1px 1px #FFF;
-    border:1px solid #DDD;
+    border:1px solid $border_color;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    background-color: #F8F6F6;
+    background-color: lightgray;
 }
 .bootstrap-frm h1 {
     font: 25px "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding: 0px 0px 10px 40px;
     display: block;
-    border-bottom: 1px solid #DADADA;
+    border-bottom: 1px solid $border_color;
     margin: -10px -30px 30px -30px;
     color: $input_font_color;
 }
@@ -68,8 +68,8 @@ $input_font_color: #000;
 
 }
 .bootstrap-frm select {
-    background: #FFF url('down-arrow.png') no-repeat right;
-    background: #FFF url('down-arrow.png') no-repeat right;
+    background: #FFF url('../images/down-arrow.png') no-repeat right;
+    background: #FFF url('../images/down-arrow.png') no-repeat right;
     appearance:none;
     -webkit-appearance:none; 
     -moz-appearance: none;
