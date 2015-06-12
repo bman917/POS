@@ -1,5 +1,4 @@
-<div class="row">
-<div class="columns">
+<div>
 
 <%= simple_form_for(@supplier, url: @modified_url, remote: @remote) do |f| %>
   <%= f.error_notification %>
@@ -13,7 +12,6 @@
   </div>
 <% end %>
 
-</div>
 </div>
 
 <%=javascript_tag do %>

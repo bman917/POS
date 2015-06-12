@@ -71,8 +71,15 @@ class Item < ActiveRecord::Base
   end
 
   def price_summary
-    reg = item_prices.find_or_create_by(name: 'REGULAR').price || "-"
-    whl = item_prices.find_or_create_by(name: 'WHOLESALE').price || "-"
+
+    item_prices.each do |i|
+      @regular_price = i.price if i.name.eql?('REGULAR')
+      @wholesale_price = i.price if i.name.eql?('WHOLESALE')  
+    end
+
+    reg = @regular_price || "-"
+    whl = @wholesale_price || "-"
+
     if reg.eql?("-") && whl.eql?("-")
       ""
     else

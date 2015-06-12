@@ -75,9 +75,9 @@ class ItemsDatatable
     #puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items_unordered = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%").includes(:supplier)
+      @items_unordered = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%").includes(:supplier, :item_prices)
     else
-      @items_unordered = Item.all.includes(:supplier)
+      @items_unordered = Item.all.includes(:supplier, :item_prices)
     end
 
     @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
@@ -98,7 +98,6 @@ class ItemsDatatable
         ordered_items = ordered_items.reverse if dir == :desc
       end
     end
-
     ordered_items
   end
 
