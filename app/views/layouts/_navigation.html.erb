@@ -17,6 +17,15 @@
         </ul>
       </li>
     </ul>
+    <ul class="left">
+      <li class="has-dropdown">
+        <%=link_to 'Sales', "#"%>
+        <ul class="dropdown">
+          <li><%=link_to 'New', '#', :onclick => "Turbolinks.visit('#{main_app.sales_path}')"%></li>
+        </ul>
+      </li>
+    </ul>
+
   </section>
   <section id="admin" class="top-bar-section">
     <ul class="right">

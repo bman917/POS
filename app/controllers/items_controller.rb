@@ -3,6 +3,9 @@ class ItemsController < ApplicationController
 
   respond_to :html, :js
 
+  def sales
+  end
+
 
   def autocomplete
   end

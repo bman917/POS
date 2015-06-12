@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'items/sales' => 'items#sales', as: 'sales'
+
   resources :item_prices
 
   get 'admin/reset_purchase_orders'
