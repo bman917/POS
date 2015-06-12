@@ -83,11 +83,13 @@ $(document).ready( function () {
   $('#item_selector').on('draw.dt', function() {
         $('#item_selector tr').unbind('click');
 
+        $('.icb').on('click', function(event) {
+           event.stopPropagation();
+        });
+
         $('#item_selector tr').on('click', function() {
             checkbox = $(this).find('.icb');
-            val = checkbox.is(":checked");
-            newval = !val;
-            checkbox.prop('checked', newval);
+            checkbox.click();
         });
   });
 
