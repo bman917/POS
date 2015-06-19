@@ -2,120 +2,193 @@
 /* Copied from http://www.sanwebe.com/2013/10/css-html-form-styles */
 
 $form_width: 700px;
+$form_height: 600px;
 $std_input_width: 375px;
 $input_font_color: #000;
 $border_color: darkgrey;
+$border-radius: 1px;
+$mono_font: "Courier New", Courier, monospace;
 
 .sales-frm {
-    margin-left:1%;
-
-    width: $form_width;
-
-    padding: 20px 30px 20px 30px;
-    font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: $input_font_color;
-    text-shadow: 1px 1px 1px #FFF;
-    border:1px solid $border_color;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    background-color: lightgray;
-
-    table {
-        td {
-            padding: 7px;
-        }
-        td.qty { 
-            text-align: right; 
-            padding-right: 10px;
-
-            input {
-                width: 4em;
-                margin-right: -5px;
-                padding-right: 5px;
-                text-align: right;
-            }
-        }
-
-
+  margin-left: 1%;
+  width: $form_width;
+  height: $form_height;
+  padding: 10px 0px 10px 0px;
+  font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: $input_font_color;
+  text-shadow: 1px 1px 1px #FFF;
+  border: 1px solid $border_color;
+  border-radius: 5px;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  background-color: white;
+  table {
+    td {
+      font-family: $mono_font;
+      padding: 7px;
     }
+    td.qty {
+      text-align: right;
+      padding-right: 10px;
+      input {
+        width: 4em;
+        margin-right: -5px;
+        padding-right: 5px;
+        text-align: right;
+      }
+    }
+  }
 }
-.sales-frm h1 {
-    font: 25px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    padding: 0px 0px 10px 40px;
-    display: block;
-    border-bottom: 1px solid $border_color;
-    margin: -10px -30px 30px -30px;
-    color: $input_font_color;
-}
-.sales-frm h1>span {
-    display: block;
-    font-size: 11px;
-}
-.sales-frm label {
-    display: block;
-    margin: 0px 0px 5px;
-}
-.sales-frm label>span {
-    float: left;
-    width: 20%;
-    text-align: right;
-    padding-right: 10px;
-    margin-top: 5px;
-    color: #333;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: bold;
-}
-.sales-frm input[type="text"], .sales-frm input[type="email"], .sales-frm textarea, .sales-frm select{
-    border: 1px solid #CCC;
-    color: $input_font_color;
-    height: 30px;
-    line-height:15px;
-    margin: 0;
-    padding: 5px 0px 5px 5px;
-    outline: 0 none;
-    width: $std_input_width;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;    
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    
 
+//Store name, address, tel number, etc...
+.sales-frm .header {
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 1em;
+  text-align: center;
+  vertical-align: middle;
 }
+
+//Main detail of invoice: Customer name date, etc
+.sales-frm .details {
+  margin-left: auto;
+  margin-right: auto;
+  width: $form_width * 0.97;
+  height: 4em;
+  input[type="text"] {
+    font-weight: bolder;
+    font: 150%;
+    width: 80%;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid $border_color;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  }
+  .left {
+    width: 70%;
+    float: left;
+  }
+  .right {
+    width: 30%;
+    float: right;
+    text-align: right;
+  }
+}
+
+.sales-frm .title {
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 0px 1px 0px 1px;
+  display: block;
+  border: 0;
+  color: $input_font_color;
+  font-weight: bolder;
+}
+
+.sales-frm h1 > span {
+  display: block;
+  font-size: 11px;
+}
+
+.sales-frm label {
+  display: block;
+  margin: 0px 0px 5px;
+}
+
+.sales-frm label > span {
+  float: left;
+  width: 20%;
+  text-align: right;
+  padding-right: 10px;
+  margin-top: 5px;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+}
+
+.sales-frm input[type="text"], .sales-frm input[type="email"], .sales-frm textarea, .sales-frm select {
+  border: 1px solid #CCC;
+  color: $input_font_color;
+  height: 30px;
+  line-height: 15px;
+  margin: 0;
+  padding: 5px 0px 5px 5px;
+  outline: 0 none;
+  width: $std_input_width;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
 .sales-frm select {
-    background: #FFF url('../images/down-arrow.png') no-repeat right;
-    background: #FFF url('../images/down-arrow.png') no-repeat right;
-    appearance:none;
-    -webkit-appearance:none; 
-    -moz-appearance: none;
-    text-indent: 0.01px;
-    text-overflow: '';
-    $form_width: 700px;
-    width: $std_input_width;
-    height: 35px;
-    line-height:15px;
+  background: #FFF url("../images/down-arrow.png") no-repeat right;
+  background: #FFF url("../images/down-arrow.png") no-repeat right;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: '';
+  $form_width: 700px;
+  width: $std_input_width;
+  height: 35px;
+  line-height: 15px;
 }
-.sales-frm textarea{
-    height:100px;
-    padding: 5px 0px 0px 5px;
-    $form_width: 700px;
-    width: $std_input_width;
+
+.sales-frm textarea {
+  height: 100px;
+  padding: 5px 0px 0px 5px;
+  $form_width: 700px;
+  width: $std_input_width;
 }
+
 .sales-frm .button {
-    background: #FFF;
-    border: 1px solid #CCC;
-    padding: 10px 25px 10px 25px;
-    color: #333;
-    border-radius: 4px;
+  background: #FFF;
+  border: 1px solid #CCC;
+  padding: 10px 25px 10px 25px;
+  color: #333;
+  border-radius: 4px;
 }
+
 .sales-frm .button:hover {
-    color: #333;
-    background-color: #EBEBEB;
-    border-color: #ADADAD;
+  color: #333;
+  background-color: #EBEBEB;
+  border-color: #ADADAD;
 }
 
 .sales-frm div.input {
   display: inline;
+}
+
+$totals_font_size: 125%;
+
+.sales-frm {
+  .total, .discount, .tax {
+    td {
+      font-size: $totals_font_size;
+      text-align: right;
+      padding-top: 2px;
+      padding-bottom: 1px;
+      background-color: white
+    }
+    td:last-child {
+      font-weight: bolder;
+      padding-right: 2em;
+    }
+
+  }
+
+  .total {
+    td:last-child {
+      border-top: 1px solid black;
+    }
+  }
 }
