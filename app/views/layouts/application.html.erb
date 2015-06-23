@@ -2,6 +2,9 @@
 <html>
   <head>
     <title><%= yield(:title) %></title>
+
+<% cache ('header') do %>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= stylesheet_link_tag    "application", media: "all" %>
@@ -11,19 +14,23 @@
   </head>
   <body id="content">
     <%= render 'layouts/navigation'%>
-        <div id="wait_message" class="hidden">
-          <%=image_tag 'loading_bar.gif', size: "125x20"%>
-        </div>
-        <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
-          :
-          <% flash.each do |name, msg| %>
-              <%= content_tag :span, msg, id: "flash_#{name}" %>
-          <% end %>
-        </div>
+    <div id="wait_message" class="hidden">
+      <%=image_tag 'loading_bar.gif', size: "125x20"%>
+    </div>
 
-      <div id="yeild_content" style="margin: 1%">
-          <%= yield %>
-      </div>
-  
-    </body>
-  </html>
+<% end %>
+
+    <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
+      :
+      <% flash.each do |name, msg| %>
+      <%= content_tag :span, msg, id: "flash_#{name}" %>
+      <% end %>
+    </div>
+
+
+    <div id="yeild_content" style="margin: 1%">
+      <%= yield %>
+    </div>
+    
+  </body>
+</html>
