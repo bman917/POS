@@ -1,0 +1,45 @@
+$(document).ready(function() {
+
+    //Initialize Dialogs
+    //==================
+    position = {
+        my: "left top",
+        at: "left bottom",
+        of: "#opener"
+    };
+    close_button = {
+        text: "Close",
+        icons: {
+            primary: "ui-icon-close"
+        },
+        click: function() {
+            $(this).dialog("close");
+        }
+    };
+    $("#error").dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [close_button]
+    });
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [close_button]
+    });
+
+    $("#opener").click(function() {
+        $("#dialog").dialog("open");
+    });
+
+    Mousetrap.stopCallback = function() { return false };
+
+    Mousetrap.bind('a', function(e){
+        $('#add_row').click();
+    });
+
+    Mousetrap.bind('esc', function(e){
+        $('#new #close').click();
+    });
+});
