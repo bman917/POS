@@ -1,0 +1,24 @@
+@import "constants";
+
+$totals_font_size: 125%;
+
+#summary {
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+    width: $form_width / 3;
+  }
+  label {
+    float: left;
+    width: 50%;
+    text-align: right;
+    font-weight: bold;
+  }
+  p {
+    text-align: right;
+    margin-right: 2em;
+    margin-bottom: 1px;
+  }
+}

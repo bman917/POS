@@ -1,21 +1,14 @@
-<%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%>
-
+<%= stylesheet_link_tag    "sales/all", media: "all" %>
+<!--%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%-->
 <div id="error" title="No Items Selected" style="display:none">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
-
 <div id="dialog" title="Select Action" style="display:none">
 	<%= link_to 'Set Price', '#', id: 'price_link', class: 'pos_action', style: 'margin: 1em 3em 1em 1em'%>
 	<%= link_to 'Delete', '#', id: 'delete', class: 'pos_action'%>
 </div>
-
 <%=form_tag '', class: 'sales-frm' do%>
-<div class="header">
-	<span class="title">E. Estanislao General Merchansize</span>
-	<span class="address">#113 JP Rizal Street, Calumpang Marikina</span>
-	<span class="address">Tel. 645-3017; Fax. 123-4567</span>
-</div>
-<div class="details">
+<div class="customer_details">
 	<div class="left">
 		<span>Customer :</span>
 		<%=text_field_tag 'customer_name', "Juan Dela Cruz", style: "display:inline"%>
@@ -26,74 +19,38 @@
 	</div>
 </div>
 <div style="width:714px; height:350px;overflow-y: scroll">
-<table style="min-height:345px;">
-	<thead>
-		<tr>
-			<th></th>
-			<th style="width: 415px; height: 53px;">Item</th>
-			<th style="width: 5em;text-align:center">Qty</th>
-			<th>Unit Price</th>
-			<th>Amount</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="item">
-			<td><%=check_box_tag('item_ids[]', nil,nil)%></td>
-			<td>Adhesive 888 Ca 20g (Piece)</td>
-			<td class="qty">2</td>
-			<td>100.00</td>
-			<td>200.00</td>
-		</tr>
-		<tr class="item">
-			<td><%=check_box_tag('item_ids[]', nil,nil)%></td>
-			<td>Adhesive 888 Ca 20g (Piece)</td>
-			<td class="qty">2</td>
-			<td>100.00</td>
-			<td>200.00</td>
-		</tr>
-		<tr class="item">
-			<td><%=check_box_tag('item_ids[]', nil,nil)%></td>
-			<td>Adhesive 888 Ca 20g (Piece)</td>
-			<td class="qty">2</td>
-			<td>100.00</td>
-			<td>200.00</td>
-		</tr>
-		
-		<tr id="total" class="footer total" style="text-align: right;">
-			<td>&nbsp;</td>
-			<td colspan="2">Total:</td>
-			<td colspan="2">800.00</td>
-		</tr>
-		<tr class="footer discount" style="text-align: right;">
-			<td>&nbsp;</td>
-			<td colspan="2">Discount:</td>
-			<td colspan="2">-10.00</td>
-		</tr>
-		<tr class="footer tax" style="text-align: right;">
-			<td>&nbsp;</td>
-			<td colspan="2">Tax (%12):</td>
-			<td colspan="2">94.80</td>
-		</tr>
-		<tr class="footer total" style="text-align: right;">
-			<td>&nbsp;</td>
-			<td colspan="2">Grand Total:</td>
-			<td colspan="2">884.80</td>
-		</tr>
-	</tbody>
-</table>
+	<table style="min-height:345px;">
+		<thead>
+			<tr>
+				<th></th>
+				<th style="width: 415px; height: 53px;">Item</th>
+				<th style="width: 5em;text-align:center">Qty</th>
+				<th>Unit Price</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
 </div>
 
-<div style="margin: 1em">
-	Number of Items: 4
+<div id="summary">
+	<div class="left" style="margin: 1em">
+		Number of Items: 4
+	</div>
+
+	<div class="right">
+		<label>Total</label><p>800.00</p>
+		<label>VAT(%12)</label><p>800.00</p>
+		<label>Grand Total</label><p>800.00</p>
+	</div>
 </div>
 
-<div id="controls" style="margin: 15px 10px 10px 10px; width: 100%">
+
+<div id="controls" style="margin: 40px 10px 10px 10px; width: 100%">
 	<%= link_to '(A) Add Item', new_item_sales_path, id: 'add_row', class: 'pos_action', remote: true%>
-
 </div>
-
-
-
 <div id="footer" class="details">
 	<div class="left-5">
 		<span>Prepared By:</span>
@@ -104,10 +61,6 @@
 		<%=text_field_tag :checked_by, "Cambal"%>
 	</div>
 </div>
-
-
-
 <!-- END FORM -->
 <% end %>
-
 <%=javascript_include_tag 'sales_new'%>

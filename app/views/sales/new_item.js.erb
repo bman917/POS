@@ -1,6 +1,6 @@
 $('#add_row').bind('click', false);
 
-$('tr#total').before("<%=j render 'sales/item_input_row'%>");
+$('tr:last').after("<%=j render 'sales/item_input_row'%>");
 
 $('#new #close').on('click', function(){ 
 	$(this).closest('tr').remove()
