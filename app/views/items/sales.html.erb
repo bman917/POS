@@ -3,11 +3,27 @@
 <div id="error" title="No Items Selected" style="display:none">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
-<div id="dialog" title="Select Action" style="display:none">
-	<%= link_to 'Set Price', '#', id: 'price_link', class: 'pos_action', style: 'margin: 1em 3em 1em 1em'%>
-	<%= link_to 'Delete', '#', id: 'delete', class: 'pos_action'%>
+
+<div id="dialog" title="Add Cash Payment" style="display:none">
+	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+		Cash Amount: <%=text_field_tag :cash_amount, nil, disabled: true%>
+	<!--%end%-->
 </div>
-<%=form_tag '', class: 'sales-frm' do%>
+
+<div id="check_payment_dialog" title="Add Check Payment" style="display:none">
+	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+		Date: <%=date_field_tag :check_number, nil%>
+		Check Number: <%=text_field_tag :check_number, nil%>
+		Account Number: <%=text_field_tag :account_number, nil%>
+		Account Name: <%=text_field_tag :account_name, nil%>
+		Bank: <%=text_field_tag :bank, nil%>
+		Branch: <%=text_field_tag :bank, nil%>
+	<!--%end%-->
+</div>
+
+
+<%=form_tag '', id: 'sales-frm', class: 'sales-frm' do%>
+<h4>ID: S071500001 </h4>
 <div class="customer_details">
 	<div class="left">
 		<span>Customer :</span>
@@ -49,7 +65,8 @@
 
 
 <div id="controls" style="margin: 40px 10px 10px 10px; width: 100%">
-	<%= link_to '(A) Add Item', new_item_sales_path, id: 'add_row', class: 'pos_action', remote: true%>
+	<%= link_to '(A) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
+	<%= link_to '(P) Add Payment', '#', id: 'add_payment', class: 'pos_action'%>
 </div>
 <div id="footer" class="details">
 	<div class="left-5">
