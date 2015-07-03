@@ -1,0 +1,56 @@
+<%=form_tag '', id: 'sales-frm', class: 'sales-frm' do%>
+<h4>ID: S071500001 </h4>
+<div class="customer_details">
+	<div class="left">
+		<span>Customer :</span>
+		<%=text_field_tag 'customer_name', "Juan Dela Cruz", style: "display:inline"%>
+	</div>
+	<div class="right">
+		<span>Date :</span>
+		<%=text_field_tag 'customer_name', "Jan 1, 1970", style: "display:inline"%>
+	</div>
+</div>
+<div style="width:714px; height:350px;overflow-y: scroll">
+	<table style="min-height:345px;">
+		<thead>
+			<tr>
+				<th></th>
+				<th style="width: 415px; height: 53px;">Item</th>
+				<th style="width: 5em;text-align:center">Qty</th>
+				<th>Unit Price</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+</div>
+<div id="summary">
+	<div class="right">
+		<label>Total</label><p>800.00</p>
+		<label>VAT(%12)</label><p>800.00</p>
+		<label>Grand Total</label><p>800.00</p>
+	</div>
+</div>
+<div id="footer" class="details">
+	<div class="left-5">
+		Number of Items: 4
+	</div>
+	<div class="left-5">
+		<span>Prepared By:</span>
+		<span>Baste</span>
+	</div>
+	<div class="right-5">
+		<span>Chcked By:</span>
+		<span>Cambal</span>
+	</div>
+</div>
+<div id="controls" style="margin: 40px 10px 10px 10px; width: 100%">
+	<%= link_to '(1) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
+	<%= link_to '(2) Prepare Order', '#', id: 'prepare_order', class: 'pos_action'%>
+	<%= link_to '(3) Check Order', '#', id: 'check_order', class: 'pos_action'%>
+	<%= link_to '(4) Add Payment', '#', id: 'add_payment', class: 'pos_action'%>
+</div>
+<!-- END FORM -->
+<% end %>

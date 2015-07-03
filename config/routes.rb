@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'items/sales' => 'items#sales', as: 'sales'
   resources :sales do
     collection do
       get 'new_item'

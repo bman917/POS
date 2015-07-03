@@ -48,24 +48,53 @@ $(document).ready(function() {
         position: position,
         buttons: [close_button]
     });
+    $('#prepared_by_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [{
+            text: "Save",
+            icons: {
+                primary: "ui-icon-check"
+            },
+            click: function() {
+                $(this).dialog("close");
+            }
+        }]
+    });
+    $('#check_order_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [save_button]
+    });
     $("#dialog").dialog({
         autoOpen: false,
         modal: true,
         position: position,
         buttons: [check_button, save_button],
-        open: function(event, ui) { 
-          $('#cash_amount').val('');
-          $('#cash_amount').removeAttr('disabled');
+        open: function(event, ui) {
+            $('#cash_amount').val('');
+            $('#cash_amount').removeAttr('disabled');
         },
-        close: function( event, ui ) {
-          $('#cash_amount').prop('disabled','disabled');
-          bind_shortcuts(); 
+        close: function(event, ui) {
+            $('#cash_amount').prop('disabled', 'disabled');
+            bind_shortcuts();
         }
     });
 
-    $("#add_payment").click(function() {
+    $("a#add_payment").click(function() {
         $("#dialog").dialog("open");
     });
+
+    $("a#prepare_order").click(function() {
+        $("#prepared_by_dialog").dialog("open");
+    });
+
+    $("a#check_order").click(function() {
+        $("#check_order_dialog").dialog("open");
+    });
+
 
     //==================
     //Keyboard Shortcuts
@@ -75,11 +104,15 @@ $(document).ready(function() {
 
 function bind_shortcuts() {
     Mousetrap.reset();
-    //'a' for adding a new item
-    Mousetrap.bind('a', click_add_item);
-    //'p' for adding a payment
-    Mousetrap.bind('p', click_add_payment);
-    Mousetrap.stopCallback = function() {return false};
+
+    Mousetrap.bind('1', click_add_item);
+    Mousetrap.bind('2', click_prepare_order);
+    Mousetrap.bind('3', click_check_order);
+    Mousetrap.bind('4', click_add_payment);
+
+    Mousetrap.stopCallback = function() {
+        return false
+    };
 }
 
 // Click 'Add Item' link, 
@@ -93,15 +126,32 @@ function click_add_item(e) {
     });
 }
 
+function click_prepare_order(e) {
+    Mousetrap.reset();
+    $('a#prepare_order').click();
+    Mousetrap.bind('esc', function(e) {
+        bind_shortcuts();
+    });
+}
+
+function click_check_order(e) {
+    Mousetrap.reset();
+    $('a#check_order').click();
+    Mousetrap.bind('esc', function(e) {
+        bind_shortcuts();
+    });
+}
+
 // Click 'Add Item' link, 
 // unbind all keyboard listeners except ecp key
 function click_add_payment(e) {
     Mousetrap.reset();
     $("#dialog").dialog("open");
-    
-    //Delay focus so that the keyboard shortcut will not register 
-    //on the cash_amount input
-    setTimeout(function() {$('#cash_amount').focus();},100);
 
+    //Delay focus so that the keyboard shortcut 
+    //will not register on the cash_amount input
+    setTimeout(function() {
+        $('#cash_amount').focus();
+    }, 100);
     //rebinding of keyboard shortcuts is handled by JQuery UI Dialog close event.
 }
