@@ -18,14 +18,19 @@
 	Branch: <%=text_field_tag :bank, nil%>
 	<!--%end%-->
 </div>
-<div id="prepared_by_dialog" title="Prepare Order" style="display:none">
+<div id="prepared_by_dialog" title="Select who will prepare order..." style="display:none">
 	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
 	Name: <%=select_tag :prepared_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
 	<!--%end%-->
 </div>
-<div id="check_order_dialog" title="Checked By" style="display:none">
+<div id="check_order_dialog" title="Select who will prepare order..." style="display:none">
 	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
 	Name: <%=select_tag :checked_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
+	<!--%end%-->
+</div>
+<div id="confirm_cancel_dialog" title="Confirm Cancel" style="display:none">
+	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+	Are you sure?
 	<!--%end%-->
 </div>
 

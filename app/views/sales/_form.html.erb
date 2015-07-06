@@ -11,7 +11,7 @@
 	</div>
 </div>
 <div style="width:714px; height:350px;overflow-y: scroll">
-	<table style="min-height:345px;">
+	<table>
 		<thead>
 			<tr>
 				<th></th>
@@ -22,6 +22,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			<%=render 'sales/item_row'%>
 		</tbody>
 	</table>
 	
@@ -51,6 +52,7 @@
 	<%= link_to '(2) Prepare Order', '#', id: 'prepare_order', class: 'pos_action'%>
 	<%= link_to '(3) Check Order', '#', id: 'check_order', class: 'pos_action'%>
 	<%= link_to '(4) Add Payment', '#', id: 'add_payment', class: 'pos_action'%>
+	<%= link_to '(5) Cancel', '#', id: 'cancel', class: 'pos_action'%>
 </div>
 <!-- END FORM -->
 <% end %>

@@ -35,7 +35,20 @@ $(document).ready(function() {
             $("#check_payment_dialog").dialog("open");
         }
     }
-
+    $('#confirm_cancel_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [{
+            text: "Yes",
+            icons: {
+                primary: "ui-icon-check"
+            },
+            click: function() {
+                $(this).dialog("close");
+            }
+        }]
+    });
     $("#error").dialog({
         autoOpen: false,
         modal: true,
@@ -95,6 +108,9 @@ $(document).ready(function() {
         $("#check_order_dialog").dialog("open");
     });
 
+    $("a#cancel").click(function() {
+        $("#confirm_cancel_dialog").dialog("open");
+    });
 
     //==================
     //Keyboard Shortcuts
@@ -109,7 +125,7 @@ function bind_shortcuts() {
     Mousetrap.bind('2', click_prepare_order);
     Mousetrap.bind('3', click_check_order);
     Mousetrap.bind('4', click_add_payment);
-
+    Mousetrap.bind('5', click_cancel_order);
     Mousetrap.stopCallback = function() {
         return false
     };
@@ -122,6 +138,14 @@ function click_add_item(e) {
     Mousetrap.reset();
     Mousetrap.bind('esc', function(e) {
         $('#new #close').click();
+        bind_shortcuts();
+    });
+}
+
+function click_cancel_order(e) {
+  Mousetrap.reset();
+  $('a#cancel').click();
+    Mousetrap.bind('esc', function(e) {
         bind_shortcuts();
     });
 }
