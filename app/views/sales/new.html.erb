@@ -3,7 +3,8 @@
 <div id="error" title="No Items Selected" style="display:none">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
-<div id="dialog" title="Add Cash Payment" style="display:none">
+
+<div id="cash_payment_dialog" title="Add Cash Payment" style="display:none">
 	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
 	Cash Amount: <%=text_field_tag :cash_amount, nil, disabled: true%>
 	<!--%end%-->
@@ -30,6 +31,8 @@
 </div>
 <div id="confirm_cancel_dialog" title="Confirm Cancel" style="display:none">
 	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+	This order will be discarded.
+	</br>
 	Are you sure?
 	<!--%end%-->
 </div>
@@ -39,6 +42,10 @@
 <div class="sales_panels">
 	<div id="sales_form_panel">
 		<%=render 'sales/form' %>
+		<%=render 'sales/controls' %>
+
+
+
 	</div>
 	<div id="sales_list_panel">
 		<h4>Sales In Progress...</h4>

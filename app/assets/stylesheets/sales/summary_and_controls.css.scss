@@ -1,6 +1,8 @@
 @import "constants";
 
 $totals_font_size: 125%;
+$controls_top_margin: 40px;
+$controls_height: 70px;
 
 #summary {
   .left {
@@ -20,5 +22,19 @@ $totals_font_size: 125%;
     text-align: right;
     margin-right: 2em;
     margin-bottom: 1px;
+  }
+}
+
+#controls  {
+  
+  margin-top: $controls_top_margin;
+  height: $controls_height;
+
+  a.pos_action {
+    width: 170px;
+  }
+
+  div {
+    margin-bottom: 5px;
   }
 }

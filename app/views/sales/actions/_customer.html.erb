@@ -1,0 +1,44 @@
+<%= link_to '(0) Customer', '#', id: 'set_customer', class: 'pos_action'%>
+
+
+<div id="customer_dialog" title="Select Customer" style="display:none">
+	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+	Name: <%=select_tag :selected_customer, options_for_select([ "Cash", "Jema", "Knorr-vi"]), :include_blank => true%>
+	<!--%end%-->
+</div>
+
+
+
+<%=javascript_tag do %>
+function click_customer(e) {
+	$('a#set_customer').click();
+    Mousetrap.reset();
+	bind_esc_key();
+}
+
+$(document).ready(function() {
+    $('#customer_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        close: bind_shortcuts,
+        buttons: [
+        	{
+                text: "Select",
+                icons: {
+                    primary: "ui-icon-check"
+                },
+                click: function() {
+                    $(this).dialog("close");
+
+                    $('#customer_name').val($('#selected_customer').val());
+                }
+            }
+        ]
+    });
+
+    $("a#set_customer").click(function() {
+        $("#customer_dialog").dialog("open");
+    });
+});
+<% end %>

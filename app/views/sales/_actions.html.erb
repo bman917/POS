@@ -1,0 +1,15 @@
+<%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%>
+
+<div id="dialog" title="Select Action" style="display:none">
+    <!--%= link_to 'Modify Price', '#', id: 'price_link', class: 'pos_action', style: 'margin: 1em 3em 1em 1em'%-->
+    <%= link_to 'Delete', '#', id: 'delete', class: 'pos_action'%>
+</div>
+
+<div id="change_price" title="Set Price" style="display:none">
+	Price:
+	<%=number_field_tag :dialog_price_value, nil, max: 1000000, autofocus: true %>
+</div>
+
+<%=hidden_field_tag :dialog_price_value%>
+
+<%=javascript_include_tag 'sales/item_actions_dialog'%>

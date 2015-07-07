@@ -1,21 +1,27 @@
+//Sales Panels
+//1. the form panel
+//2. the panel for sales in progress
+
 @import "constants";
+@import "summary_and_controls";
 
 $sales_list_panel_width: 400px;
+$sales_panel_height: $form_height + $controls_height + $controls_top_margin;
 
 .sales_panels {
 	width: ($form_width + $sales_list_panel_width) * 1.05;
-	height: $form_height;
+	height: $sales_panel_height;
 	margin-top: -10px;
 }
 #sales_form_panel {
 	float: left;
 	width: $form_width + 20;
-	height: $form_height;
+	height: $sales_panel_height;
 }
 
 #sales_list_panel {
 	width: $sales_list_panel_width;
-	height: $form_height;
+	height: $sales_panel_height;
 	float: right;
 	padding-top: 1.5em;
 	border-left: 1px darkgray solid;

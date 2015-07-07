@@ -1,0 +1,12 @@
+<div id="controls">
+  <div id="control_panel_1">
+    <%= render 'sales/actions/customer'%>
+    <%= link_to '(1) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
+    <%= link_to '(2) Prepare Order', '#', id: 'prepare_order', class: 'pos_action'%>
+    <%= link_to '(3) Check Order', '#', id: 'check_order', class: 'pos_action'%>
+  </div>
+  <div id="control_panel_2">
+    <%= link_to '(4) Add Payment', '#', id: 'add_payment', class: 'pos_action'%>
+    <%= link_to '(5) Cancel', '#', id: 'cancel', class: 'pos_action'%>
+  </div>
+</div>

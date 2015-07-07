@@ -1,12 +1,24 @@
+//Common controls
+position = {
+    my: "center",
+    at: "center",
+    of: "#sales-frm"
+};
+close_button = {
+    text: "Close",
+    icons: {
+        primary: "ui-icon-check"
+    },
+    click: function() {
+        $(this).dialog("close");
+    }
+};
+
 $(document).ready(function() {
 
     //Initialize Dialogs
     //==================
-    position = {
-        my: "center",
-        at: "center",
-        of: "#sales-frm"
-    };
+
     save_button = {
         text: "Save",
         icons: {
@@ -16,15 +28,7 @@ $(document).ready(function() {
             $(this).dialog("close");
         }
     };
-    close_button = {
-        text: "Close",
-        icons: {
-            primary: "ui-icon-check"
-        },
-        click: function() {
-            $(this).dialog("close");
-        }
-    };
+
     check_button = {
         text: "Check Payment",
         icons: {
@@ -81,7 +85,7 @@ $(document).ready(function() {
         position: position,
         buttons: [save_button]
     });
-    $("#dialog").dialog({
+    $("#cash_payment_dialog").dialog({
         autoOpen: false,
         modal: true,
         position: position,
@@ -97,7 +101,7 @@ $(document).ready(function() {
     });
 
     $("a#add_payment").click(function() {
-        $("#dialog").dialog("open");
+        $("#cash_payment_dialog").dialog("open");
     });
 
     $("a#prepare_order").click(function() {
@@ -120,7 +124,7 @@ $(document).ready(function() {
 
 function bind_shortcuts() {
     Mousetrap.reset();
-
+    Mousetrap.bind('0', click_customer);
     Mousetrap.bind('1', click_add_item);
     Mousetrap.bind('2', click_prepare_order);
     Mousetrap.bind('3', click_check_order);
@@ -170,7 +174,7 @@ function click_check_order(e) {
 // unbind all keyboard listeners except ecp key
 function click_add_payment(e) {
     Mousetrap.reset();
-    $("#dialog").dialog("open");
+    $("#cash_payment_dialog").dialog("open");
 
     //Delay focus so that the keyboard shortcut 
     //will not register on the cash_amount input
@@ -178,4 +182,10 @@ function click_add_payment(e) {
         $('#cash_amount').focus();
     }, 100);
     //rebinding of keyboard shortcuts is handled by JQuery UI Dialog close event.
+}
+
+function bind_esc_key() {
+    Mousetrap.bind('esc', function(e) {
+        bind_shortcuts();
+    });   
 }

@@ -1,0 +1,47 @@
+<% url = POS::Application.routes.url_helpers %>
+
+//Used by sales/_actions.html.erb
+
+$(document).ready( function () {
+
+  //Initialize Dialogs
+  //==================
+  position = { my: "left top", at: "left bottom", of: "#opener"};
+  close_button = { 
+      text: "Close", icons: { primary: "ui-icon-close"},
+      click: function() {$( this ).dialog( "close" );}
+  };
+
+  $("#error").dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
+  $("#dialog").dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
+
+  //Logic for deciding which Diolog to open
+  //=======================================
+  $( "#opener" ).click(function() {
+    checked = $("#sales-frm .icb:checked").length;
+    if (checked == 0) {
+      $( "#error").dialog( "option", "title", "No Items Selected" );
+      $( "#error" ).dialog( "open" );
+    } else {
+      $( "#dialog" ).dialog( "open" );
+    }
+  });
+
+  //==================
+  //Other Button Logics
+  //==================
+  
+  //Delete
+  //==================
+  $('#dialog #delete').unbind('click');
+  $('#dialog #delete').on('click', function() { 
+      result = confirm("Delete Checked Items. Are you sure?");
+      $( "#dialog" ).dialog( "close" );
+      if (result) {
+        $('#sales-frm input[name=_method]').val('DELETE');
+        $('#sales-frm').attr('action', '<%=url.destroy_multiple_items_path%>');
+        $('#sales-frm').submit();
+      }
+  });
+// END $(document).ready
+}); 

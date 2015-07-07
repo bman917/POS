@@ -14,7 +14,10 @@
 	<table>
 		<thead>
 			<tr>
-				<th></th>
+				<th>
+					<%=render '/sales/actions'%>
+
+				</th>
 				<th style="width: 415px; height: 53px;">Item</th>
 				<th style="width: 5em;text-align:center">Qty</th>
 				<th>Unit Price</th>
@@ -47,12 +50,6 @@
 		<span>Cambal</span>
 	</div>
 </div>
-<div id="controls" style="margin: 40px 10px 10px 10px; width: 100%">
-	<%= link_to '(1) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
-	<%= link_to '(2) Prepare Order', '#', id: 'prepare_order', class: 'pos_action'%>
-	<%= link_to '(3) Check Order', '#', id: 'check_order', class: 'pos_action'%>
-	<%= link_to '(4) Add Payment', '#', id: 'add_payment', class: 'pos_action'%>
-	<%= link_to '(5) Cancel', '#', id: 'cancel', class: 'pos_action'%>
-</div>
+
 <!-- END FORM -->
 <% end %>
