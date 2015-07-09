@@ -46,16 +46,18 @@ class ItemBase < ActiveRecord::Base
   def map_by_attrib_then_supplier
     map = {}
       items.each do | i |
-        i.attrib_values.each do | av |
-          map[av.attrib.name] = {} unless map[av.attrib.name]
-          map[av.attrib.name][i.supplier.name] = Set.new unless map[av.attrib.name][i.supplier.name]
-          map[av.attrib.name][i.supplier.name] << av.value
+        if i.supplier
+          i.attrib_values.each do | av |
+            map[av.attrib.name] = {} unless map[av.attrib.name]
+            map[av.attrib.name][i.supplier.name] = Set.new unless map[av.attrib.name][i.supplier.name]
+            map[av.attrib.name][i.supplier.name] << av.value
+          end
+
+          map[:unit] = {} unless map[:unit]
+
+          map[:unit][i.supplier.name] = Set.new unless map[:unit][i.supplier.name]
+          map[:unit][i.supplier.name] << i.unit
         end
-
-        map[:unit] = {} unless map[:unit]
-
-        map[:unit][i.supplier.name] = Set.new unless map[:unit][i.supplier.name]
-        map[:unit][i.supplier.name] << i.unit
       end
       map
   end

@@ -1,20 +1,19 @@
-<%=page_title "Listing Item Bases"%>
+<%=page_title "Listing Item Types"%>
 
-<table>
+<table style="width:400px">
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3"></th>
+      
     </tr>
   </thead>
 
   <tbody>
     <% @item_bases.each do |item_base| %>
       <tr>
-        <td><%= item_base.name %></td>
-        <td><%= link_to 'Show', item_base %></td>
-        <td><%= link_to 'Edit', edit_item_base_path(item_base) %></td>
-        <td><%= link_to 'Destroy', item_base, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to item_base.name, item_base %></td>
+        <!--td><%= link_to 'Edit', edit_item_base_path(item_base) %></td-->
+        <!--td><%= link_to 'Destroy', item_base, method: :delete, data: { confirm: 'Are you sure?' } %></td-->
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +21,4 @@
 
 <br>
 
-<%= link_to 'New Item base', new_item_base_path %>
+<!--%= link_to 'New Item base', new_item_base_path %-->

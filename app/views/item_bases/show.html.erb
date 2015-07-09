@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Item Type:</strong>
   <%= @item_base.name %>
 </p>
 
@@ -17,17 +17,17 @@ Required Attributes:
   </ul>
 </div -->
 
-<table id="item_base_show_attrib">
+<table id="item_base_show_attrib" >
   <thead>
     <tr>
       <%gen_table(@item_base)[:header].sort_by {|attrib, index| index}.each do | name, index | %>
-            <th><%=name%></th>
+            <th style="width:40px"><%=name%></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <%gen_table(@item_base)[:rows].each do | columns  | %>
-    <tr>
+    <tr style="vertical-align: top;">
         <% columns.each do | col_index, value | %>
           <% if col_index == 1 %>
             <td><%=value%></td>
@@ -46,5 +46,5 @@ Required Attributes:
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_item_base_path(@item_base) %> |
+<%= link_to 'Edit', edit_item_base_path(@item_base), style: 'display:none' %>
 <%= link_to 'Back', item_bases_path %>
