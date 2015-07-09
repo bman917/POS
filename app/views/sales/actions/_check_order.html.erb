@@ -1,0 +1,23 @@
+<%= link_to link_name, '#', id: 'check_order', class: 'pos_action'%>
+
+<div id="check_order_dialog" title="Select who will prepare order..." style="display:none">
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    Name: <%=select_tag :checked_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
+    <!--%end%-->
+</div>
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    $('#check_order_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [save_button]
+    });
+
+    $("a#check_order").click(function() {
+        $("#check_order_dialog").dialog("open");
+    });
+});
+<% end %>

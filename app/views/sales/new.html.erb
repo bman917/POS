@@ -1,51 +1,18 @@
+<%=javascript_include_tag 'sales_new'%>
 <%= stylesheet_link_tag    "sales/all", media: "all" %>
+
 <!--%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%-->
 <div id="error" title="No Items Selected" style="display:none">
 	<%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>
 </div>
 
-<div id="cash_payment_dialog" title="Add Cash Payment" style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	Cash Amount: <%=text_field_tag :cash_amount, nil, disabled: true%>
-	<!--%end%-->
-</div>
-<div id="check_payment_dialog" title="Add Check Payment" style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	Date: <%=date_field_tag :check_number, nil%>
-	Check Number: <%=text_field_tag :check_number, nil%>
-	Account Number: <%=text_field_tag :account_number, nil%>
-	Account Name: <%=text_field_tag :account_name, nil%>
-	Bank: <%=text_field_tag :bank, nil%>
-	Branch: <%=text_field_tag :bank, nil%>
-	<!--%end%-->
-</div>
-<div id="prepared_by_dialog" title="Select who will prepare order..." style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	Name: <%=select_tag :prepared_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
-	<!--%end%-->
-</div>
-<div id="check_order_dialog" title="Select who will prepare order..." style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	Name: <%=select_tag :checked_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
-	<!--%end%-->
-</div>
-<div id="confirm_cancel_dialog" title="Confirm Cancel" style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	This order will be discarded.
-	</br>
-	Are you sure?
-	<!--%end%-->
-</div>
-
-<%=javascript_include_tag 'sales_new'%>
 
 <div class="sales_panels">
 	<div id="sales_form_panel">
 		<%=render 'sales/form' %>
 		<%=render 'sales/controls' %>
-
-
-
+		<!--div id="block_controls" style="height:100px;width:700px">
+		</div-->
 	</div>
 	<div id="sales_list_panel">
 		<h4>Sales In Progress...</h4>

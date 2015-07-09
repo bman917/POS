@@ -32,3 +32,14 @@ $('#item_name').autocomplete({
 });
 
 $('#item_name').focus();
+
+// $( "#block_controls" ).position({
+//       my: "left top",
+//       at: "left top",
+//       of: "#controls"
+// });
+
+$('a#add_item').bind('click', function(e){
+  e.preventDefault();
+  return false;
+})

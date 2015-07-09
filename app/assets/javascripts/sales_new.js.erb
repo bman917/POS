@@ -13,108 +13,27 @@ close_button = {
         $(this).dialog("close");
     }
 };
+save_button = {
+    text: "Save",
+    icons: {
+        primary: "ui-icon-check"
+    },
+    click: function() {
+        $(this).dialog("close");
+    }
+};
 
 $(document).ready(function() {
 
     //Initialize Dialogs
     //==================
-
-    save_button = {
-        text: "Save",
-        icons: {
-            primary: "ui-icon-check"
-        },
-        click: function() {
-            $(this).dialog("close");
-        }
-    };
-
-    check_button = {
-        text: "Check Payment",
-        icons: {
-            primary: "ui-icon-newwin"
-        },
-        click: function() {
-            $(this).dialog("close");
-            $("#check_payment_dialog").dialog("open");
-        }
-    }
-    $('#confirm_cancel_dialog').dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [{
-            text: "Yes",
-            icons: {
-                primary: "ui-icon-check"
-            },
-            click: function() {
-                $(this).dialog("close");
-            }
-        }]
-    });
     $("#error").dialog({
         autoOpen: false,
         modal: true,
         position: position,
         buttons: [close_button]
     });
-    $('#check_payment_dialog').dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [close_button]
-    });
-    $('#prepared_by_dialog').dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [{
-            text: "Save",
-            icons: {
-                primary: "ui-icon-check"
-            },
-            click: function() {
-                $(this).dialog("close");
-            }
-        }]
-    });
-    $('#check_order_dialog').dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [save_button]
-    });
-    $("#cash_payment_dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [check_button, save_button],
-        open: function(event, ui) {
-            $('#cash_amount').val('');
-            $('#cash_amount').removeAttr('disabled');
-        },
-        close: function(event, ui) {
-            $('#cash_amount').prop('disabled', 'disabled');
-            bind_shortcuts();
-        }
-    });
 
-    $("a#add_payment").click(function() {
-        $("#cash_payment_dialog").dialog("open");
-    });
-
-    $("a#prepare_order").click(function() {
-        $("#prepared_by_dialog").dialog("open");
-    });
-
-    $("a#check_order").click(function() {
-        $("#check_order_dialog").dialog("open");
-    });
-
-    $("a#cancel").click(function() {
-        $("#confirm_cancel_dialog").dialog("open");
-    });
 
     //==================
     //Keyboard Shortcuts
@@ -122,14 +41,42 @@ $(document).ready(function() {
     bind_shortcuts();
 });
 
-function bind_shortcuts() {
+
+// Performs a click event for the given link defined by the 
+// link_css_id parameter
+function click_control(link_css_id) {
+    $(link_css_id).click();
+    reset_and_bind_esc_key();
+}
+
+// Creates a function to be used by Mousetrap
+// The function performs a click event driven by the click_control function
+function mousetrap_click(link_css_id) {
+    var f = new Function('link_css_id', 'click_control("'+link_css_id+'")');
+    return f;
+}
+
+function reset_and_bind_esc_key() {
     Mousetrap.reset();
-    Mousetrap.bind('0', click_customer);
+    Mousetrap.bind('esc', function(e) {
+        bind_shortcuts();
+    });   
+}
+
+function bind_shortcuts() {
+    //When add_item link is clicked, the add_item link is disabled
+    //by binding to add_item link, a 'click' event the returns false
+    //So, when binding shortcuts, make sure this even is unbound so that 
+    //the add_item link will work.
+    $('a#add_item').unbind('click');
+
+    Mousetrap.reset();
+    Mousetrap.bind('0', mousetrap_click('a#set_customer'));
     Mousetrap.bind('1', click_add_item);
-    Mousetrap.bind('2', click_prepare_order);
-    Mousetrap.bind('3', click_check_order);
+    Mousetrap.bind('2', mousetrap_click('a#prepare_order'));
+    Mousetrap.bind('3', mousetrap_click('a#check_order'));
     Mousetrap.bind('4', click_add_payment);
-    Mousetrap.bind('5', click_cancel_order);
+    Mousetrap.bind('5', mousetrap_click('a#cancel'));
     Mousetrap.stopCallback = function() {
         return false
     };
@@ -143,30 +90,7 @@ function click_add_item(e) {
     Mousetrap.bind('esc', function(e) {
         $('#new #close').click();
         bind_shortcuts();
-    });
-}
 
-function click_cancel_order(e) {
-  Mousetrap.reset();
-  $('a#cancel').click();
-    Mousetrap.bind('esc', function(e) {
-        bind_shortcuts();
-    });
-}
-
-function click_prepare_order(e) {
-    Mousetrap.reset();
-    $('a#prepare_order').click();
-    Mousetrap.bind('esc', function(e) {
-        bind_shortcuts();
-    });
-}
-
-function click_check_order(e) {
-    Mousetrap.reset();
-    $('a#check_order').click();
-    Mousetrap.bind('esc', function(e) {
-        bind_shortcuts();
     });
 }
 
@@ -184,8 +108,3 @@ function click_add_payment(e) {
     //rebinding of keyboard shortcuts is handled by JQuery UI Dialog close event.
 }
 
-function bind_esc_key() {
-    Mousetrap.bind('esc', function(e) {
-        bind_shortcuts();
-    });   
-}

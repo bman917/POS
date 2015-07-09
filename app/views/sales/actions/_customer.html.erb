@@ -1,4 +1,4 @@
-<%= link_to '(0) Customer', '#', id: 'set_customer', class: 'pos_action'%>
+<%= link_to link_name, '#', id: 'set_customer', class: 'pos_action'%>
 
 
 <div id="customer_dialog" title="Select Customer" style="display:none">
@@ -10,12 +10,6 @@
 
 
 <%=javascript_tag do %>
-function click_customer(e) {
-	$('a#set_customer').click();
-    Mousetrap.reset();
-	bind_esc_key();
-}
-
 $(document).ready(function() {
     $('#customer_dialog').dialog({
         autoOpen: false,
@@ -39,6 +33,8 @@ $(document).ready(function() {
 
     $("a#set_customer").click(function() {
         $("#customer_dialog").dialog("open");
+
+
     });
 });
 <% end %>

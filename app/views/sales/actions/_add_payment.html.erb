@@ -1,0 +1,59 @@
+<%= link_to link_name, '#', id: 'add_payment', class: 'pos_action'%>
+
+<div id="cash_payment_dialog" title="Add Cash Payment" style="display:none">
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    Cash Amount: <%=text_field_tag :cash_amount, nil, disabled: true%>
+    <!--%end%-->
+</div>
+<div id="check_payment_dialog" title="Add Check Payment" style="display:none">
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    Date: <%=date_field_tag :check_number, nil%>
+    Check Number: <%=text_field_tag :check_number, nil%>
+    Account Number: <%=text_field_tag :account_number, nil%>
+    Account Name: <%=text_field_tag :account_name, nil%>
+    Bank: <%=text_field_tag :bank, nil%>
+    Branch: <%=text_field_tag :bank, nil%>
+    <!--%end%-->
+</div>
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    $('#check_payment_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [close_button]
+    });
+    
+    check_button = {
+        text: "Check Payment",
+        icons: {
+            primary: "ui-icon-newwin"
+        },
+        click: function() {
+            $(this).dialog("close");
+            $("#check_payment_dialog").dialog("open");
+        }
+    }
+
+    $("#cash_payment_dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [check_button, save_button],
+        open: function(event, ui) {
+            $('#cash_amount').val('');
+            $('#cash_amount').removeAttr('disabled');
+        },
+        close: function(event, ui) {
+            $('#cash_amount').prop('disabled', 'disabled');
+            bind_shortcuts();
+        }
+    });
+
+    $("a#add_payment").click(function() {
+        $("#cash_payment_dialog").dialog("open");
+    });
+});
+<% end %>

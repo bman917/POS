@@ -1,0 +1,31 @@
+<%= link_to link_name, '#', id: 'prepare_order', class: 'pos_action'%>
+
+<div id="prepared_by_dialog" title="Select who will prepare order..." style="display:none">
+	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+	Name: <%=select_tag :prepared_by, options_for_select([ "Cambal", "Baste"]), :include_blank => true%>
+	<!--%end%-->
+</div>
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    $('#prepared_by_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [{
+            text: "Save",
+            icons: {
+                primary: "ui-icon-check"
+            },
+            click: function() {
+                $(this).dialog("close");
+            }
+        }]
+    });
+
+    $("a#prepare_order").click(function() {
+        $("#prepared_by_dialog").dialog("open");
+    });
+});
+<% end %>

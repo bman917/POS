@@ -1,0 +1,33 @@
+<%= link_to link_name, '#', id: 'cancel', class: 'pos_action'%>
+
+<div id="confirm_cancel_dialog" title="Confirm Cancel" style="display:none">
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    This order will be discarded.
+    </br>
+    Are you sure?
+    <!--%end%-->
+</div>
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    $('#confirm_cancel_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [{
+            text: "Yes",
+            icons: {
+                primary: "ui-icon-check"
+            },
+            click: function() {
+                $(this).dialog("close");
+            }
+        }]
+    });
+
+    $("a#cancel").click(function() {
+        $("#confirm_cancel_dialog").dialog("open");
+    });
+});
+<% end %>
