@@ -1,29 +1,28 @@
 $('tbody').append("<%=j render 'sales/item_input_row'%>");
-
+//ATTENTION: this need to happen AFTER the item_input_row has been rendered
+disable_add_item_button();
 
 var qty_css = '#qty';
 var item_id_css = '#item_id';
 var item_name_css = '#item_name';
 var item_price_css = '#item_price';
+var input_css = 'tr#new input';
 
-//ATTENTION: this need to happen AFTER the item_input_row has been rendered
-disable_add_item_button();
-
+var ready_to_save_check = function(event) {
+  setTimeout(function() {
+    if(validate_item_autocomplete(item_id_css, qty_css, item_price_css)) {
+      $(input_css).addClass('ready_to_save');  
+    } else {
+      $(input_css).removeClass('ready_to_save');  
+    }
+  },100);
+}
 
 //Highlight the row when the focus is on item qty field
 //=====================================================
-$(qty_css).on('focus', function(event){
-  //console.log('sales form qty focus event');
-  if(validate_item_autocomplete(item_id_css, item_price_css)) {
-    $(this).closest('tr').find('input').addClass('ready_to_save');  
-  }
-});
-$(qty_css).on('focusout', function(event){
-  //console.log('salse form qty focusout');
-  $(this).closest('tr').find('input').removeClass('ready_to_save');  
-});
+$(input_css).on('change' , ready_to_save_check);
+$(input_css).on('keydown', ready_to_save_check);
 //=====================================================
-
 
 
 $('#item_name').autocomplete({
@@ -33,8 +32,9 @@ $('#item_name').autocomplete({
     $('#add_item_button').addClass('hide');
   },
   select: function( event, ui ) {
-    console.log("autocomplete selected item:" + ui.item.id);
+    console.log("autocomplete selected item:" + JSON.stringify(ui.item));
     $(item_id_css).val(ui.item.id);
+    $(item_price_css).val(ui.item.price);
     console.log("item_id value:" + $(item_id_css).val());
     //$('#item_name').val(ui.item.value);
     $(qty_css).val("");

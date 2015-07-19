@@ -70,6 +70,10 @@ class Item < ActiveRecord::Base
     "#{name} (#{unit})"
   end
 
+  def regular_price
+    item_prices.where(name: 'REGULAR').first.try(:price)
+  end
+
   def price_summary
 
     item_prices.each do |i|

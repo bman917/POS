@@ -3,9 +3,9 @@
     <%= render partial: 'sales/actions/customer', locals: {link_name: '(0) Customer'}%>
     <%= link_to '(1) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
     <%= render partial: 'sales/actions/prepare_order', locals: {link_name: '(2) Prepare Order'}%>
-    <%= render partial: 'sales/actions/check_order',   locals: {link_name: '(3) Check Order'}%>
   </div>
   <div id="control_panel_2">
+    <%= render partial: 'sales/actions/check_order',   locals: {link_name: '(3) Check Order'}%>
     <%= render partial: 'sales/actions/add_payment',   locals: {link_name: '(4) Add Payment'}%>
     <%= render partial: 'sales/actions/confirm_cancel',locals: {link_name: '(5) Cancel'}%>
   </div>

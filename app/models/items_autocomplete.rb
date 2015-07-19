@@ -18,6 +18,7 @@ class ItemsAutocomplete
         id: item.id,
         label: "#{item.name} (#{item.unit})",
         value: "#{item.name} (#{item.unit})",
+        price: item.regular_price,
         desc: item.unit        
       }
     end
