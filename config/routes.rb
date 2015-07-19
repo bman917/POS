@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :item_sales do
+  end
+
   resources :sales do
     collection do
       get 'new_item'

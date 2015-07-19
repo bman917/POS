@@ -1,0 +1,15 @@
+<% url = POS::Application.routes.url_helpers %>
+
+function item_sale_create_ajax(sale_id_css, item_id_css, item_qty_css, item_price_css) {
+
+    $.ajax({
+        url: '<%=url.item_sales_path%>',
+        type: "POST"//,
+        // data: {
+        //   'item_purchase_order[item_id]': $(item_id_css).val(), 
+        //   'item_purchase_order[quantity]': $(qty_css).val(),
+        //   'item_purchase_order[purchase_order_id]': $('#purchase_order_id').val(),
+
+        // }
+    });
+}

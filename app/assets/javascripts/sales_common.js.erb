@@ -44,6 +44,12 @@ function mousetrap_click(link_css_id) {
     return f;
 }
 
+function bind_enter_keyboard_listener() {
+    Mousetrap.bind('enter', function(e) {
+        item_sale_create_ajax();
+    });
+}
+
 function reset_and_bind_esc_key() {
     Mousetrap.reset();
     Mousetrap.bind('esc', function(e) {
@@ -97,19 +103,12 @@ function click_add_payment(e) {
     //rebinding of keyboard shortcuts is handled by JQuery UI Dialog close event.
 }
 
-//Disables add item button
-//ensures that when the add item row is removed, 
-//the add item button will be re-enabled
-function disable_add_item_button() {
-    $('a#add_item').bind('click', function(e){
-      e.preventDefault();
-      return false;
-    });
-    $('#new #close').on('click', function(){ 
-        $(this).closest('tr').remove()
-        $('#add_item').unbind('click');
-        bind_shortcuts();
-    });    
+//Removes the sales input row
+function remove_item_sales_input_row() {
+    $('tr#new').remove();
+    //Make sure that the add_item button is enabled
+    $('#add_item').unbind('click');
+    bind_shortcuts();
 }
 
 

@@ -1,6 +1,18 @@
 $('tbody').append("<%=j render 'sales/item_input_row'%>");
-//ATTENTION: this need to happen AFTER the item_input_row has been rendered
-disable_add_item_button();
+
+//Add functionality to the close link
+//===================================
+$('#new #close').on('click', function(){ 
+    remove_item_sales_input_row();
+});
+
+//Disable Add item button
+//=======================
+$('a#add_item').bind('click', function(e){
+  e.preventDefault();
+  return false;
+});
+
 
 var qty_css = '#qty';
 var item_id_css = '#new #item_id';
@@ -14,6 +26,7 @@ var ready_to_save_check = function(event) {
     setTimeout(function() {
       if(validate_item_autocomplete(item_id_css, qty_css, item_price_css)) {
         $(input_css).addClass('ready_to_save');  
+        bind_enter_keyboard_listener();
       } else {
         $(input_css).removeClass('ready_to_save');  
       }
