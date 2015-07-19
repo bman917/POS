@@ -71,7 +71,7 @@ class Item < ActiveRecord::Base
   end
 
   def regular_price
-    item_prices.where(name: 'REGULAR').first.try(:price)
+    item_prices.select{|p|p.name.eql?('REGULAR')}.first
   end
 
   def price_summary

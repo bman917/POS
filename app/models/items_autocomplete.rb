@@ -33,9 +33,9 @@ class ItemsAutocomplete
     puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%")
+      @items = Item.includes(:item_prices).where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%")
     else
-      @items = Item.all
+      @items = Item.includes(:item_prices).all
     end
   end
 
