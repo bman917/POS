@@ -1,15 +1,20 @@
 <% url = POS::Application.routes.url_helpers %>
 
-function item_sale_create_ajax(sale_id_css, item_id_css, item_qty_css, item_price_css) {
+function bind_enter_keyboard_listener() {
+    Mousetrap.bind('enter', function(e) {
+        item_sale_create_ajax();
+    });
+}
 
+function item_sale_create_ajax() {
     $.ajax({
         url: '<%=url.item_sales_path%>',
-        type: "POST"//,
-        // data: {
-        //   'item_purchase_order[item_id]': $(item_id_css).val(), 
-        //   'item_purchase_order[quantity]': $(qty_css).val(),
-        //   'item_purchase_order[purchase_order_id]': $('#purchase_order_id').val(),
-
-        // }
+        type: "POST",
+         data: {
+           'item_sale[item_id]' : $(item_id_css).val(), 
+           'item_sale[qty]'     : $(item_qty_css).val(),
+           'item_sale[sale_id]' : $(sales_id_css).val(),
+           'item_sale[price]'   : $(item_price_css).val()
+        }
     });
 }

@@ -1,4 +1,6 @@
-$('tbody').after("<%=j render 'sales/item_row'%>");
-//remove_item_sales_input_row();
+$('tr#new').after("<%=j render partial: 'sales/item_sale', object: @item_sale%>");
+$('tr').removeClass('newly_added');
+$('#<%=@item_sale.css_id%>').addClass('newly_added');
+
 $('#item_name').val('');
 $('#item_name').focus();

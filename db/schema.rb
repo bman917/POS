@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609164450) do
+ActiveRecord::Schema.define(version: 20150719213728) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -109,6 +109,19 @@ ActiveRecord::Schema.define(version: 20150609164450) do
   add_index "item_purchase_orders", ["item_id"], name: "index_item_purchase_orders_on_item_id", using: :btree
   add_index "item_purchase_orders", ["purchase_order_id"], name: "index_item_purchase_orders_on_purchase_order_id", using: :btree
 
+  create_table "item_sales", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "sale_id"
+    t.float    "qty",        limit: 24
+    t.float    "price",      limit: 24
+    t.float    "total",      limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_sales", ["item_id"], name: "index_item_sales_on_item_id", using: :btree
+  add_index "item_sales", ["sale_id"], name: "index_item_sales_on_sale_id", using: :btree
+
   create_table "items", force: true do |t|
     t.integer  "item_base_id"
     t.integer  "supplier_id"
@@ -135,6 +148,17 @@ ActiveRecord::Schema.define(version: 20150609164450) do
 
   add_index "purchase_orders", ["supplier_id"], name: "index_purchase_orders_on_supplier_id", using: :btree
 
+  create_table "sales", force: true do |t|
+    t.string   "created_by"
+    t.string   "prepared_by"
+    t.string   "checked_by"
+    t.float    "total",       limit: 24
+    t.float    "vat",         limit: 24
+    t.float    "grand_total", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "suppliers", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -142,6 +166,17 @@ ActiveRecord::Schema.define(version: 20150609164450) do
   end
 
   add_index "suppliers", ["name"], name: "index_suppliers_on_name", unique: true, using: :btree
+
+  create_table "trigrams", force: true do |t|
+    t.string  "trigram",     limit: 3
+    t.integer "score",       limit: 2
+    t.integer "owner_id"
+    t.string  "owner_type"
+    t.string  "fuzzy_field"
+  end
+
+  add_index "trigrams", ["owner_id", "owner_type", "fuzzy_field", "trigram", "score"], name: "index_for_match", using: :btree
+  add_index "trigrams", ["owner_id", "owner_type"], name: "index_by_owner", using: :btree
 
   create_table "units", force: true do |t|
     t.string   "name"

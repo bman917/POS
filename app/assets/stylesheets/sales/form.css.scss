@@ -40,6 +40,11 @@
       }
     }
     td.price input { width: 4.5em;}
+    tr.newly_added {
+      font-weight: bolder; 
+      font-style: italic;
+      td {  color: #013500 } 
+    }
     
     input.ready_to_save {
       background-color: #A4DEB5;

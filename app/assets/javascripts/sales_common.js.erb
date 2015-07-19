@@ -25,6 +25,14 @@ save_button = {
     }
 };
 
+//=========
+//Constants
+//=========
+var sales_id_css  = '#sale_id'
+var item_id_css   = 'tr#new #item_id'
+var item_qty_css  = 'tr#new #qty'
+var item_price_css= 'tr#new #item_price'
+var input_css = 'tr#new input';
 
 //================================
 //Common functions for sales logic
@@ -42,12 +50,6 @@ function click_control(link_css_id) {
 function mousetrap_click(link_css_id) {
     var f = new Function('link_css_id', 'click_control("'+link_css_id+'")');
     return f;
-}
-
-function bind_enter_keyboard_listener() {
-    Mousetrap.bind('enter', function(e) {
-        item_sale_create_ajax();
-    });
 }
 
 function reset_and_bind_esc_key() {

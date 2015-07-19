@@ -1,0 +1,9 @@
+<tr id="<%=item_sale.css_id%>">
+	<td>
+		<%=check_box_tag :checked_by, nil, nil, class: 'icb'%>
+	</td>
+	<td><%=item_sale.item.summary%></td>
+	<td class="qty"><%=item_sale.qty%></td>
+	<td><%=item_sale.price%></td>
+	<td><%=item_sale.total%></td>
+</tr>

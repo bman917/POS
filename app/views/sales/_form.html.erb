@@ -1,5 +1,6 @@
 <%=form_tag '', id: 'sales-frm', class: 'sales-frm' do%>
-<h4>ID: S071500001 </h4>
+<h4>ID: <%=@sale.number%></h4>
+<%=hidden_field_tag :sale_id, @sale.id%>
 <div class="customer_details">
 	<div class="left">
 		<span>Customer :</span>
@@ -25,6 +26,8 @@
 			</tr>
 		</thead>
 		<tbody>
+			<%=render partial: 'sales/item_sale', collection: @sale.item_sales%>
+
 		</tbody>
 	</table>
 	

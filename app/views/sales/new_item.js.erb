@@ -1,68 +1,70 @@
-$('tbody').append("<%=j render 'sales/item_input_row'%>");
+$('tbody').prepend("<%=j render 'sales/item_input_row'%>");
 
 //Add functionality to the close link
 //===================================
-$('#new #close').on('click', function(){ 
+$('#new #close').on('click', function() {
     remove_item_sales_input_row();
 });
 
 //Disable Add item button
 //=======================
-$('a#add_item').bind('click', function(e){
-  e.preventDefault();
-  return false;
+$('a#add_item').bind('click', function(e) {
+    e.preventDefault();
+    return false;
 });
 
 
-var qty_css = '#qty';
-var item_id_css = '#new #item_id';
-var item_name_css = '#item_name';
-var item_price_css = '#item_price';
-var input_css = 'tr#new input';
-
 var ready_to_save_check = function(event) {
-  esc_key = 27;
-  if (event.keyCode != esc_key) {
-    setTimeout(function() {
-      if(validate_item_autocomplete(item_id_css, qty_css, item_price_css)) {
-        $(input_css).addClass('ready_to_save');  
-        bind_enter_keyboard_listener();
-      } else {
-        $(input_css).removeClass('ready_to_save');  
-      }
-    },100);
-  }
+
+    //Prevent execute when esc kye is pressed
+    esc_key = 27;
+    if (event.keyCode != esc_key) {
+
+        //Wrap in timeout to make sure that the
+        //input recieves the value before the validate_item_autocomplete is called
+        setTimeout(function() {
+
+            if (validate_item_autocomplete(item_id_css, item_qty_css, item_price_css)) {
+                Mousetrap.bind('enter', function(e) {
+                    item_sale_create_ajax();
+                });
+                $(input_css).addClass('ready_to_save');
+            } else {
+                $(input_css).removeClass('ready_to_save');
+            }
+
+        }, 100);
+    }
 }
 
 //Highlight the row when the focus is on item qty field
 //=====================================================
-$(input_css).on('change' , ready_to_save_check);
+$(input_css).on('change', ready_to_save_check);
 $(input_css).on('keydown', ready_to_save_check);
 //=====================================================
 
-
 $('#item_name').autocomplete({
-  minLength: 2,
-  source: "<%=json_items_path%>",
-  change: function( event, ui) {
-    $('#add_item_button').addClass('hide');
-  },
-  select: function( event, ui ) {
-    console.log("autocomplete selected item:" + JSON.stringify(ui.item));
-    $(item_id_css).val(ui.item.id);
-    $(item_price_css).val(ui.item.price);
-    console.log("item_id value:" + $(item_id_css).val());
-    //$('#item_name').val(ui.item.value);
-    $(qty_css).val("");
+    minLength: 2,
+    source: "<%=json_items_path%>",
+    change: function(event, ui) {
+        $('#add_item_button').addClass('hide');
+    },
+    select: function(event, ui) {
+        console.log("autocomplete selected item:" + JSON.stringify(ui.item));
+        $(item_id_css).val(ui.item.id);
+        $(item_price_css).val(ui.item.price);
+        console.log("item_id value:" + $(item_id_css).val());
+        //$('#item_name').val(ui.item.value);
+        $(item_qty_css).val("");
 
-    //Delay the focus a little bit so the it happens
-    //after normal focusing occurs.
-    setTimeout(function() {
-      $(qty_css).focus(); 
-      $('#add_item_button').removeClass('hide');
-    }, 100);
-    return false;
-  }
+        //Delay the focus a little bit so the it happens
+        //after normal focusing occurs.
+        setTimeout(function() {
+            $(item_qty_css).focus();
+            $('#add_item_button').removeClass('hide');
+        }, 100);
+        return false;
+    }
 });
 
 $('#item_name').focus();
