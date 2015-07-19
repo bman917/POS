@@ -3,7 +3,6 @@
   <head>
     <title><%= yield(:title) %></title>
 
-<% cache ('header') do %>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,12 +12,13 @@
     <%= csrf_meta_tags %>
   </head>
   <body id="content">
+<% cache ('header') do %>
     <%= render 'layouts/navigation'%>
+<% end %>
     <div id="wait_message" class="hidden">
       <%=image_tag 'loading_bar.gif', size: "125x20"%>
     </div>
 
-<% end %>
 
     <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
       :
