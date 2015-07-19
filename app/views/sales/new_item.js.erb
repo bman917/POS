@@ -1,14 +1,8 @@
-$('#add_row').bind('click', false);
+disable_add_item_button();
 
 $('tbody').append("<%=j render 'sales/item_input_row'%>");
 
-$('#new #close').on('click', function(){ 
-	$(this).closest('tr').remove()
-	$('#add_row').unbind('click');
-});
-
 qty_css = '#qty';
-
 
 $('#item_name').autocomplete({
   minLength: 2,
@@ -39,7 +33,3 @@ $('#item_name').focus();
 //       of: "#controls"
 // });
 
-$('a#add_item').bind('click', function(e){
-  e.preventDefault();
-  return false;
-})

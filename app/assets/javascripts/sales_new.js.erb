@@ -1,4 +1,6 @@
-//Common controls
+//=======================
+//Common Buttons controls
+//=======================
 position = {
     my: "center",
     at: "center",
@@ -23,24 +25,10 @@ save_button = {
     }
 };
 
-$(document).ready(function() {
 
-    //Initialize Dialogs
-    //==================
-    $("#error").dialog({
-        autoOpen: false,
-        modal: true,
-        position: position,
-        buttons: [close_button]
-    });
-
-
-    //==================
-    //Keyboard Shortcuts
-    //
-    bind_shortcuts();
-});
-
+//================================
+//Common functions for sales logic
+//================================
 
 // Performs a click event for the given link defined by the 
 // link_css_id parameter
@@ -108,3 +96,38 @@ function click_add_payment(e) {
     //rebinding of keyboard shortcuts is handled by JQuery UI Dialog close event.
 }
 
+//Disables add item button
+//ensures that when the add item row is removed, 
+//the add item button will be re-enabled
+function disable_add_item_button() {
+    $('a#add_item').bind('click', function(e){
+      e.preventDefault();
+      return false;
+    })
+    $('#new #close').on('click', function(){ 
+        $(this).closest('tr').remove()
+        $('#add_item').unbind('click');
+      bind_shortcuts();
+    });    
+}
+
+
+//==================================
+// Start Common Initialization logic
+//==================================
+
+$(document).ready(function() {
+
+    //Initialize Dialogs
+    //==================
+    $("#error").dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [close_button]
+    });
+
+    //==================
+    //Keyboard Shortcuts
+    bind_shortcuts();
+});
