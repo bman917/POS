@@ -28,7 +28,7 @@
       font-family: $mono_font;
       padding: 7px;
     }
-    td.qty {
+    td.qty, td.price {
       text-align: right;
       padding-right: 10px;
       input {
@@ -38,6 +38,8 @@
         text-align: right;
       }
     }
+    td.price input { width: 4.5em;}
+    
     input.ready_to_save {
       background-color: #A4DEB5;
     }

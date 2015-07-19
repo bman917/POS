@@ -68,6 +68,7 @@ function bind_shortcuts() {
     Mousetrap.stopCallback = function() {
         return false
     };
+    $('#focus_indicator').show();
 }
 
 // Click 'Add Item' link, 
@@ -130,4 +131,13 @@ $(document).ready(function() {
     //==================
     //Keyboard Shortcuts
     bind_shortcuts();
+
+    $(window).focus(function() {
+        console.log('window focus');
+        $('#focus_indicator').show();
+    });
+    $(window).focusout(function() {
+        console.log('window focus');
+        $('#focus_indicator').hide();
+    });
 });
