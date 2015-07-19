@@ -38,8 +38,11 @@
         text-align: right;
       }
     }
+    input.ready_to_save {
+      background-color: #A4DEB5;
+    }
   }
-}
+} //END .sales-frm
 
 
 .sales-frm input[type="text"], .sales-frm input[type="email"], .sales-frm textarea, .sales-frm select {
@@ -97,5 +100,7 @@
 .sales-frm div.input {
   display: inline;
 }
+
+
 
 

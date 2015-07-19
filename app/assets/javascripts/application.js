@@ -26,12 +26,9 @@
 //= require common_tools/jquery-spin
 //= require mousetrap.min
 //= require jquery.dataTables.min
-//require dataTables.tableTools
 //= require humane.min
 //= require turbolinks
 //= require_tree .
-//= stub item_index_dialog
-//= stub sales_new
 
 function init_foundation() {
   $(document).foundation();

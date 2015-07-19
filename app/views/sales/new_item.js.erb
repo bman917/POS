@@ -1,8 +1,23 @@
-disable_add_item_button();
+var qty_css = '#qty';
+var item_id_css = '#item_id';
+var item_name_css = '#item_name';
 
 $('tbody').append("<%=j render 'sales/item_input_row'%>");
 
-qty_css = '#qty';
+//ATTENTION: this need to happen AFTER the item_input_row has been rendered
+disable_add_item_button();
+
+//Highlight the row when the focus is on item qty field
+$(qty_css).on('focus', function(event){
+  //console.log('sales form qty focus event');
+    $(this).closest('tr').find('input').addClass('ready_to_save');  
+});
+$(qty_css).on('focusout', function(event){
+  //console.log('salse form qty focusout');
+  $(this).closest('tr').find('input').removeClass('ready_to_save');  
+});
+
+
 
 $('#item_name').autocomplete({
   minLength: 2,
@@ -11,7 +26,9 @@ $('#item_name').autocomplete({
     $('#add_item_button').addClass('hide');
   },
   select: function( event, ui ) {
-    //$(item_id_css).val(ui.item.id);
+    console.log("autocomplete selected item:" + ui.item.id);
+    $(item_id_css).val(ui.item.id);
+    console.log("item_id value:" + $(item_id_css).val());
     //$('#item_name').val(ui.item.value);
     $(qty_css).val("");
 
@@ -32,4 +49,3 @@ $('#item_name').focus();
 //       at: "left top",
 //       of: "#controls"
 // });
-

@@ -78,8 +78,8 @@ function click_add_item(e) {
     Mousetrap.bind('esc', function(e) {
         $('#new #close').click();
         bind_shortcuts();
-
     });
+
 }
 
 // Click 'Add Item' link, 
@@ -103,11 +103,11 @@ function disable_add_item_button() {
     $('a#add_item').bind('click', function(e){
       e.preventDefault();
       return false;
-    })
+    });
     $('#new #close').on('click', function(){ 
         $(this).closest('tr').remove()
         $('#add_item').unbind('click');
-      bind_shortcuts();
+        bind_shortcuts();
     });    
 }
 
@@ -130,4 +130,6 @@ $(document).ready(function() {
     //==================
     //Keyboard Shortcuts
     bind_shortcuts();
+
+    alert(validate_item_autocomplete);
 });
