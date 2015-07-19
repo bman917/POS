@@ -1,21 +1,28 @@
+$('tbody').append("<%=j render 'sales/item_input_row'%>");
+
+
 var qty_css = '#qty';
 var item_id_css = '#item_id';
 var item_name_css = '#item_name';
-
-$('tbody').append("<%=j render 'sales/item_input_row'%>");
+var item_price_css = '#item_price';
 
 //ATTENTION: this need to happen AFTER the item_input_row has been rendered
 disable_add_item_button();
 
+
 //Highlight the row when the focus is on item qty field
+//=====================================================
 $(qty_css).on('focus', function(event){
   //console.log('sales form qty focus event');
+  if(validate_item_autocomplete(item_id_css, item_price_css)) {
     $(this).closest('tr').find('input').addClass('ready_to_save');  
+  }
 });
 $(qty_css).on('focusout', function(event){
   //console.log('salse form qty focusout');
   $(this).closest('tr').find('input').removeClass('ready_to_save');  
 });
+//=====================================================
 
 
 
@@ -43,9 +50,3 @@ $('#item_name').autocomplete({
 });
 
 $('#item_name').focus();
-
-// $( "#block_controls" ).position({
-//       my: "left top",
-//       at: "left top",
-//       of: "#controls"
-// });
