@@ -50,15 +50,19 @@ class ItemsController < ApplicationController
     ids = params[:item_ids]
     Item.transaction do
 
-      price = params[:price_value]
       name = params[:price_type]
 
-      items = Item.find(params[:item_ids])
-      items.each do |item|
-        item_price = item.item_prices.find_or_create_by(name: name)
-        item_price.price = price
+      params[:item_ids].each do | item_id |
+        item_price = ItemPrice.where(item_id: item_id, name: name).first
+
+        unless item_price
+          item_price = ItemPrice.new(item_id: item_id, name: name)
+        end
+
+        item_price.price = params[:price_value]
         item_price.save!
       end
+
       flash[:status] = "Successfully Updated #{name} Price of #{ids.size} Items"
     end if ids 
 

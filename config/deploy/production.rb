@@ -14,7 +14,7 @@
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
-
+set :branch, 'prod'
 server 'bman917.com', user: 'jchan', roles: %w{web app db}, :MYSQL_PASSWORD => fetch(:MYSQL_PASSWORD)
 
 
