@@ -39,7 +39,7 @@ $(document).ready( function () {
       $( "#dialog" ).dialog( "close" );
       if (result) {
         $('#sales-frm input[name=_method]').val('DELETE');
-        $('#sales-frm').attr('action', '<%=url.destroy_multiple_items_path%>');
+        $('#sales-frm').attr('action', '<%=url.destroy_multiple_item_sales_path%>');
         $('#sales-frm').submit();
       }
   });

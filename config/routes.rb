@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   resources :item_sales do
+    collection do
+      delete 'destroy_multiple'
+    end
   end
 
   resources :sales do
