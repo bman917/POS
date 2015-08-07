@@ -4,4 +4,5 @@ class Sale < ActiveRecord::Base
 	def number
 		"S#{format('%02d', created_at.month)}#{created_at.year}#{format('%07d', id)}"
 	end
+
 end

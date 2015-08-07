@@ -1,3 +1,8 @@
 <% @item_sales.each do | item_sale_id |%>
-$('#item_sale_<%=item_sale_id%>').remove();
+  $('#item_sale_<%=item_sale_id%>').remove();
+<% end %>
+
+$('#app_msg').empty();
+<% flash.each do |name, msg| %>
+  $('#app_msg').append('<span><%=msg%></span>');
 <% end %>

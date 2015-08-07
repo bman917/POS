@@ -32,25 +32,25 @@
 	</table>
 	
 </div>
-<div id="summary">
+<div id="summary" style="margin-top:2em">
 	<div class="right">
-		<label>Total</label><p>800.00</p>
-		<label>VAT(%12)</label><p>800.00</p>
-		<label>Grand Total</label><p>800.00</p>
+		<label>Total</label><p id="sale_total"><%=number_to_currency(@sale.total || '0.00', unit: '')%></p>
+		<!--label>VAT(%12)</label><p>800.00</p>
+		<label>Grand Total</label><p>800.00</p-->
 	</div>
 </div>
-<div id="footer" class="details">
+<div id="footer" class="details" style="margin-top:2em">
 	<div class="left-5">
-		Number of Items: 4
+		Number of Items: <span id="number_of_items"><%=@sale.item_sales.count%></span>
 	</div>
-	<div class="left-5">
+	<!--div class="left-5">
 		<span>Prepared By:</span>
 		<span>Baste</span>
 	</div>
 	<div class="right-5">
 		<span>Chcked By:</span>
 		<span>Cambal</span>
-	</div>
+	</div-->
 </div>
 
 <!-- END FORM -->

@@ -4,3 +4,6 @@ $('#<%=@item_sale.css_id%>').addClass('newly_added');
 
 $('#item_name').val('');
 $('#item_name').focus();
+
+$('#sale_total').text('<%=number_to_currency @sale.total, unit: ''%>');
+$('#number_of_items').text('<%=@sale.item_sales.count%>');
