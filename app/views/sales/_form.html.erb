@@ -4,11 +4,11 @@
 <div class="customer_details">
 	<div class="left">
 		<span>Customer :</span>
-		<%=text_field_tag 'customer_name', "Juan Dela Cruz", style: "display:inline"%>
+		<%=text_field_tag 'customer_name', "CASH", style: "display:inline"%>
 	</div>
 	<div class="right">
 		<span>Date :</span>
-		<%=text_field_tag 'customer_name', "Jan 1, 1970", style: "display:inline"%>
+		<%=text_field_tag 'customer_name', @sale.created_at.to_s(:sale_date), style: "display:inline"%>
 	</div>
 </div>
 <div style="height:350px;overflow-y: scroll">
