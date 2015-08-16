@@ -12,7 +12,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body id="content">
-<% cache ('header') do %>
+<% cache (current_user.username) do %>
     <%= render 'layouts/navigation'%>
 <% end %>
     <div id="wait_message" class="hidden">
