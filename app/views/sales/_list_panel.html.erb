@@ -1,0 +1,19 @@
+<div id="sales_list">
+	<h4>Sales In Progress...</h4>
+	<ul>
+	  <% @sales_in_progress.each do | sale | %>
+	    <li>
+	    <%=link_to sale.number, sale, class: ('highlight' if sale.id == @sale.id), remote: true %> - <%= time_ago_in_words sale.created_at %> ago
+	    </li>
+	  <% end %>
+	</ul>
+	<h4>Completed Sales...</h4>
+	<ul>
+	  <% @completed_sales.each do | sale | %>
+	    <li>
+	    <%=link_to sale.number, sale, class: ('highlight' if sale.id == @sale.id), remote: true %> - <%= time_ago_in_words sale.created_at %> ago
+	    </li>
+	  <% end %>
+	</ul>
+
+</div>

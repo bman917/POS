@@ -12,7 +12,16 @@ $(document).ready( function () {
       click: function() {$( this ).dialog( "close" );}
   };
 
-  $("#error").dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
+  // $("#error").dialog({ 
+  //   autoOpen: false, 
+  //   modal: true, 
+  //   position: position, 
+  //   buttons: [close_button]},
+  //   close: function( event, ui ) {
+  //     alert('error closed');
+  //     bind_shortcuts();
+  //   });
+
   $("#dialog").dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
 
   //Logic for deciding which Diolog to open

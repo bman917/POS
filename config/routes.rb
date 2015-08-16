@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   resources :sales do
     collection do
       get 'new_item'
+      get 'in_progress'
+    end
+
+    member do
+      post 'close'
     end
   end
 

@@ -73,6 +73,7 @@ function bind_shortcuts() {
     Mousetrap.bind('3', mousetrap_click('a#check_order'));
     Mousetrap.bind('4', click_add_payment);
     Mousetrap.bind('5', mousetrap_click('a#cancel'));
+    Mousetrap.bind('6', mousetrap_click('a#close'));
     Mousetrap.stopCallback = function() {
         return false
     };
@@ -126,7 +127,10 @@ $(document).ready(function() {
         autoOpen: false,
         modal: true,
         position: position,
-        buttons: [close_button]
+        buttons: [close_button],
+        close: function( event, ui ) {
+            bind_shortcuts();
+        }
     });
 
     //==================

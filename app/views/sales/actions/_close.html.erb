@@ -1,0 +1,45 @@
+<%= link_to link_name, '#', id: 'close', class: 'pos_action'%>
+
+<div id="confirm_close_dialog" title="Confirm Sale is Complete" style="display:none">
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    This sale will be marked as completed.
+    </br>
+    Are you sure?
+    <!--%end%-->
+</div>
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    $('#confirm_close_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: position,
+        buttons: [{
+            text: "Yes",
+            icons: {
+                primary: "ui-icon-check"
+            },
+            click: function() {
+                $(this).dialog("close");
+                $.ajax({
+                  dataType: 'script',
+                  type: 'POST',
+                  url: "/sales/" + $('#sale_id').val() + "/close"
+                });
+            }
+        }]
+    });
+
+    $("a#close").click(function() {
+
+        checked = $("#sales-frm table tbody tr").length;
+        if (checked == 0) {
+          $( "#error").dialog( "option", "title", "But this sale is empty!!!" );
+          $( "#error" ).dialog( "open" );
+        } else {
+          $("#confirm_close_dialog").dialog("open");
+        }
+    });
+});
+<% end %>
