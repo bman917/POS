@@ -17,6 +17,12 @@ class SalesController < ApplicationController
 
   def new
     @sale = Sale.find_by_id(session[:current_sale_id])
+    if @sale && @sale.created_at.day < Time.now.day
+      if @sale.item_sales.count == 0
+        @sale.destroy
+        @sale = nil
+      end
+    end
     create_and_store_in_session unless @sale
     set_sales_list
   end
