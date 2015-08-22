@@ -48,7 +48,7 @@ class ItemBasesController < ApplicationController
   end
 
   def column_names
-    @column_names = %w(check_box summary price_summary supplier)
+    @column_names = %w(summary price_summary supplier)
   end
 
   def show

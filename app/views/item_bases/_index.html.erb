@@ -13,9 +13,6 @@
       <table id="item_selector" class="display">
         <thead>
           <tr>
-            <th style="width:20px">
-              &nbsp;
-            </th>
             <th>Name</th>
             <th>
               <span title="Regular / Wholesale">Price</span>
@@ -34,8 +31,6 @@ $(document).ready( function () {
 $( document ).tooltip();
   columns = <%=raw @items_datatable.columns %>;
   columnDefs = [
-    { "orderable": false, "targets": [0,-1,-2]},
-    { "className": "dt-center", "targets": [0]}  //center checkbox
   ];
 
   $('#item_bases').change(item_base_index_ajax);
@@ -66,26 +61,7 @@ $( document ).tooltip();
             "mColumns": [ 1, 2, 3 ]
           }]
       }
-      // , "drawCallback": function( settings ) {
-      //     $('#controls').prependTo($('.dataTables_wrapper'));
-      //   }
   } );
-
-  //document.addEventListener("page:load", $('#item_selector').DataTable().ajax.reload());
-
-  //Even listener so that when row is clicked. The checkbox in the row is toggled
-  $('#item_selector').on('draw.dt', function() {
-        $('#item_selector tr').unbind('click');
-
-        $('.icb').on('click', function(event) {
-           event.stopPropagation();
-        });
-
-        $('#item_selector tr').on('click', function() {
-            checkbox = $(this).find('.icb');
-            checkbox.click();
-        });
-  });
 
 
 //END DOCUMENT READY

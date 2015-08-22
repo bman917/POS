@@ -113,7 +113,12 @@ class ItemsDatatable
     #puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items_unordered = Item.where("item_base_id = #{@item_base_id} and (name LIKE ? or unit LIKE ?)", "%#{search_val}%", "%#{search_val}%").includes(:supplier, :item_prices)
+      supplier_id = Supplier.where("name LIKE ?", "%#{search_val}%").select("id").map{|s|s.id}
+      if supplier_id.count > 0
+        @items_unordered = Item.where(supplier_id: supplier_id, item_base_id: @item_base_id).includes(:supplier, :item_prices)
+      else
+        @items_unordered = Item.where("item_base_id = #{@item_base_id} and (name LIKE ? or unit LIKE ?)", "%#{search_val}%", "%#{search_val}%").includes(:supplier, :item_prices)
+      end
     else
       @items_unordered = Item.where("item_base_id = #{@item_base_id}").includes(:supplier, :item_prices)
     end
