@@ -98,8 +98,7 @@ class ItemsController < ApplicationController
 
   def index_switch_item_base
     @column_names = %w(check_box summary price_summary supplier)
-    @item_base = ItemBase.find(selected_item_base)
-    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items.order(:supplier_id)})
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => selected_item_base})
     respond_to do |format|
       format.html { render 'index' }
       format.js { render 'reload_data_table'}

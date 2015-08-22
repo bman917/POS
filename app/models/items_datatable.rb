@@ -6,6 +6,7 @@ class ItemsDatatable
     @colum_names = colum_names
     @options = options
     @items = options[:items]
+    @item_base_id = options[:item_base_id]
     puts "Initialized with #{@items}"
   end
 
@@ -69,8 +70,11 @@ class ItemsDatatable
   end
 
   def items
-    puts "Getting items: #{@items}"
-    @items ||= fetch_items
+    if @item_base_id
+      @items ||= fetch_by_item_base
+    else
+      @items ||= fetch_items
+    end
   end
 
   def fetch_items
@@ -104,6 +108,36 @@ class ItemsDatatable
     ordered_items
   end
 
+  def fetch_by_item_base
+    search_val = params[:search][:value] if params[:search]
+    #puts "Search Value: #{search_val}"
+
+    if search_val && !search_val.empty?
+      @items_unordered = Item.where("item_base_id = #{@item_base_id} and (name LIKE ? or unit LIKE ?)", "%#{search_val}%", "%#{search_val}%").includes(:supplier, :item_prices)
+    else
+      @items_unordered = Item.where("item_base_id = #{@item_base_id}").includes(:supplier, :item_prices)
+    end
+
+    @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
+
+    @recordsFiltered = @items_unordered.count
+
+    @items_unordered = @items_unordered.limit(params[:length]).offset(params[:start]) if params[:length].to_i >= 0
+
+    ordered_items = @items_unordered
+
+    params[:order].each do | order |
+      index = order[1][:column].to_i || 0
+      dir = order[1][:dir].to_sym || :desc
+      column = @colum_names[index]
+      #puts "Order Column Index: #{index}, Column: #{column}, Dir: #{dir}"
+      if column
+        ordered_items = @items_unordered.sort_by { | i | i.send(column) }
+        ordered_items = ordered_items.reverse if dir == :desc
+      end
+    end
+    ordered_items
+  end
 
   def method_missing(*args, &block)
     @view.send(*args, &block)

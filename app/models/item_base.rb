@@ -5,6 +5,8 @@ class ItemBase < ActiveRecord::Base
   has_many :attribs, through: :attrib_item_bases
   has_many :items, :dependent => :destroy
 
+  default_scope -> { where("name != 'Seeded Item Base'") }
+
   # supplier_a: {
   #   "Thickness"=>#<Set: {"7mm"}>, 
   #   "Color"=>#<Set: {"Black"}>, 

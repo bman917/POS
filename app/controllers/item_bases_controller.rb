@@ -33,7 +33,7 @@ class ItemBasesController < ApplicationController
     @item_base_id ||= selected_item_base
     @item_base = ItemBase.find(@item_base_id)
     @column_names = column_names
-    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items})
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:item_base_id => @item_base_id})
     @item_bases = ItemBase.all
     respond_with(@item_bases)
   end
@@ -42,14 +42,9 @@ class ItemBasesController < ApplicationController
     
     @column_names = column_names
     @item_base = ItemBase.find(selected_item_base)
-    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items.order(:supplier_id)})
-    
-    if params[:term]
-      #When there is a :term paramter then it means this is an autocomplete json
-      render json: ItemsAutocomplete.new(view_context)
-    else
-      render json: @items_datatable
-    end
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:item_base_id => @item_base_id})
+    render json: @items_datatable
+
   end
 
   def column_names
