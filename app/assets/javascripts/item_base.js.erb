@@ -1,0 +1,18 @@
+<% url = POS::Application.routes.url_helpers %>
+
+/*
+Used by item/index. 
+This will trigger ItemsController/index as a script.
+
+Usage:
+1. When supplier is changed, triggering this function 
+   will relaod the items datable with the items for the 
+   selected supplier
+*/
+function item_base_index_ajax() {
+  item_base_id = $('#item_bases').val();
+  $.ajax({
+    dataType: 'script',
+    url: "/items/switch_item_base/" + item_base_id
+  });
+}

@@ -120,7 +120,7 @@ RSpec.describe Item, :type => :model do
 
         describe "by supplier" do
           before(:each) do
-            @map = @item_base.map_by_supplier
+            @map = @item_base.map_by_supplier_then_by_attribute
           end
 
           it "has correct count" do

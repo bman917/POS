@@ -48,7 +48,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :item_bases 
+  resources :item_bases do
+     get  :json_filter_by, on: :collection
+    post :json_filter_by, on: :collection
+  end
+
+  get  'items/switch_item_base/:item_base_id' => 'items#index_switch_item_base', as: 'items_switch_item_base'
 
   get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'
 

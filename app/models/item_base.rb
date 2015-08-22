@@ -5,7 +5,6 @@ class ItemBase < ActiveRecord::Base
   has_many :attribs, through: :attrib_item_bases
   has_many :items, :dependent => :destroy
 
-
   # supplier_a: {
   #   "Thickness"=>#<Set: {"7mm"}>, 
   #   "Color"=>#<Set: {"Black"}>, 
@@ -16,7 +15,7 @@ class ItemBase < ActiveRecord::Base
   #   ...
   #   ...
   # }
-  def map_by_supplier
+  def map_by_supplier_then_by_attribute
     item_by_supplier = items.group_by { |i| i.supplier.name}
 
     item_by_supplier.each do | supplier_name, items |

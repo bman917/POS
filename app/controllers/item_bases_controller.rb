@@ -29,8 +29,31 @@ class ItemBasesController < ApplicationController
   end
 
   def index
+    @item_base_id = item_params[:item_base_id] if (params && params[:item_base])
+    @item_base_id ||= selected_item_base
+    @item_base = ItemBase.find(@item_base_id)
+    @column_names = column_names
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items})
     @item_bases = ItemBase.all
     respond_with(@item_bases)
+  end
+
+  def json_filter_by
+    
+    @column_names = column_names
+    @item_base = ItemBase.find(selected_item_base)
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items.order(:supplier_id)})
+    
+    if params[:term]
+      #When there is a :term paramter then it means this is an autocomplete json
+      render json: ItemsAutocomplete.new(view_context)
+    else
+      render json: @items_datatable
+    end
+  end
+
+  def column_names
+    @column_names = %w(check_box summary price_summary supplier)
   end
 
   def show

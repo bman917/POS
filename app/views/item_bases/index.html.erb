@@ -1,24 +1,2 @@
-<%=page_title "Listing Item Types"%>
 
-<table style="width:400px">
-  <thead>
-    <tr>
-      <th>Name</th>
-      
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @item_bases.each do |item_base| %>
-      <tr>
-        <td><%= link_to item_base.name, item_base %></td>
-        <!--td><%= link_to 'Edit', edit_item_base_path(item_base) %></td-->
-        <!--td><%= link_to 'Destroy', item_base, method: :delete, data: { confirm: 'Are you sure?' } %></td-->
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<!--%= link_to 'New Item base', new_item_base_path %-->
+<%=render 'index'%>

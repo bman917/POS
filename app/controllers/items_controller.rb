@@ -96,6 +96,16 @@ class ItemsController < ApplicationController
     end
   end
 
+  def index_switch_item_base
+    @column_names = %w(check_box summary price_summary supplier)
+    @item_base = ItemBase.find(selected_item_base)
+    @items_datatable = ItemsDatatable.new(view_context, @column_names, {:items => @item_base.items.order(:supplier_id)})
+    respond_to do |format|
+      format.html { render 'index' }
+      format.js { render 'reload_data_table'}
+    end
+  end
+
   def show
     @cloned_item = Item.new(@item.attributes)
     respond_with(@item)

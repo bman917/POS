@@ -5,6 +5,8 @@ class ItemsDatatable
     @view = view
     @colum_names = colum_names
     @options = options
+    @items = options[:items]
+    puts "Initialized with #{@items}"
   end
 
   def as_json(options={})
@@ -57,7 +59,7 @@ class ItemsDatatable
         copy: link_to("Copy", copy_item_path(item), remote: true),
         name: item.name,
         unit: item.unit,
-        supplier: item.supplier.name,
+        supplier: (item.supplier.try(:name) || "Deleted!!!"),
         pending_orders: item.pending_orders,
         price_summary: item.price_summary,
         summary: "#{item.name} <span class='unit'>(#{item.unit.humanize})</span>",
@@ -67,6 +69,7 @@ class ItemsDatatable
   end
 
   def items
+    puts "Getting items: #{@items}"
     @items ||= fetch_items
   end
 

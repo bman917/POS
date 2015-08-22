@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
     session[:supplier_id] = @supplier_id
   end
 
+  def selected_item_base
+    @item_base_id = params[:item_base_id] || session[:item_base_id] || ItemBase.all.first.id
+    session[:item_base_id] = @item_base_id
+  end
+
   def clear_selected_supplier
     session[:supplier_id] = nil
   end
