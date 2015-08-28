@@ -6,3 +6,6 @@ $('#app_msg').empty();
 <% flash.each do |name, msg| %>
   $('#app_msg').append('<span><%=msg%></span>');
 <% end %>
+
+$('#sales_form_panel #summary .content').remove();
+$('#sales_form_panel #summary').append("<%=j render 'sales/form_summary'%>");

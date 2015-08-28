@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150816064904) do
+ActiveRecord::Schema.define(version: 20150828163447) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -158,6 +158,10 @@ ActiveRecord::Schema.define(version: 20150816064904) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
+    t.float    "payment_1",   limit: 24
+    t.float    "payment_2",   limit: 24
+    t.float    "payment_3",   limit: 24
+    t.float    "payment_4",   limit: 24
   end
 
   create_table "suppliers", force: true do |t|

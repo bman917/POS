@@ -25,6 +25,21 @@ $(document).ready(function() {
         position: position,
         buttons: [close_button]
     });
+
+    save_button = {
+        text: "Save",
+        icons: {
+            primary: "ui-icon-check"
+        },
+        click: function() {
+            $(this).dialog("close");
+            $.ajax({
+              dataType: 'script',
+              type: 'POST',
+              url: "/sales/" + $('#sale_id').val() + "/payment/" + $('#cash_amount').val()
+            });
+        }
+    };
     
     check_button = {
         text: "Check Payment",
@@ -41,10 +56,15 @@ $(document).ready(function() {
         autoOpen: false,
         modal: true,
         position: position,
-        buttons: [check_button, save_button],
+        //buttons: [check_button, save_button],
+        buttons: [save_button],
         open: function(event, ui) {
+            reset_and_bind_esc_key();
             $('#cash_amount').val('');
             $('#cash_amount').removeAttr('disabled');
+            setTimeout(function() {
+                $('#cash_amount').focus();
+            }, 250);
         },
         close: function(event, ui) {
             $('#cash_amount').prop('disabled', 'disabled');

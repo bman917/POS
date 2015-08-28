@@ -4,7 +4,7 @@ class ItemSale < ActiveRecord::Base
 
   before_save :calculate_total
   before_save :store_item_price
-  after_save :update_sale_total
+  after_commit :update_sale_total
 
   #if the time has no REGULAR price
   #then update the item with the price for this item_sale

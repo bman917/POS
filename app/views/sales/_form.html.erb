@@ -1,5 +1,9 @@
 <%=form_tag destroy_multiple_item_sales_path, id: 'sales-frm', class: 'sales-frm', method: 'DELETE', remote: true do%>
-<h4>ID: <%=@sale.number%></h4>
+<h4>ID: <%=@sale.number%> </h4> 
+<% if @sale.status == 'COMPLETED'%>
+<div style="float:right;margin-top:-2.5em;color:red">(This sale is marked as completed)</div>
+
+<% end %>
 <%=hidden_field_tag :sale_id, @sale.id%>
 <div class="customer_details">
 	<div class="left">
@@ -33,11 +37,7 @@
 	
 </div>
 <div id="summary" style="margin-top:2em">
-	<div class="right">
-		<label>Total</label><p id="sale_total"><%=number_to_currency(@sale.total || '0.00', unit: '')%></p>
-		<!--label>VAT(%12)</label><p>800.00</p>
-		<label>Grand Total</label><p>800.00</p-->
-	</div>
+<%=render 'sales/form_summary'%>
 </div>
 <div id="footer" class="details" style="margin-top:2em">
 	<div class="left-5">

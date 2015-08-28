@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     post :json_filter_by, on: :collection
   end
 
+  post 'sales/:id/payment/:amount' => 'sales#payment'
+
   get  'items/switch_item_base/:item_base_id' => 'items#index_switch_item_base', as: 'items_switch_item_base'
 
   get 'item_base/:id/attribs' => 'item_bases#scripts_to_add_attribs_to_item_form'

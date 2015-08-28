@@ -10,4 +10,11 @@ class Sale < ActiveRecord::Base
 	def age
 		Time.now - self.created_at
 	end
+
+	def change_to_tender
+		retVal = 0
+		retVal = self.payment_1 - self.total if self.payment_1 && self.total
+		retVal = 0 if retVal < 0
+		retVal
+	end
 end

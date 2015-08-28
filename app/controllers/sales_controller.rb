@@ -1,6 +1,12 @@
 class SalesController < ApplicationController
   respond_to :html, :js
 
+  def payment
+    @sale = set_sale
+    @sale.payment_1 = params[:amount].to_f
+    @sale.save!
+  end
+
   def new_item
   end
 
@@ -16,7 +22,8 @@ class SalesController < ApplicationController
   end
 
   def new
-    @sale = Sale.find_by_id(session[:current_sale_id])
+    @sale = Sale.in_progress.first
+    
     if @sale && @sale.created_at.day < Time.now.day
       if @sale.item_sales.count == 0
         @sale.destroy
@@ -24,6 +31,7 @@ class SalesController < ApplicationController
       end
     end
     create_and_store_in_session unless @sale
+    session[:current_sale_id] = @sale.id
     set_sales_list
   end
 
@@ -56,6 +64,7 @@ class SalesController < ApplicationController
 
   def set_sale
     @sale = Sale.find(params[:id])
+    @sale
   end
 
   def create_and_store_in_session
