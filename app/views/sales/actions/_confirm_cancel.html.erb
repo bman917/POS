@@ -28,7 +28,13 @@ $(document).ready(function() {
                   url: "/sales/" + $('#sale_id').val()
                 });
             }
-        }]
+        }],
+        open: function(event, ui) {
+            reset_and_bind_esc_key();
+        },        
+        close: function(event, ui) {
+            bind_shortcuts();
+        }        
     });
 
     $("a#cancel").click(function() {
