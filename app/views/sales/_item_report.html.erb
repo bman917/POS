@@ -1,3 +1,7 @@
+<h5> Summary </h5>
+<li>Number of transactions: <%=@summary[:transactions]%></li>
+<li>Total Amount: <%=number_to_currency @summary[:total], unit: 'Php '%></li>
+
 <h5>Items</h5>
 <table style="width:30em">
   <thead>

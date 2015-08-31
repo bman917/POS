@@ -1,15 +1,17 @@
 <h3>Sales Report for <%=@month%></h3>
 <div style="width:700">
 	<div>
-		Select sales Date:
+		<%=render 'item_report'%>
+	</div>
+	<div>
+	<h5>Sales report by Date:</h5>
+		View Sales Report for a specific day:
 		<ul class="mono">
 			<% @sales_by_date.each do | sale_by_day | %>
 			<li><%=link_to sale_by_day.first.strftime("%a, %b %e, %Y"), report_by_date_path(sale_by_day.first) %></li>
 			<% end %>
 		</ul>
 	</div>
+
 	<%=link_to '<-- Back', report_sales_path%>
-	<div>
-		<%=render 'item_report'%>
-	</div>
 </div>

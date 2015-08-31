@@ -1,8 +1,5 @@
 <h3>Sales Report for: <%=@d.strftime("%a, %b %e, %Y")%></h3>
 
-<li>Number of transactions: <%=@summary[:transactions]%></li>
-<li>Total Amount: <%=number_to_currency @summary[:total], unit: 'Php '%></li>
-
 <%=render 'item_report'%>
 
 <%=link_to '<-- Back', report_by_month_path(@d) %>
