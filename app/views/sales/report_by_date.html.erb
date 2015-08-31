@@ -1,26 +1,8 @@
 <h3>Sales Report for: <%=@d.strftime("%a, %b %e, %Y")%></h3>
 
-<li>Number of transactions: <%=@transactions%></li>
-<li>Total Amount: <%=number_to_currency @total, unit: 'Php '%></li>
+<li>Number of transactions: <%=@summary[:transactions]%></li>
+<li>Total Amount: <%=number_to_currency @summary[:total], unit: 'Php '%></li>
 
-<h5>Items</h5>
-<table style="width:30em">
-  <thead>
-    <tr>
-      <th>Item Name</th>
-      <th style="width:10em">Number Sold</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @item_summary.each do | name, count | %>
-    <tr>
-      <td><%=name%></td>
-      <td><%=count%></td>
-    </tr>
-    <% end %>
-    
-  </tbody>
-
-</table>
+<%=render 'item_report'%>
 
 <%=link_to '<-- Back', report_by_month_path(@d) %>

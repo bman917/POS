@@ -3,51 +3,22 @@ class SalesController < ApplicationController
 
   def report_by_month
     date = Date.parse(params[:date])
-    start_date = date.beginning_of_month.prev_day
+    
+    start_date = date.beginning_of_month
     end_date   = date.end_of_month.next_day
-
-    @sales_by_date = Sale.where("status = 'COMPLETED' AND created_at between ? and ?", start_date, end_date).order(:created_at).group("DATE(created_at)").count
-
+    @summary = Sale.generate_summary(start_date,end_date)
+    
+    @sales_by_date = Sale.within_month(date).order(:created_at).group("DATE(created_at)").count
 
     @month = date.strftime("%b %Y")
+
   end
 
   def report_by_date
     @d = Date.parse(params[:date])
     bod = @d.beginning_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
     eod = @d.end_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
-
-    sale_ids = Sale.where("status = 'COMPLETED' AND created_at between ? and  ?", bod, eod).map{|i| i.id}
-    @transactions = sale_ids.count
-    @total = Sale.where(id: sale_ids).sum(:total)
-    puts sale_ids
-    @item_sales = ItemSale.where(sale_id: sale_ids).includes(:item)
-    @item_summary = {}
-    @item_sales.each do |item_sale|
-      name = item_sale.item.name
-      count = item_sale.qty + (@item_summary[name] || 0)
-      puts "#{name} - #{count}"
-      @item_summary[name] = count
-    end
-
-
-
-    # @item_sales = ItemSale.where(sale_id: sale_ids).group(:item_id).count
-
-    # item_ids = @item_sales.map { |is| is.first }
-    # @items = Item.where(id: item_ids)
-    # @items.each do |i|
-    #   # if @item_sales[i.id]
-    #     name = i.name
-    #     count = @item_sales[i.id]
-    #     @item_summary[name] = [] unless @item_summary[name]
-    #     @item_summary[name] << 
-    #   # end
-    # end
-    # puts @item_sales
-
-
-
+    @summary = Sale.generate_summary(bod,eod)
   end
 
   def report
@@ -64,13 +35,14 @@ class SalesController < ApplicationController
     @dates.each do |date|
       start_date = date.beginning_of_month.strftime("%Y-%m-%d")
       end_date   = date.end_of_month.strftime("%Y-%m-%d")
-      @reports << Report.find_or_create_by(start_date: start_date, 
+      r = Report.find_or_create_by(start_date: start_date, 
         end_date: end_date)
+      @reports << r if r.number_of_sales > 0
     end
 
     @reports.each do |r|
       unless r.number_of_sales
-        r.number_of_sales = Sale.where("status = 'COMPLETED' created_at between ? and ?", r.start_date, r.end_date).count
+        r.number_of_sales = Sale.in_between(r.start_date, r.end_date).count
         r.save! if r.number_of_sales
       end
     end

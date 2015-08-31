@@ -1,0 +1,19 @@
+<h5>Items</h5>
+<table style="width:30em">
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th class="align_right pad_right_7" style="width:7em"># Sold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @summary[:item_count].each do | name, count | %>
+    <tr>
+      <td><%=name%></td>
+      <td class="align_right pad_right_5"><%=count.to_i%></td>
+    </tr>
+    <% end %>
+    
+  </tbody>
+
+</table>

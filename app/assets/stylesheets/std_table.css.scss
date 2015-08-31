@@ -4,9 +4,12 @@ table {
 
 tr, td, th {
   padding: 1px;
+  .align_right { text-align: right}
+  .pad_right_5 { padding-right: 5px}
 }
 
 
 table tr.highlight {
   background: #A9F6AB;
 }
+
