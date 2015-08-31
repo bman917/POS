@@ -23,6 +23,7 @@
         <%=link_to 'Sales', "#"%>
         <ul class="dropdown">
             <li><%=link_to 'Sales', '#', :onclick => "Turbolinks.visit('#{main_app.new_sale_path}')"%></li>
+            <li><%=link_to 'Report', '#',:onclick => "Turbolinks.visit('#{main_app.report_sales_path}')"%></li>
         </ul>
       </li>
     </ul>

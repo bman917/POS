@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831100132) do
+ActiveRecord::Schema.define(version: 20150831122928) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(version: 20150831100132) do
     t.float    "payment_4",     limit: 24
     t.string   "customer_name"
   end
+
+  add_index "sales", ["created_at"], name: "index_sales_on_created_at", using: :btree
 
   create_table "suppliers", force: true do |t|
     t.string   "name"

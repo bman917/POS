@@ -1,6 +1,34 @@
 class SalesController < ApplicationController
   respond_to :html, :js
 
+  def report_by_date
+    @d = Date.parse(params[:date])
+    bod = @d.beginning_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
+    eod = @d.end_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
+
+    sale_ids = Sale.where("status = 'COMPLETED' AND created_at between ? and  ?", bod, eod).map{|i| i.id}
+    @transactions = sale_ids.count
+    @total = Sale.where(id: sale_ids).sum(:total)
+    @item_sales = ItemSale.where(sale_id: sale_ids).group(:item_id).count
+    item_ids = @item_sales.map { |is| is.first }
+    @items = Item.where(id: item_ids)
+    @item_summary = {}
+    @items.each do |i|
+      # if @item_sales[i.id]
+        count = @item_sales[i.id]
+        name = i.name
+        @item_summary[name] = count
+      # end
+    end
+    puts @item_summary
+
+  end
+
+  def report
+    @sales_by_date_q = Sale.order(:created_at).group("DATE(created_at)")
+    @sales_by_date = @sales_by_date_q.count
+  end
+
   def set_customer
     @sale = set_sale
     @sale.customer_name = params[:customer_name]
