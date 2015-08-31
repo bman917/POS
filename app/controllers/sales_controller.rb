@@ -37,7 +37,7 @@ class SalesController < ApplicationController
       end_date   = date.end_of_month.strftime("%Y-%m-%d")
       r = Report.find_or_create_by(start_date: start_date, 
         end_date: end_date)
-      @reports << r if r.number_of_sales > 0
+      @reports << r if r.number_of_sales && r.number_of_sales > 0
     end
 
     @reports.each do |r|
