@@ -1,4 +1,5 @@
 <div id="sales_list">
+	<h5><%=Time.now.to_s(:sale_date)%></h5>
 	<h4>Sales In Progress...</h4>
 	<ul>
 	  <% @sales_in_progress.each do | sale | %>

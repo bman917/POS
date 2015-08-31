@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   end
 
   post 'sales/:id/payment/:amount' => 'sales#payment'
+  post 'sales/:id/set_customer/:customer_name' => 'sales#set_customer'
 
   get  'items/switch_item_base/:item_base_id' => 'items#index_switch_item_base', as: 'items_switch_item_base'
 

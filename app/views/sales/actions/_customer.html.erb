@@ -2,39 +2,53 @@
 
 
 <div id="customer_dialog" title="Select Customer" style="display:none">
-	<!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
-	Name: <%=select_tag :selected_customer, options_for_select([ "Cash", "Jema", "Knorr-vi"]), :include_blank => true%>
-	<!--%end%-->
+    <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
+    Name: <%=text_field_tag :customer_name, nil, disabled: true %>
+    <!--%end%-->
 </div>
 
 
 
 <%=javascript_tag do %>
 $(document).ready(function() {
+
+    save_button = {
+        text: "Save",
+        icons: {
+            primary: "ui-icon-check"
+        },
+        click: function() {
+            $(this).dialog("close");
+            $.ajax({
+              dataType: 'script',
+              type: 'POST',
+              url: "/sales/" + $('#sale_id').val() + "/set_customer/" + $('#customer_dialog #customer_name').val()
+            });
+        }
+    };
+
     $('#customer_dialog').dialog({
         autoOpen: false,
         modal: true,
         position: position,
-        close: bind_shortcuts,
-        buttons: [
-        	{
-                text: "Select",
-                icons: {
-                    primary: "ui-icon-check"
-                },
-                click: function() {
-                    $(this).dialog("close");
-
-                    $('#customer_name').val($('#selected_customer').val());
-                }
-            }
-        ]
+        buttons: [save_button],
+        open: function(event, ui) {
+            reset_and_bind_esc_key();
+            setTimeout(function() {
+                $('#customer_dialog #customer_name').val('');
+                $('#customer_dialog #customer_name').removeAttr('disabled');
+                $('#customer_dialog #customer_name').focus();
+            }, 250);
+        },        
+        close: function(event, ui) {
+            $('#customer_dialog #customer_name').prop('disabled', 'disabled');
+            bind_shortcuts();
+        }
     });
 
     $("a#set_customer").click(function() {
+        $('#customer_dialog #customer_name').val('');
         $("#customer_dialog").dialog("open");
-
-
     });
 });
 <% end %>

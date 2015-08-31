@@ -1,5 +1,5 @@
 <%=form_tag destroy_multiple_item_sales_path, id: 'sales-frm', class: 'sales-frm', method: 'DELETE', remote: true do%>
-<h4>ID: <%=@sale.number%> </h4> 
+<h4>SALE #: <%=@sale.number%> </h4> 
 <% if @sale.status == 'COMPLETED'%>
 <div style="float:right;margin-top:-2.5em;color:red">(This sale is marked as completed)</div>
 
@@ -8,7 +8,7 @@
 <div class="customer_details">
 	<div class="left">
 		<span>Customer :</span>
-		<%=text_field_tag 'customer_name', "CASH", style: "display:inline"%>
+		<%=text_field_tag 'customer_name', @sale.customer_name, style: "display:inline;background:none", disabled: true%>
 	</div>
 	<div class="right">
 		<span>Date :</span>
