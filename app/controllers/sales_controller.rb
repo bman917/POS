@@ -6,7 +6,7 @@ class SalesController < ApplicationController
     start_date = date.beginning_of_month
     end_date   = date.end_of_month
 
-    @sales_by_date = Sale.where('created_at between ? and ?', start_date, end_date).order(:created_at).group("DATE(created_at)").count
+    @sales_by_date = Sale.where("status = 'COMPLETED' AND created_at between ? and ?", start_date, end_date).order(:created_at).group("DATE(created_at)").count
 
 
     @month = date.strftime("%b %Y")
@@ -55,7 +55,7 @@ class SalesController < ApplicationController
 
     @reports.each do |r|
       unless r.number_of_sales
-        r.number_of_sales = Sale.where('created_at between ? and ?', r.start_date, r.end_date).count
+        r.number_of_sales = Sale.where("status = 'COMPLETED' created_at between ? and ?", r.start_date, r.end_date).count
         r.save! if r.number_of_sales
       end
     end
