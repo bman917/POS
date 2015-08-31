@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     post :json_filter_by, on: :collection
   end
 
+  get 'sales/report/month/:date' => 'sales#report_by_month', as: 'report_by_month'
   get 'sales/report/date/:date' => 'sales#report_by_date', as: 'report_by_date'
   post 'sales/:id/payment/:amount' => 'sales#payment'
   post 'sales/:id/set_customer/:customer_name' => 'sales#set_customer'

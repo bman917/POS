@@ -1,6 +1,17 @@
 class SalesController < ApplicationController
   respond_to :html, :js
 
+  def report_by_month
+    date = Date.parse(params[:date])
+    start_date = date.beginning_of_month
+    end_date   = date.end_of_month
+
+    @sales_by_date = Sale.where('created_at between ? and ?', start_date, end_date).order(:created_at).group("DATE(created_at)").count
+
+
+    @month = date.strftime("%b %Y")
+  end
+
   def report_by_date
     @d = Date.parse(params[:date])
     bod = @d.beginning_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
@@ -25,9 +36,37 @@ class SalesController < ApplicationController
   end
 
   def report
+    @dates = []
+    first_sale_date = Sale.order('created_at asc').first.created_at
+    tmp = Date.today.prev_year
+
+    1.upto(12) do
+      tmp = tmp.next_month
+      @dates << tmp if tmp >= first_sale_date
+    end
+
+    @reports = []
+    @dates.each do |date|
+      start_date = date.beginning_of_month.strftime("%Y-%m-%d")
+      end_date   = date.end_of_month.strftime("%Y-%m-%d")
+      @reports << Report.find_or_create_by(start_date: start_date, 
+        end_date: end_date)
+    end
+
+    @reports.each do |r|
+      unless r.number_of_sales
+        r.number_of_sales = Sale.where('created_at between ? and ?', r.start_date, r.end_date).count
+        r.save! if r.number_of_sales
+      end
+    end
+    
     @sales_by_date_q = Sale.order(:created_at).group("DATE(created_at)")
+    @month = @sales_by_date_q.group_by{ |r| r.created_at.month }
     @sales_by_date = @sales_by_date_q.count
+    puts @dates
   end
+
+
 
   def set_customer
     @sale = set_sale

@@ -1,7 +1,8 @@
 <h3>Sales Report</h3>
-Select sales date:
+Select sales month:
+
 <ul class="mono">
-<% @sales_by_date.each do | sale_by_day | %>
-<li><%=link_to sale_by_day.first.strftime("%a, %b %e, %Y"), report_by_date_path(sale_by_day.first) %></li>
+<% @reports.each do | r | %>
+<li><%=link_to r.to_s, report_by_month_path(r.start_date) %></li>
 <% end %>
 </ul>

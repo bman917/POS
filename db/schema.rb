@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831122928) do
+ActiveRecord::Schema.define(version: 20150831132430) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20150831122928) do
 
   add_index "items", ["item_base_id"], name: "index_items_on_item_base_id", using: :btree
   add_index "items", ["name", "supplier_id", "unit"], name: "index_items_on_name_and_supplier_id_and_unit", unique: true, using: :btree
+  add_index "items", ["name"], name: "index_items_on_name", using: :btree
   add_index "items", ["supplier_id"], name: "index_items_on_supplier_id", using: :btree
 
   create_table "purchase_orders", force: true do |t|
@@ -147,6 +148,16 @@ ActiveRecord::Schema.define(version: 20150831122928) do
   end
 
   add_index "purchase_orders", ["supplier_id"], name: "index_purchase_orders_on_supplier_id", using: :btree
+
+  create_table "reports", force: true do |t|
+    t.string   "start_date"
+    t.string   "end_date"
+    t.integer  "number_of_sales"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reports", ["start_date"], name: "index_reports_on_start_date", using: :btree
 
   create_table "sales", force: true do |t|
     t.string   "created_by"

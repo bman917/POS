@@ -1,0 +1,9 @@
+<h3>Sales Report for <%=@month%></h3>
+Select sales Date:
+<ul class="mono">
+<% @sales_by_date.each do | sale_by_day | %>
+<li><%=link_to sale_by_day.first.strftime("%a, %b %e, %Y"), report_by_date_path(sale_by_day.first) %></li>
+<% end %>
+</ul>
+
+<%=link_to '<-- Back', report_sales_path%>
