@@ -3,8 +3,8 @@ class SalesController < ApplicationController
 
   def report_by_month
     date = Date.parse(params[:date])
-    start_date = date.beginning_of_month
-    end_date   = date.end_of_month
+    start_date = date.beginning_of_month.prev_day
+    end_date   = date.end_of_month.next_day
 
     @sales_by_date = Sale.where("status = 'COMPLETED' AND created_at between ? and ?", start_date, end_date).order(:created_at).group("DATE(created_at)").count
 
@@ -20,18 +20,33 @@ class SalesController < ApplicationController
     sale_ids = Sale.where("status = 'COMPLETED' AND created_at between ? and  ?", bod, eod).map{|i| i.id}
     @transactions = sale_ids.count
     @total = Sale.where(id: sale_ids).sum(:total)
-    @item_sales = ItemSale.where(sale_id: sale_ids).group(:item_id).count
-    item_ids = @item_sales.map { |is| is.first }
-    @items = Item.where(id: item_ids)
+    puts sale_ids
+    @item_sales = ItemSale.where(sale_id: sale_ids).includes(:item)
     @item_summary = {}
-    @items.each do |i|
-      # if @item_sales[i.id]
-        count = @item_sales[i.id]
-        name = i.name
-        @item_summary[name] = count
-      # end
+    @item_sales.each do |item_sale|
+      name = item_sale.item.name
+      count = item_sale.qty + (@item_summary[name] || 0)
+      puts "#{name} - #{count}"
+      @item_summary[name] = count
     end
-    puts @item_summary
+
+
+
+    # @item_sales = ItemSale.where(sale_id: sale_ids).group(:item_id).count
+
+    # item_ids = @item_sales.map { |is| is.first }
+    # @items = Item.where(id: item_ids)
+    # @items.each do |i|
+    #   # if @item_sales[i.id]
+    #     name = i.name
+    #     count = @item_sales[i.id]
+    #     @item_summary[name] = [] unless @item_summary[name]
+    #     @item_summary[name] << 
+    #   # end
+    # end
+    # puts @item_sales
+
+
 
   end
 
