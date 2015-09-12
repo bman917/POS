@@ -82,7 +82,19 @@ class ItemsDatatable
     #puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items_unordered = Item.where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%").includes(:supplier, :item_prices)
+      terms = search_val.squish.split(' ')
+      query = ""
+      terms.each do |term|
+        query = "#{query} (name LIKE '%#{term}%' or unit LIKE '%#{term}%') AND"
+      end
+      query = query[0..-4].chop #Remove the trailing ' AND'
+      puts "Search Query: #{query}"
+
+      @items_unordered = Item.where(query)
+      # terms.each do |term|
+      #   @items_unordered = @items_unordered.where("name LIKE ? or unit LIKE ?", "%#{terms}%", "%#{terms}%")
+      # end
+      @items_unordered = @items_unordered.includes(:supplier, :item_prices)
     else
       @items_unordered = Item.all.includes(:supplier, :item_prices)
     end

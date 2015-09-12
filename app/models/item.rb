@@ -67,7 +67,11 @@ class Item < ActiveRecord::Base
   end
 
   def summary
-    "#{name} (#{unit})"
+    if unit
+      "#{name} (#{unit})"
+    else
+      name
+    end
   end
 
   def regular_price

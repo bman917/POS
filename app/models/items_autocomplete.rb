@@ -16,8 +16,8 @@ class ItemsAutocomplete
     items.map do | item |
       {
         id: item.id,
-        label: "#{item.name} (#{item.unit})",
-        value: "#{item.name} (#{item.unit})",
+        label: "#{item.summary}",
+        value: "#{item.summary}",
         price: item.regular_price,
         desc: item.unit        
       }
@@ -33,7 +33,20 @@ class ItemsAutocomplete
     puts "Search Value: #{search_val}"
 
     if search_val && !search_val.empty?
-      @items = Item.includes(:item_prices).where("name LIKE ? or unit LIKE ?", "%#{search_val}%", "%#{search_val}%")
+      terms = search_val.squish.split(' ')
+      query = ""
+      terms.each do |term|
+        query = "#{query} (name LIKE '%#{term}%' or unit LIKE '%#{term}%') AND"
+      end
+      query = query[0..-4].chop #Remove the trailing ' AND'
+      puts "Search Query: #{query}"
+      count = Item.includes(:item_prices).where(query).count
+      puts "Search Result: #{count}"
+      if count > 50
+        @items = [Item.new(name: "Results: #{count}. Too many to display. Be more specific....")]
+      else
+        @items = Item.includes(:item_prices).where(query)
+      end
     else
       @items = Item.includes(:item_prices).all
     end
