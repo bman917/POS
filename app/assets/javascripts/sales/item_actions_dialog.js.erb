@@ -3,6 +3,7 @@
 //Used by sales/_actions.html.erb
 
 $(document).ready( function () {
+  
 
   //Initialize Dialogs
   //==================
@@ -22,15 +23,18 @@ $(document).ready( function () {
   //     bind_shortcuts();
   //   });
 
+  
   $("#dialog").dialog({ autoOpen: false, modal: true, position: position, buttons: [close_button]});
 
   //Logic for deciding which Diolog to open
   //=======================================
+  $( "#opener" ).unbind('click');
+
   $( "#opener" ).click(function() {
     checked = $("#sales-frm .icb:checked").length;
     if (checked == 0) {
       $( "#error").dialog( "option", "title", "No Items Selected" );
-      $( "#error" ).dialog( "open" );
+      $( "#error").dialog("open");
     } else {
       $( "#dialog" ).dialog( "open" );
     }
@@ -44,13 +48,10 @@ $(document).ready( function () {
   //==================
   $('#dialog #delete').unbind('click');
   $('#dialog #delete').on('click', function() { 
-      result = confirm("Delete Checked Items. Are you sure?");
       $( "#dialog" ).dialog( "close" );
-      if (result) {
-        $('#sales-frm input[name=_method]').val('DELETE');
-        $('#sales-frm').attr('action', '<%=url.destroy_multiple_item_sales_path%>');
-        $('#sales-frm').submit();
-      }
+      $('#sales-frm input[name=_method]').val('DELETE');
+      $('#sales-frm').attr('action', '<%=url.destroy_multiple_item_sales_path%>');
+      $('#sales-frm').submit();
   });
 // END $(document).ready
 }); 

@@ -1,5 +1,5 @@
 @import "constants";
-
+@import "summary_and_controls";
 
 .sales-frm {
   margin-left: 1%;
@@ -7,16 +7,15 @@
   height: $form_height;
   padding: 10px 0px 10px 0px;
   padding-bottom: 100px;
-  font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: $input_font_color;
-  text-shadow: 1px 1px 1px #FFF;
-  
-  // border: 1px solid $border_color;
-  // border-radius: 5px;
-  // -webkit-border-radius: $border-radius;
-  // -moz-border-radius: $border-radius;
 
-  background-color: white;
+  background-color: $body_color;
+
+  #table_wrapper {
+    height: $form_height - $controls_height - $controls_top_margin;
+    overflow-y: scroll;
+  }
   table {
     table-layout: fixed;
     tr {

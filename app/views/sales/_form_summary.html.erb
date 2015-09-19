@@ -1,13 +1,13 @@
-	<div class="content right">
-		<label>Total</label><p id="sale_total"><%=number_to_currency(@sale.total || '0.00', unit: '')%></p>
-		<!--label>VAT(%12)</label><p>800.00</p>
-		<label>Grand Total</label><p>800.00</p-->
-		<label>Payment</label>
-			<p id="payment_1">
-				<%=number_to_currency((@sale.payment_1 || 0), unit: '')%>
-			</p>
-		<label>Change</label>
-			<p id="change">
-				<%=number_to_currency(@sale.change_to_tender, unit: '')%>
-			</p>
-	</div>
+<div id="sale_summary" class="content">
+	<label>Total</label><p id="sale_total"><%=number_to_currency(@sale.total || '0.00', unit: '')%></p>
+	<!--label>VAT(%12)</label><p>800.00</p>
+	<label>Grand Total</label><p>800.00</p-->
+	<label>Payment</label>
+		<p id="payment_1">
+			<%=number_to_currency((@sale.payment_1 || 0), unit: '')%>
+		</p>
+	<label>Change</label>
+		<p id="change">
+			<%=number_to_currency(@sale.change_to_tender, unit: '')%>
+		</p>
+</div>

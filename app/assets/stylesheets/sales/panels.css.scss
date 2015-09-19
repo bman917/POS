@@ -5,8 +5,10 @@
 @import "constants";
 @import "summary_and_controls";
 
-$sales_list_panel_width: 400px;
+$sales_right_panel: 200px;
+$sales_list_panel_width: $sales_right_panel;
 $sales_panel_height: $form_height + $controls_height + $controls_top_margin;
+$sales_right_panel_height: $form_height;
 
 .sales_panels {
 	width: ($form_width + $sales_list_panel_width) * 1.05;
@@ -19,7 +21,7 @@ $sales_panel_height: $form_height + $controls_height + $controls_top_margin;
 	height: $sales_panel_height;
 }
 
-#sales_list_panel {
+#sales_list_panel, #sales_right_panel {
 	width: $sales_list_panel_width;
 	height: $sales_panel_height;
 	float: right;
@@ -28,12 +30,9 @@ $sales_panel_height: $form_height + $controls_height + $controls_top_margin;
 	padding-left: 1.5em;
 
 	//Gradient background
-	background: rgba(219,219,219,0.57);
-	background: -moz-linear-gradient(left, rgba(219,219,219,0.57) 0%, rgba(209,209,209,0.57) 0%, rgba(245,245,245,0.57) 0%, rgba(254,254,254,1) 100%);
-	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(219,219,219,0.57)), color-stop(0%, rgba(209,209,209,0.57)), color-stop(0%, rgba(245,245,245,0.57)), color-stop(100%, rgba(254,254,254,1)));
-	background: -webkit-linear-gradient(left, rgba(219,219,219,0.57) 0%, rgba(209,209,209,0.57) 0%, rgba(245,245,245,0.57) 0%, rgba(254,254,254,1) 100%);
-	background: -o-linear-gradient(left, rgba(219,219,219,0.57) 0%, rgba(209,209,209,0.57) 0%, rgba(245,245,245,0.57) 0%, rgba(254,254,254,1) 100%);
-	background: -ms-linear-gradient(left, rgba(219,219,219,0.57) 0%, rgba(209,209,209,0.57) 0%, rgba(245,245,245,0.57) 0%, rgba(254,254,254,1) 100%);
-	background: linear-gradient(to right, rgba(219,219,219,0.57) 0%, rgba(209,209,209,0.57) 0%, rgba(245,245,245,0.57) 0%, rgba(254,254,254,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#fefefe', GradientType=1 );
+	//background-color: black;
+}
+
+#sales_right_panel {
+	height: $sales_right_panel_height;
 }

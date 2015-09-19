@@ -9,9 +9,8 @@ class ItemSale < ActiveRecord::Base
   #if the time has no REGULAR price
   #then update the item with the price for this item_sale
   def store_item_price
-  	unless item.regular_price
-  		item.regular_price = self.price
-  	end
+    puts "item.regular_price: #{item.id}.#{item.regular_price}"
+ 		item.regular_price = self.price
   end
 
   def calculate_total

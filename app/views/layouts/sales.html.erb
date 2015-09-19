@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= stylesheet_link_tag    "sales/all", media: "all" %>
+    <%= javascript_include_tag "vendor/modernizr"%>
+    <%= javascript_include_tag "application"%>
+    <%= csrf_meta_tags %>
+  </head>
+  <body id="content" class="sales">
+    <div id="wait_message" class="hidden">
+      <%=image_tag 'loading_bar.gif', size: "125x20"%>
+    </div>
+    <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
+      :
+      <% flash.each do |name, msg| %>
+      <%= content_tag :span, msg, id: "flash_#{name}" %>
+      <% end %>
+    </div>
+    <div id="yeild_content" style="margin: 1%">
+      <%= yield %>
+    </div>
+    
+  </body>
+</html>

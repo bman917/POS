@@ -79,12 +79,16 @@ class Item < ActiveRecord::Base
   end
 
   def regular_price=(price)
-    reg_price = regular_price
-    unless reg_price
-      reg_price = item_prices.new(name: 'REGULAR')
+    reg_price = item_prices.select{|p|p.name.eql?('REGULAR')}.first
+    puts "got reg_price: #{reg_price}"
+    if reg_price.nil? || reg_price.price.nil?
+      reg_price = item_prices.new(name: 'REGULAR', price: price)
+      puts "Creating new reg_price #{reg_price}"
+      reg_price.save!
+    elsif reg_price.price != price
+      reg_price.price = price
+      reg_price.save!
     end
-    reg_price.price = price
-    reg_price.save
   end
 
   def price_summary

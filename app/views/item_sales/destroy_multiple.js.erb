@@ -7,5 +7,5 @@ $('#app_msg').empty();
   $('#app_msg').append('<span><%=msg%></span>');
 <% end %>
 
-$('#sales_form_panel #summary .content').remove();
-$('#sales_form_panel #summary').append("<%=j render 'sales/form_summary'%>");
+$('#sales_right_panel #summary_vertical .content').remove();
+$('#sales_right_panel #summary_vertical').append("<%=j render 'sales/form_summary'%>");

@@ -114,15 +114,8 @@ function remove_item_sales_input_row() {
     bind_shortcuts();
 }
 
-
-//==================================
-// Start Common Initialization logic
-//==================================
-
-$(document).ready(function() {
-
-    //Initialize Dialogs
-    //==================
+//Initialize Dialogs
+function init_error_dialog() {
     $("#error").dialog({
         autoOpen: false,
         modal: true,
@@ -133,6 +126,16 @@ $(document).ready(function() {
         }
     });
 
+}
+
+
+//==================================
+// Start Common Initialization logic
+//==================================
+
+$(document).ready(function() {
+
+    init_error_dialog();
     //==================
     //Keyboard Shortcuts
     bind_shortcuts();

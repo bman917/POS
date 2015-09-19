@@ -94,6 +94,7 @@ class SalesController < ApplicationController
     create_and_store_in_session unless @sale
     session[:current_sale_id] = @sale.id
     set_sales_list
+    render layout: "sales"
   end
 
   def show

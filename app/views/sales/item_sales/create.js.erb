@@ -8,5 +8,5 @@ $('#item_name').focus();
 $('#sale_total').text('<%=number_to_currency @sale.total, unit: ''%>');
 $('#number_of_items').text('<%=@sale.item_sales.count%>');
 
-$('#sales_form_panel #summary .content').remove();
-$('#sales_form_panel #summary').append("<%=j render 'sales/form_summary'%>");
+$('#sales_right_panel #summary_vertical .content').remove();
+$('#sales_right_panel #summary_vertical').append("<%=j render 'sales/form_summary'%>");

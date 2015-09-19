@@ -15,7 +15,7 @@
 		<%=text_field_tag 'customer_name', @sale.created_at.to_s(:sale_date), style: "display:inline"%>
 	</div>
 </div>
-<div style="height:350px;overflow-y: scroll">
+<div id="table_wrapper">
 	<table>
 		<thead>
 			<tr>
@@ -37,7 +37,7 @@
 	
 </div>
 <div id="summary" style="margin-top:2em">
-<%=render 'sales/form_summary'%>
+<!--%=render 'sales/form_summary'%-->
 </div>
 <div id="footer" class="details" style="margin-top:2em">
 	<div class="left-5">
