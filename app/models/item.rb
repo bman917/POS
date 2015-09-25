@@ -80,7 +80,6 @@ class Item < ActiveRecord::Base
 
   def regular_price=(price)
     reg_price = item_prices.select{|p|p.name.eql?('REGULAR')}.first
-    puts "got reg_price: #{reg_price}, price: #{reg_price.price}"
     if reg_price.nil?
       reg_price = item_prices.new(name: 'REGULAR', price: price)
       puts "Creating new reg_price #{reg_price}"
