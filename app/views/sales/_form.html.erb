@@ -1,7 +1,13 @@
 <%=form_tag destroy_multiple_item_sales_path, id: 'sales-frm', class: 'sales-frm', method: 'DELETE', remote: true do%>
-<h4>SALE #: <%=@sale.number%> </h4> 
-<% if @sale.status == 'COMPLETED'%>
-<div style="float:right;margin-top:-2.5em;color:red">(This sale is marked as completed)</div>
+
+<!-- START FORM HEADER -->
+
+
+	<h1>SALE #: <%=@sale.number%> </h4> 
+	<% if @sale.status == 'COMPLETED'%>
+	<div style="float:right;margin-top:-2.5em;color:red">(This sale is marked as completed)</div>
+
+<!-- END FORM HEADER -->
 
 <% end %>
 <%=hidden_field_tag :sale_id, @sale.id%>
@@ -36,22 +42,7 @@
 	</table>
 	
 </div>
-<div id="summary" style="margin-top:2em">
-<!--%=render 'sales/form_summary'%-->
-</div>
-<div id="footer" class="details" style="margin-top:2em">
-	<div class="left-5">
-		Number of Items: <span id="number_of_items"><%=@sale.item_sales.count%></span>
-	</div>
-	<!--div class="left-5">
-		<span>Prepared By:</span>
-		<span>Baste</span>
-	</div>
-	<div class="right-5">
-		<span>Chcked By:</span>
-		<span>Cambal</span>
-	</div-->
-</div>
+
 
 <!-- END FORM -->
 <% end %>

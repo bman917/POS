@@ -4,31 +4,24 @@ $totals_font_size: 125%;
 $controls_top_margin: 40px;
 $controls_height: 70px;
 
-#summary {
-  .left {
-    float: left;
-  }
-  .right {
-    float: right;
-    width: $form_width / 3;
-  }
+#summary, #summary_vertical {
   label {
-    float: left;
-    width: 50%;
-    text-align: right;
+    cursor: auto;
     font-weight: bold;
   }
+
   p {
-    text-align: right;
-    margin-right: 2em;
-    margin-bottom: 1px;
+    font-size: 150%;
+    color: white;
+    font-weight: bold;
   }
 }
 
+
 #controls  {
   
-  margin-top: $controls_top_margin;
-  height: $controls_height;
+  // margin-top: $controls_top_margin;
+  // height: $controls_height;
 
   a.pos_action {
     width: 170px;

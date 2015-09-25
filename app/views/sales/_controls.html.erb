@@ -1,9 +1,13 @@
-<div id="controls" style="display:none">
-    <%= render partial: 'sales/actions/customer', locals: {link_name: '(0) Customer'}%>
-    <%= link_to '(1) Add Item', new_item_sales_path, id: 'add_item', class: 'pos_action', remote: true%>
-    <%= render partial: 'sales/actions/add_payment',   locals: {link_name: '(4) Add Payment'}%>
-    <%= render partial: 'sales/actions/confirm_cancel',locals: {link_name: '(5) Cancel'}%>
-    <%= render partial: 'sales/actions/close', locals: {link_name: '(6) Close'}%>
+<div id="controls">
+    Keyboard Controls:
+    <ul style="list-style-type:none">
+
+    <%= render partial: 'sales/actions/customer', locals: {link_name: 'Customer'}%>
+    <%= render partial: 'sales/actions/add_item', locals: {link_name: 'Add Item'}%>
+    <%= render partial: 'sales/actions/add_payment',   locals: {link_name: 'Add Payment'}%>
+    <%= render partial: 'sales/actions/confirm_cancel',locals: {link_name: 'Cancel Sale'}%>
+    <%= render partial: 'sales/actions/close', locals: {link_name: 'End Sale'}%>
+    </ul>
 </div>
 <div id="disbaled" style="display:none">
     <%= render partial: 'sales/actions/prepare_order', locals: {link_name: '(2) Prepare Order'}%>

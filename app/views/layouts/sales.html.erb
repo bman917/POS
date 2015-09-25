@@ -16,12 +16,12 @@
     <div id="wait_message" class="hidden">
       <%=image_tag 'loading_bar.gif', size: "125x20"%>
     </div>
-    <div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
+    <!--div id="app_msg" style="background:antiquewhite;height: 1.5em;color: darkgray;">
       :
       <% flash.each do |name, msg| %>
       <%= content_tag :span, msg, id: "flash_#{name}" %>
       <% end %>
-    </div>
+    </div-->
     <div id="yeild_content" style="margin: 1%">
       <%= yield %>
     </div>

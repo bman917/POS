@@ -13,10 +13,32 @@
   background-color: $body_color;
 
   #table_wrapper {
-    height: $form_height - $controls_height - $controls_top_margin;
-    overflow-y: scroll;
+    height: $form_height;
+    //overflow-y: scroll;
   }
+  
+  table, th, tr, td { 
+    padding: 0; 
+    color: $table_font_color;
+    background-color:$table_background_color;
+  }  
   table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: $border_color;
+    
+    
+    thead { 
+      background-color: $table_background_color; 
+    }
+
+    tbody { 
+      background-color: $table_background_color;
+
+    }
+
+    th { border-bottom: 1px solid $border_color;}
+  
     table-layout: fixed;
     tr {
       height: 30px;
@@ -42,7 +64,7 @@
     tr.newly_added {
       font-weight: bolder; 
       font-style: italic;
-      td {  color: #013500 } 
+      td {  color: $table_highlight_font_color } 
     }
     
     input.ready_to_save {

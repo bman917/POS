@@ -8,5 +8,10 @@ $border-radius: 1px;
 
 // Font
 $mono_font: "Courier New", Courier, monospace;
-$font_color: green;
+$font_color: #00FF00;
 $input_font_color: #000;
+
+//Tables
+$table_background_color: black;
+$table_font_color: white;
+$table_highlight_font_color: $font_color;

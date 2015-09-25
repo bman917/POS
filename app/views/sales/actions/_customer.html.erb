@@ -1,7 +1,7 @@
-<%= link_to link_name, '#', id: 'set_customer', class: 'pos_action'%>
+<li><kbd>0</kbd> - <%= link_to link_name, '#', id: 'set_customer', class: ''%></li>
 
 
-<div id="customer_dialog" title="Select Customer" style="display:none">
+<div id="customer_dialog" title="Set Customer Name" style="display:none">
     <!--%=form_tag 'add/payment/cash', id: 'payment-frm' do%-->
     Name: <%=text_field_tag :customer_name, nil, disabled: true %>
     <!--%end%-->

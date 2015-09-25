@@ -7,7 +7,7 @@
 
 $sales_right_panel: 200px;
 $sales_list_panel_width: $sales_right_panel;
-$sales_panel_height: $form_height + $controls_height + $controls_top_margin;
+$sales_panel_height: $form_height;
 $sales_right_panel_height: $form_height;
 
 .sales_panels {
@@ -17,14 +17,16 @@ $sales_right_panel_height: $form_height;
 }
 #sales_form_panel {
 	float: left;
-	width: $form_width + 20;
+	width: $form_width;
 	height: $sales_panel_height;
 }
 
 #sales_list_panel, #sales_right_panel {
+	position:fixed;
+	left: $form_width * 1.05;
 	width: $sales_list_panel_width;
 	height: $sales_panel_height;
-	float: right;
+	
 	padding-top: 1.5em;
 	border-left: 1px darkgray solid;
 	padding-left: 1.5em;

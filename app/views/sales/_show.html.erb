@@ -8,18 +8,11 @@
 <div class="sales_panels">
   <div id="sales_form_panel">
     <%=render 'sales/form' %>
-    <%=render 'sales/controls' %>
   </div>
 
   <div id="sales_right_panel">
-    Keyboard Controls:
-    <ul style="list-style-type:none">
-      <li><kbd>0</kbd> - Customer</li>
-      <li><kbd>1</kbd> - Add Item</li>
-      <li><kbd>4</kbd> - Add Payment</li>
-      <li><kbd>5</kbd> - Cancel</li>
-      <li><kbd>6</kbd> - Close</li>
-    </ul>
+    <%=render 'sales/controls' %>
+    <hr style="width: 90%"/>
     <div id="summary_vertical">
       <%=render 'sales/form_summary'%>
     </div>
