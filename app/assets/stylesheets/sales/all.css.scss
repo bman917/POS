@@ -15,3 +15,8 @@ body.sales {
 	border-color: yellow;
 	font-size: 104%;
 }
+
+#top_right {
+	position: fixed;
+	left: $form_width * 1;
+}

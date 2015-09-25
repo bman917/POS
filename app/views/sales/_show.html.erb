@@ -1,6 +1,11 @@
 <%=javascript_include_tag 'sales_common'%>
 <div id="focus_indicator" style="width: 10px; height: 10px; display: none; float: left; position: absolute; background: green;">
 </div>
+
+<div id="top_right">
+<%=link_to 'Exit', root_url%>
+</div>
+
 <!--%=image_tag 'gear.png', id:"opener", style: 'cursor: pointer; cursor: hand;'%-->
 <div id="error" title="No Items Selected" style="display:none">
   <%=image_tag 'But-why-meme.png', style: 'margin-left: 30px;'%>

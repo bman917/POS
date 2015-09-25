@@ -11,7 +11,7 @@ class SalesController < ApplicationController
     @sales_by_date = Sale.within_month(date).order(:created_at).group("DATE(created_at)").count
 
     @month = date.strftime("%b %Y")
-
+    render layout: 'application'
   end
 
   def report_by_date
@@ -19,6 +19,7 @@ class SalesController < ApplicationController
     bod = @d.beginning_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
     eod = @d.end_of_day.strftime("%Y-%m-%d %H:%M:%S:%L")
     @summary = Sale.generate_summary(bod,eod)
+    render layout: 'application'
   end
 
   def report
@@ -31,19 +32,24 @@ class SalesController < ApplicationController
       @dates << tmp if tmp >= first_sale_date
     end
 
+    puts "Getting report for #{@dates}......"
+
     @reports = []
     @dates.each do |date|
       start_date = date.beginning_of_month.strftime("%Y-%m-%d")
       end_date   = date.end_of_month.strftime("%Y-%m-%d")
       r = Report.find_or_create_by(start_date: start_date, 
         end_date: end_date)
-      @reports << r if r.number_of_sales && r.number_of_sales > 0
+      puts "Found Report: #{r}"
+      @reports << r #if r.number_of_sales && r.number_of_sales > 0
     end
+
+    puts "Total Reports found #{@reports}"
 
     @reports.each do |r|
       unless r.number_of_sales
         r.number_of_sales = Sale.in_between(r.start_date, r.end_date).count
-        r.save! if r.number_of_sales
+        r.save! if r.number_of_sales && r.number_of_sales > 0
       end
     end
     
@@ -51,6 +57,7 @@ class SalesController < ApplicationController
     @month = @sales_by_date_q.group_by{ |r| r.created_at.month }
     @sales_by_date = @sales_by_date_q.count
     puts @dates
+    render layout: 'application'
   end
 
 
