@@ -1,5 +1,7 @@
 $('#sales-frm').remove();
 $('#sales_form_panel').prepend("<%=j render 'sales/form'%>");
+$('#sales-frm').hide();
+$('#sales-frm').fadeIn('fast');
 $('#sales_list').remove();
 $('#sales_list_panel').append("<%=j render 'sales/list_panel' %>");
 bind_shortcuts();

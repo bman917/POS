@@ -2,13 +2,22 @@ $('tr#new').after("<%=j render partial: 'sales/item_sale', object: @item_sale%>"
 $('tr').removeClass('newly_added');
 $('#<%=@item_sale.css_id%>').addClass('newly_added');
 
+
+
 $('#item_id').val('');
 $('input').removeClass('ready_to_save');
 $('#item_name').val('');
 $('#item_name').focus();
+$('#item_price').val('');
 
-$('#sale_total').text('<%=number_to_currency @sale.total, unit: ''%>');
-$('#number_of_items').text('<%=@sale.item_sales.count%>');
+$('tr.newly_added').hide();
+$('tr.newly_added').fadeIn('fast');
+
+// $('#sale_total').text('<%=number_to_currency @sale.total, unit: ''%>');
+// $('#number_of_items').text('<%=@sale.item_sales.count%>');
 
 $('#sales_right_panel #summary_vertical .content').remove();
 $('#sales_right_panel #summary_vertical').append("<%=j render 'sales/form_summary'%>");
+
+$('#sale_total').hide();
+$('#sale_total').slideDown('fast');

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831132430) do
+ActiveRecord::Schema.define(version: 20150926000042) do
 
   create_table "attrib_item_bases", force: true do |t|
     t.integer  "attrib_id"
@@ -185,17 +185,6 @@ ActiveRecord::Schema.define(version: 20150831132430) do
   end
 
   add_index "suppliers", ["name"], name: "index_suppliers_on_name", unique: true, using: :btree
-
-  create_table "trigrams", force: true do |t|
-    t.string  "trigram",     limit: 3
-    t.integer "score",       limit: 2
-    t.integer "owner_id"
-    t.string  "owner_type"
-    t.string  "fuzzy_field"
-  end
-
-  add_index "trigrams", ["owner_id", "owner_type", "fuzzy_field", "trigram", "score"], name: "index_for_match", using: :btree
-  add_index "trigrams", ["owner_id", "owner_type"], name: "index_by_owner", using: :btree
 
   create_table "units", force: true do |t|
     t.string   "name"

@@ -29,7 +29,7 @@ class Item < ActiveRecord::Base
     if self.attrib_values.try(:size) > 0
       sorted = attrib_values.sort { |x,y| x.attrib.display_number <=> y.attrib.display_number }
       values = sorted.map { |x| x.value }
-      self.name = "#{item_base.name} #{values.join(" ")}".squeeze(" ").capitalize.titleize
+      self.name = remove_ivalid_chars("#{item_base.name} #{values.join(" ")}".squeeze(" "))
     else
       self.name = "#{item_base.name}"
     end
@@ -105,6 +105,11 @@ class Item < ActiveRecord::Base
     else
       "#{reg} / #{whl}"
     end
+  end
+
+  private
+  def remove_ivalid_chars(word)
+    word.humanize.gsub(/\b[a-z]/) { $&.capitalize }
   end
 
 end
