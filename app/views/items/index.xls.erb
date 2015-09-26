@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+<ss:Styles>
+    <ss:Style ss:ID="1">
+        <ss:Font ss:Bold="1"/>
+    </ss:Style>
+</ss:Styles>
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <ss:Column ss:Width="40"/>
+      <ss:Column ss:Width="150"/>
+      <ss:Column ss:Width="70"/>
+      <ss:Column ss:Width="50"/>
+      <ss:Column ss:Width="250"/>
+       <Row ss:StyleID="1">
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Supplier</Data></Cell>
+        <Cell><Data ss:Type="String">Base</Data></Cell>
+        <Cell><Data ss:Type="String">Unit</Data></Cell>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+      </Row>
+    <% @items_datatable.items.each do | item | %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= item.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= item.supplier.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= item.item_base_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= item.unit %></Data></Cell>
+        <Cell ss:Width="200"><Data ss:Type="String"><%= item.short_name %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

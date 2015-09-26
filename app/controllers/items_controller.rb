@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html, :js
+  respond_to :html, :js, :xls
 
   def sales
   end
@@ -271,7 +271,6 @@ class ItemsController < ApplicationController
     end
     def render_index
       prepare_index
-      render 'index'
     end
 
     def set_item

@@ -102,7 +102,7 @@ class ItemsDatatable
       # end
       @items_unordered = @items_unordered.includes(:supplier, :item_prices)
     else
-      @items_unordered = Item.all.includes(:supplier, :item_prices)
+      @items_unordered = Item.all.includes(:supplier, :item_prices, :item_base)
     end
 
     @items_unordered = @items_unordered.where(supplier: @options[:supplier]) if @options[:supplier]
@@ -122,7 +122,7 @@ class ItemsDatatable
         ordered_items = @items_unordered.sort_by { | i | i.send(column) }
         ordered_items = ordered_items.reverse if dir == :desc
       end
-    end
+    end if params && params[:order]
     ordered_items
   end
 

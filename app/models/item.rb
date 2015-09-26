@@ -51,6 +51,10 @@ class Item < ActiveRecord::Base
       end  
   end
 
+  def item_base_name
+    @item_base ||= item_base.name
+  end
+
   def item_base_name=(name)  
     @item_base_name = name
     self.item_base = ItemBase.find_or_create_by(name: item_base_name)  
@@ -105,6 +109,11 @@ class Item < ActiveRecord::Base
     else
       "#{reg} / #{whl}"
     end
+  end
+
+  def short_name
+    r = Regexp.new "^#{item_base_name} "
+    name.gsub(r,'')
   end
 
   private

@@ -12,6 +12,7 @@
 
     <%= modal_button 'New Supplier', new_supplier_path%>
     <%= link_to 'Reset Confirmed Order Count', admin_reset_purchase_orders_path, class: 'pos_action hide', data: {confirm: 'Are you sure?'} %>
+    <%= link_to 'Download as Excel', items_path(format: 'xls') %>
   </div>
 
   <div style="min-width: 800px;max-width: 1000px" class="item_list">
