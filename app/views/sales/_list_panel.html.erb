@@ -3,8 +3,9 @@
 	<h4>Sales In Progress...</h4>
 	<ul>
 	  <% @sales_in_progress.each do | sale | %>
-	    <li>
+	    <li id="<%=sale.css_id%>">
 	    <%=link_to sale.number, sale, class: ('highlight' if sale.id == @sale.id), remote: true %> - <%= time_ago_in_words sale.created_at %> ago
+	    <%=link_to "delete", destroy_no_auto_create_sale_path(sale.id), :method => 'delete', remote: true, data: { confirm: "Are you sure?" } %>
 	    </li>
 	  <% end %>
 	</ul>
@@ -12,7 +13,7 @@
 	<ul>
 	  <% @completed_sales.each do | sale | %>
 	    <li>
-	    <%=link_to sale.number, sale, class: ('highlight' if sale.id == @sale.id), remote: true %> - <%= time_ago_in_words sale.created_at %> ago
+	    <%=link_to sale.number, sale, class: ('highlight' if sale.id == @sale.id), remote: true %> - <%= time_ago_in_words sale.updated_at %> ago
 	    </li>
 	  <% end %>
 	</ul>

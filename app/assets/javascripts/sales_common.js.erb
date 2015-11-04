@@ -74,11 +74,21 @@ function bind_shortcuts() {
     Mousetrap.bind('4', click_add_payment);
     Mousetrap.bind('5', mousetrap_click('a#cancel'));
     Mousetrap.bind('6', mousetrap_click('a#close'));
+    Mousetrap.bind('7', mousetrap_click('a#retrieve_sale'));
+    Mousetrap.bind('8', click_sales_create_new);
+
     Mousetrap.stopCallback = function() {
         return false
     };
     $('#focus_indicator').show();
 }
+
+function click_sales_create_new(e) {
+    Mousetrap.reset();
+    $('#sales_create_new').click();
+}
+
+
 
 // Click 'Add Item' link, 
 // unbind all keyboard listeners except ecp key

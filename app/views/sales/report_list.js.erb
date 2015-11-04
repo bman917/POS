@@ -1,0 +1,7 @@
+$('#retrieve_sale_dialog #sales_list').remove();
+$('#retrieve_sale_dialog').append('<%=j render 'sales/list_panel'%>');
+setTimeout(function() {
+	//Focus need to be called so that 'esc' key will work
+	//The focus seem to be lost when #sales_list is removed
+	$('.ui-button').focus();
+},250);

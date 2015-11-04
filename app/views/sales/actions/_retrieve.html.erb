@@ -1,0 +1,45 @@
+<li><kbd>7</kbd> - <%= link_to link_name, "#", id: 'retrieve_sale', class: ''%></li>
+
+
+<div id="retrieve_sale_dialog" title="Sales List for Today..." style="display:none">
+    <!-- note: this is populated by sales/report_list.js.erb -->
+</div>
+
+
+
+<%=javascript_tag do %>
+$(document).ready(function() {
+
+    retrieve_sale_dialog_position = {
+        my: "right top",
+        at: "right top",
+        of: "#sales_right_panel"
+    };
+
+    $('#retrieve_sale_dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        position: retrieve_sale_dialog_position,
+        buttons: [close_button],
+        open: function(event, ui) {
+            $.ajax({
+                  dataType: 'script',
+                  type: 'GET',
+                  url: "/sales/" + $('#sale_id').val() + "/retrieve/list",
+                  complete: reset_and_bind_esc_key
+                });
+        },
+        close: function(event, ui) {
+            $.ajax({
+                  dataType: 'script',
+                  type: 'GET',
+                  url: "/sales/new"
+                });
+        }
+    });
+
+    $("a#retrieve_sale").click(function() {
+        $("#retrieve_sale_dialog").dialog("open");
+    });
+});
+<% end %>

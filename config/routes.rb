@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+
   resources :item_sales do
     collection do
       delete 'destroy_multiple'
@@ -11,10 +13,12 @@ Rails.application.routes.draw do
       get 'new_item'
       get 'in_progress'
       get 'report'
+      get 'create_new'
     end
 
     member do
       post 'close'
+      delete 'destroy_no_auto_create'
     end
   end
 
@@ -54,6 +58,7 @@ Rails.application.routes.draw do
     post :json_filter_by, on: :collection
   end
 
+  get 'sales/:id/retrieve/list' => 'sales#report_list', as: 'retrieve_sales_list'
   get 'sales/report/month/:date' => 'sales#report_by_month', as: 'report_by_month'
   get 'sales/report/date/:date' => 'sales#report_by_date', as: 'report_by_date'
   post 'sales/:id/payment/:amount' => 'sales#payment'

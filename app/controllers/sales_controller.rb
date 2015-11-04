@@ -1,6 +1,10 @@
 class SalesController < ApplicationController
   respond_to :html, :js
 
+  def report_list
+    self.show
+  end
+
   def report_by_month
     date = Date.parse(params[:date])
     
@@ -88,6 +92,16 @@ class SalesController < ApplicationController
     render 'new'
   end
 
+  def create_new
+    @sale = Sale.in_progress.first
+    if @sale && @sale.item_sales.count > 0
+      create_and_store_in_session
+      session[:current_sale_id] = @sale.id
+    end
+    set_sales_list
+    render layout: "sales", action: 'new'
+  end
+
   def new
     @sale = Sale.in_progress.first
 
@@ -107,6 +121,11 @@ class SalesController < ApplicationController
   def show
     @sale = set_sale
     set_sales_list
+  end
+
+  def destroy_no_auto_create
+    @sale = set_sale
+    @sale.destroy
   end
 
   def destroy
