@@ -35,7 +35,6 @@
     <% end %>
   </div>
 
-
 <%=javascript_tag do %>
 $(document).ready( function () {
 
@@ -101,7 +100,7 @@ $( document ).tooltip();
 
 
 
-<% end %>
+<% end unless Supplier.all.first.nil? %>
 
 
 <br>
