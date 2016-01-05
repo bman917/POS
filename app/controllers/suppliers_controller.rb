@@ -1,4 +1,5 @@
 class SuppliersController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:script_to_add_to_select]
   before_action :set_supplier, only: [:show, :edit, :update, :destroy]
 
   respond_to :html

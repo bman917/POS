@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def selected_supplier
-    @supplier_id = params[:supplier_id] || session[:supplier_id] || Supplier.all.first.id
+    @supplier_id = params[:supplier_id] || session[:supplier_id] || Supplier.all.first.try(:id)
     session[:supplier_id] = @supplier_id
   end
 
