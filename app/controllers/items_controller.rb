@@ -272,6 +272,7 @@ class ItemsController < ApplicationController
     end
     def render_index
       prepare_index
+      render 'index'
     end
 
     def set_item

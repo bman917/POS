@@ -57,7 +57,7 @@ class Item < ActiveRecord::Base
 
   def item_base_name=(name)  
     @item_base_name = name
-    self.item_base = ItemBase.find_or_create_by(name: item_base_name)  
+    self.item_base = ItemBase.find_or_create_by(name: @item_base_name)
   end
 
   def add_attrib(attrib, value)
